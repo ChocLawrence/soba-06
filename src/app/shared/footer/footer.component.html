@@ -1,0 +1,165 @@
+<div *ngIf="!hideFooter">
+    <div *ngIf="footerVariant == 'bg-light';else execute_block">
+        <!-- Footer Start -->
+        <footer class="footer bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-12 mb-0 mb-md-4 pb-0 pb-md-2">
+                        <a href="#" class="logo-footer">
+                            <img src="assets/images/logo-dark.png" height="24" alt="">
+                        </a>
+                        <p class="mt-4 text-muted">{{"Saint Joseph's College Sasse is located in the South West Region of Cameroon, and an exemplary institution of learning for both secondary and high school students."| translate}}
+                        </p>
+                        <ul class="list-unstyled social-icon social mb-0 mt-4">
+                            <li class="list-inline-item"><a href="javascript:void(0)" class="rounded">
+                                    <i-feather name="facebook" class="fea icon-sm fea-social"></i-feather>
+                                </a></li>
+                            <li class="list-inline-item ms-1"><a href="javascript:void(0)" class="rounded">
+                                    <i-feather name="instagram" class="fea icon-sm fea-social"></i-feather>
+                                </a></li>
+                            <li class="list-inline-item ms-1"><a href="javascript:void(0)" class="rounded">
+                                    <i-feather name="twitter" class="fea icon-sm fea-social"></i-feather>
+                                </a></li>
+                            <li class="list-inline-item ms-1"><a href="javascript:void(0)" class="rounded">
+                                    <i-feather name="linkedin" class="fea icon-sm fea-social"></i-feather>
+                                </a></li>
+                        </ul>
+                        <!--end icon-->
+                    </div>
+                    <!--end col-->
+
+                    <div class="col-lg-2 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <h5 class="text-dark footer-head">{{"Quick Jumps"| translate}}</h5>
+                        <ul class="list-unstyled footer-list mt-4">
+                            <li><a routerLink="/" class="text-muted"><i class="uil uil-angle-right-b me-1"></i>
+                                    {{"Home"| translate}}</a></li>
+                            <li><a routerLink="/contributions" class="text-muted"><i class="uil uil-angle-right-b me-1"></i>
+                                    {{"Contributions"| translate}}</a></li>
+                            <li><a routerLink="/gallery" class="text-muted"><i class="uil uil-angle-right-b me-1"></i>
+                                    {{"Gallery"| translate}}</a></li>
+                        </ul>
+                    </div>
+                    <!--end col-->
+
+                    <div class="col-lg-3 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <h5 class="text-dark footer-head">Useful Links</h5>
+                        <ul class="list-unstyled footer-list mt-4">
+                            <li><a routerLink="/contact" class="text-muted"><i class="uil uil-angle-right-b me-1"></i>
+                                    {{"Contact"| translate}}</a></li>
+                        </ul>
+                    </div>
+                    <!--end col-->
+
+                    <div class="col-lg-3 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <h5 class="text-light footer-head"></h5>
+                        <p class="mt-4">{{"SOBA CLASS OF 2006"| translate}}</p>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!--end container-->
+        </footer>
+        <!-- Footer End -->
+    </div>
+    <ng-template #execute_block>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-12 mb-0 mb-md-4 pb-0 pb-md-2">
+                        <a href="#" class="logo-footer">
+                            <img src="assets/images/logo-light.png" height="50" alt="">
+                        </a>
+                        <p class="mt-4 text-muted">{{"The Consulate General of the Republic of Cameroon in France is here to serve you with all your needs concerning travelling to Cameroon and getting all the appropriate documentation in place."| translate}}
+                        </p>
+                        <ul class="list-unstyled social-icon foot-social-icon mb-0 mt-4">
+                            <li class="list-inline-item"><a href="javascript:void(0)" class="rounded">
+                                    <i-feather name="facebook" class="fea icon-sm fea-social"></i-feather>
+                                </a></li>
+                            <li class="list-inline-item ms-1"><a href="javascript:void(0)" class="rounded">
+                                    <i-feather name="instagram" class="fea icon-sm fea-social"></i-feather>
+                                </a></li>
+                            <li class="list-inline-item ms-1"><a href="javascript:void(0)" class="rounded">
+                                    <i-feather name="twitter" class="fea icon-sm fea-social"></i-feather>
+                                </a></li>
+                            <li class="list-inline-item ms-1"><a href="javascript:void(0)" class="rounded">
+                                    <i-feather name="linkedin" class="fea icon-sm fea-social"></i-feather>
+                                </a></li>
+                        </ul>
+                        <!--end icon-->
+                    </div>
+                    <!--end col-->
+
+                    <div class="col-lg-2 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <h5 class="text-light footer-head">{{"Quick Jumps"| translate}}</h5>
+                        <ul class="list-unstyled footer-list mt-4">
+                            <li><a routerLink="/" class="text-foot"><i class="uil uil-angle-right-b me-1"></i>
+                                    {{"Home"| translate}}</a></li>
+                            <li><a routerLink="/contributions" class="text-foot"><i class="uil uil-angle-right-b me-1"></i>
+                                   {{"Contributions"| translate}}</a></li>
+                            <li><a routerLink="/gallery" class="text-foot"><i class="uil uil-angle-right-b me-1"></i>
+                                    {{"Gallery"| translate}}</a></li>
+                        </ul>
+                    </div>
+                    <!--end col-->
+
+                    <div class="col-lg-3 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <h5 class="text-light footer-head">{{"Useful Links"| translate}}</h5>
+                        <ul class="list-unstyled footer-list mt-4">
+                            <li><a routerLink="/contact" class="text-foot"><i class="uil uil-angle-right-b me-1"></i>
+                                    {{"Contact"| translate}}</a></li>
+                        </ul>
+                    </div>
+                    <!--end col-->
+
+                    <div class="col-lg-3 col-md-4 col-12 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <h5 class="text-light footer-head"></h5>
+                        <p class="mt-4">{{"SOBA CLASS OF 2006"| translate}}</p>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!--end container-->
+        </footer>
+    </ng-template>
+</div>
+<!--end footer-->
+<footer class="footer footer-bar">
+    <div class="container text-center">
+        <div class="row align-items-center">
+            <div class="col-sm-6">
+                <div class="text-sm-start">
+                    <p class="mb-0">© {{year}}
+                       {{"SOBA-06. All Rights Reserved"| translate}}
+                    </p>
+                </div>
+            </div>
+            <!--end col-->
+
+            <div class="col-sm-6 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                <!-- <ul class="list-unstyled text-sm-end mb-0">
+                    <li class="list-inline-item"><a href="javascript:void(0)"><img
+                                src="assets/images/payments/american-ex.png" class="avatar avatar-ex-sm"
+                                title="American Express" alt=""></a></li>
+                    <li class="list-inline-item ms-1"><a href="javascript:void(0)"><img
+                                src="assets/images/payments/discover.png" class="avatar avatar-ex-sm" title="Discover"
+                                alt=""></a></li>
+                    <li class="list-inline-item ms-1"><a href="javascript:void(0)"><img
+                                src="assets/images/payments/master-card.png" class="avatar avatar-ex-sm"
+                                title="Master Card" alt=""></a></li>
+                    <li class="list-inline-item ms-1"><a href="javascript:void(0)"><img
+                                src="assets/images/payments/paypal.png" class="avatar avatar-ex-sm" title="Paypal"
+                                alt=""></a></li>
+                    <li class="list-inline-item ms-1"><a href="javascript:void(0)"><img
+                                src="assets/images/payments/visa.png" class="avatar avatar-ex-sm" title="Visa"
+                                alt=""></a></li>
+                </ul> -->
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</footer>
+<!--end footer-->

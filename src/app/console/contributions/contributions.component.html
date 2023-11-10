@@ -1,0 +1,155 @@
+<!-- Hero Start -->
+<section class="bg-half bg-light d-table w-100" id="home">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+                <div class="page-next-level">
+                    <h4 class="title"> Contributions </h4>
+                    <div class="page-next">
+                        <nav aria-label="breadcrumb" class="d-inline-block">
+                            <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                <li class="breadcrumb-item"><a routerLink="/console/">Console</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">Contributions</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+<!--end section-->
+<!-- Hero End -->
+
+<div class="row p-3">
+    <div class="col-12 mx-auto">
+        <div class="bg-white shadow-sm rounded p-3 pt-sm-4 pb-sm-5 px-sm-4 mb-4">
+            <span><a class="btn btn-success btn-sm addButton mb-4"
+                    (click)="openContributionModal('addContribution', null)">
+                    <i-feather name="plus" class="icons"></i-feather>
+                </a></span>
+            <form class="form-inline d-inline" (ngSubmit)="onSubmitSearchContributions()"
+                [formGroup]="searchContributionForm">
+
+                <p class="mb-4 mt-4"><strong>Search Contributions</strong></p>
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <ng-multiselect-dropdown [placeholder]="'Beneficiary' | translate"
+                            [settings]="memberDropdownSettings" [data]="members"
+                            [formControl]="$any(searchContributionForm).controls['soba_member_id']"
+                            (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <ng-multiselect-dropdown [placeholder]="'Event' | translate" [settings]="dropdownSettings"
+                            [data]="events" [formControl]="$any(searchContributionForm).controls['soba_event_id']"
+                            (onSelect)="onEventSelect($event)" (onDeSelect)="onEventDeSelect($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <ng-multiselect-dropdown [placeholder]="'Statuses' | translate" [settings]="dropdownSettings"
+                            [data]="statuses" [formControl]="$any(searchContributionForm).controls['soba_status_id']"
+                            (onSelect)="onStatusSelect($event)" (onDeSelect)="onStatusDeSelect($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <button [disabled]="!searchContributionFormIsValid()"
+                            class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <dx-data-grid #contributionsContainer id="contributionsContainer" [dataSource]="contributions"
+                [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true" [showColumnLines]="false"
+                [allowColumnReordering]="true" [allowCollapsing]="false" [wordWrapEnabled]="true"
+                [hoverStateEnabled]="true" (onFileSaving)="_core.onFileSaving($event, 'Contributions')">
+                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
+                </dxo-pager>
+                <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
+                </dxo-search-panel>
+
+                <!-- Columns -->
+                <dxi-column width="auto" dataField="soba_member_id" [caption]="'Full Name' | translate"
+                    cellTemplate="memberTemplate">
+                </dxi-column>
+                <dxi-column dataField="soba_event_id" [caption]="'Event' | translate" cellTemplate="eventTemplate">
+                </dxi-column>
+                <dxi-column dataField="amount" [caption]="'Amount' | translate">
+                </dxi-column>
+                <dxi-column dataField="soba_status_id" [caption]="'Status' | translate" cellTemplate="statusTemplate">
+                </dxi-column>
+                <dxi-column dataField="comment" [caption]="'Comment' | translate">
+                </dxi-column>
+                <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
+                    [caption]="'Recorded Date' | translate">
+                </dxi-column>
+                <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
+                </dxi-column>
+
+                <div *dxTemplate="let cell of 'eventTemplate'">
+                    <span>
+                        {{ cell.data.soba_event_id ? getEventName(cell.data.soba_event_id) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'statusTemplate'">
+                    <span>
+                        {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'memberTemplate'">
+                    <span>
+                        {{ cell.data.soba_member_id ? getMemberName(cell.data.soba_member_id) : "-" }}
+                    </span>
+                </div>
+
+
+                <div *dxTemplate="let cell of 'createdAtTemplate'">
+                    <span>
+                        {{ cell.data.created_at ? getDate(cell.data.created_at) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'actionsTemplate'">
+                    <div class="mainActions">
+                        <ul>
+                            <li>
+                                <i-feather name="edit" class="icons blue feather-icon"
+                                    [title]="'Edit Contribution' | translate"
+                                    (click)="openContributionModal('updateContribution', cell.data)"></i-feather>
+                            </li>
+                            <li>
+                                <i-feather name="trash" class="icons red feather-icon"
+                                    [title]="'Delete Contribution' | translate"
+                                    (click)="openContributionModal('deleteContribution', cell.data)">
+                                </i-feather>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <dxo-export [enabled]="true" [formats]="['pdf']" fileName="contributions"
+                    [allowExportSelectedData]="false" [customizeExcelCell]="customizeExcelCell"></dxo-export>
+                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+            </dx-data-grid>
+        </div>
+    </div>
+</div>
+
+<app-modal-contribution #contributionModals [contribution]="theContribution" [origin]="origin" [events]="events"
+    [statuses]="statuses" [members]="members" [action]="contributionModalAction"
+    (contributionModalClosed)="onContributionModalClosed()">
+</app-modal-contribution>
+
+<ngx-loading [show]="loadingData" [config]="{
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop: true,
+    animationType: animationType
+  }"></ngx-loading>

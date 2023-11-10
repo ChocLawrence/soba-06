@@ -1,0 +1,81 @@
+<div class="back-to-home rounded d-none d-sm-block">
+    <a routerLink="/" class="btn btn-icon btn-soft-primary">
+        <i-feather name="home" class="icons"></i-feather>
+    </a>
+</div>
+
+<!-- <app-header></app-header> -->
+
+<!-- Hero Start -->
+<section class="bg-home d-flex align-items-center">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-6">
+                <div class="me-lg-5">
+                    <img src="assets/images/travel/bg.jpg" class="img-fluid d-block mx-auto" alt="">
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6"  *ngIf="state=='login'">
+                <div class="card login-page bg-white shadow rounded border-0">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">{{"Administrator Login" | translate}}</h4>
+                        <form class="login-form mt-4" id="loginForm" [formGroup]="loginForm"
+                            (ngSubmit)="onSubmitLogin()">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">{{"Username" | translate}} <span
+                                                class="text-danger">*</span></label>
+                                        <div class="form-icon position-relative">
+                                            <i-feather name="user" class="fea icon-sm icons"></i-feather>
+                                            <input type="email" formControlName="username" class="form-control ps-5"
+                                                placeholder="Email" name="email" required="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-->
+
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">{{"Password"| translate}} <span class="text-danger">*</span></label>
+                                        <div class="form-icon position-relative">
+                                            <i-feather name="key" class="fea icon-sm icons"></i-feather>
+                                            <input type="password" formControlName="password" class="form-control ps-5"
+                                                placeholder="Password" required="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-->
+
+                                <div class="col-lg-12 mb-0">
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary" [disabled]="!loginFormIsValid() || loading">
+                                            {{"Sign in"| translate}} &nbsp;
+                                            <div class="spinner-border float-right" role="status" *ngIf="loading">
+                                                <span class="visually-hidden">{{"Loading"| translate}}...</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--end col-->
+
+                                <!-- <div class="col-12 text-center">
+                                    <p class="mb-0 mt-3"><small class="text-dark me-2">{{"Don't have an account"| translate}}?</small>
+                                        <a routerLink="/signup" class="text-dark fw-bold">Sign Up</a></p>
+                                </div> -->
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+                        </form>
+                    </div>
+                </div>
+                <!---->
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+<!--end section-->
+<!-- Hero End -->

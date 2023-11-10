@@ -1,0 +1,260 @@
+<app-header></app-header>
+<!-- Hero Start -->
+<section class="bg-half bg-light d-table w-100" id="home">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+                <div class="page-next-level">
+                    <h4 class="title"> Contributions </h4>
+                    <div class="page-next">
+                        <nav aria-label="breadcrumb" class="d-inline-block">
+                            <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                <li class="breadcrumb-item"><a routerLink="/contributions">Contributions</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">DETAILS</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+<!--end section-->
+<!-- Hero End -->
+
+<div class="row p-3">
+    <div class="col-12 mx-auto">
+        <div class="bg-white shadow-sm rounded p-3 pt-sm-4 pb-sm-5 px-sm-4 mb-4">
+            <!--SEARCH FILTER-->
+            <div class="row d-flex justify-content-end">
+                <!-- span class="addButtons badge badge-success pointer" *ngIf="core.userHasPermission('xxx')" -->
+                <!-- <div class="col">
+                    <span class="page-title">{{ "Ex-systems rx" | translate }}</span>
+        
+                    <span class="addButtons badge badge-success pointer" (click)="openTreatmentNewModal('add')"
+                        [title]="'Start new treatment' | translate">
+                        <i class="fa fa-plus"></i>&nbsp;{{ "New" | translate }} </span>&nbsp;
+                </div> -->
+
+                <div class="col-2">
+                    <form [formGroup]="layoutFormGroup">
+                        <select (ngModelChange)="onLayoutSelect(expand)" id="layout" class="form-control"
+                            formControlName="layout">
+                            <option value="">{{ "Table layout" | translate }}</option>
+                            <option value="collapse">{{ "Collapsed" | translate }}</option>
+                            <option value="expand">{{ "Expanded" | translate }}</option>
+                            <option value="linear">{{ "Linear" | translate }}</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <form class="form-inline d-inline" (ngSubmit)="onSubmitSearchContributions()"
+                [formGroup]="searchContributionForm">
+
+                <p class="mb-4 mt-4"><strong>Search Contributions</strong></p>
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <ng-multiselect-dropdown [placeholder]="'Beneficiary' | translate"
+                            [settings]="memberDropdownSettings" [data]="members"
+                            [formControl]="$any(searchContributionForm).controls['soba_member_id']"
+                            (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <ng-multiselect-dropdown [placeholder]="'Event' | translate" [settings]="dropdownSettings"
+                            [data]="events" [formControl]="$any(searchContributionForm).controls['soba_event_id']"
+                            (onSelect)="onEventSelect($event)" (onDeSelect)="onEventDeSelect($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <ng-multiselect-dropdown [placeholder]="'Statuses' | translate" [settings]="dropdownSettings"
+                            [data]="statuses"
+                            [formControl]="$any(searchContributionForm).controls['contribution_status_id']"
+                            (onSelect)="onStatusSelect($event)" (onDeSelect)="onStatusDeSelect($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
+                        <button (click)="resetForm()" title="Reset Search Filter"
+                            class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            <i-feather name="refresh-ccw" class="icons"></i-feather>
+                        </button>
+
+                        <span class="spanAction pointer" title="Print" (click)="printContributions()">
+                            <i class="fa fa-print"></i> PRINT
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <div *ngIf="allContributions && allContributions.length>0">
+                <dx-data-grid #contributionsContainer id="contributionsContainer" [dataSource]="allContributions"
+                    [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true" [showColumnLines]="false"
+                    [allowColumnReordering]="true" [allowCollapsing]="false" [wordWrapEnabled]="true"
+                    [hoverStateEnabled]="true" [noDataText]="'No data available' | translate"
+                    (onFileSaving)="_core.onFileSaving($event, 'Contributions')">
+                    <dxo-column-chooser [enabled]="false"></dxo-column-chooser>
+                    <dxo-paging [enabled]="true" [pageSize]="20">
+                    </dxo-paging>
+                    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
+                    </dxo-pager>
+                    <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
+                    </dxo-search-panel>
+                    <dxo-group-panel [visible]="true"></dxo-group-panel>
+                    <dxo-grouping #expand [autoExpandAll]="autoExpand" expandMode="rowClick"></dxo-grouping>
+
+                    <!-- Columns -->
+                    <dxi-column *ngIf="layout != 'linear'" dataField="id" [calculateGroupValue]="calculGrouping"
+                        [groupIndex]="0" groupCellTemplate="groupActionsTemplate" [sortIndex]="1"
+                        sortOrder="asc"></dxi-column>
+                    <dxi-column width="auto" ataField="soba_event_id" [caption]="'Event' | translate"
+                        cellTemplate="eventTemplate">
+                    </dxi-column>
+                    <dxi-column dataField="amount" [caption]="'Amount' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
+                        cellTemplate="statusTemplate">
+                    </dxi-column>
+                    <dxi-column dataField="comment" [caption]="'Comment' | translate" cellTemplate="commentTemplate">
+                    </dxi-column>
+                    <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
+                        [caption]="'Recorded Date' | translate">
+                    </dxi-column>
+                    <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
+                    </dxi-column>
+
+                    <div *dxTemplate="let cell of 'groupActionsTemplate'">
+                        <span>{{ getTitle(cell) }}</span>
+                        <span class="pull-right" *ngIf="cell.data.collapsedItems && cell.data.collapsedItems[0]">
+
+                        </span>
+                        <span class="pull-right" *ngIf="cell.data.items && cell.data.items[0]">
+
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'eventTemplate'">
+                        <span>
+                            {{ cell.data.soba_event_id ? getEventName(cell.data.soba_event_id) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'statusTemplate'">
+                        <span>
+                            {{ cell.data.contribution_status_id ? getStatusName(cell.data.contribution_status_id) : "-"
+                            }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'memberTemplate'">
+                        <span>
+                            {{ cell.data.soba_member_id ? getMemberName(cell.data.soba_member_id) : "-" }}
+                        </span>
+                    </div>
+
+
+                    <div *dxTemplate="let cell of 'commentTemplate'">
+                        <span>
+                            {{ cell.data.comment ? cell.data.comment : "-" }}
+                        </span>
+                    </div>
+
+
+                    <div *dxTemplate="let cell of 'createdAtTemplate'">
+                        <span>
+                            {{ cell.data.created_at ? getDate(cell.data.created_at) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'actionsTemplate'">
+                        <div class="mainActions">
+                            <ul>
+                                <li>
+                                    <i-feather name="eye" class="icons blue feather-icon"
+                                        [title]="'View Details' | translate"></i-feather>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <dxo-export [enabled]="true" [formats]="['pdf']" fileName="contributions"
+                        [allowExportSelectedData]="false" [customizeExcelCell]="customizeExcelCell"></dxo-export>
+                </dx-data-grid>
+            </div>
+            <div *ngIf="!allContributions.length">
+                <hr>
+                <span>NO RESULT FOUND FOR SEARCH FILTER</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- print prescription-->
+<div #printableArea style="display: none">
+    <div *ngIf="pageCount === 1" style="font-size: small !important">
+        <div class="h2-style">
+           <img src="/assets/images/logo-dark.png" alt="" width="200" height="auto">
+        </div>
+        <hr>
+        <div class="h2-style">
+            <h2 class="text-center"> SOBA 06 CLASS CONTRIBUTIONS</h2>
+        </div>
+        <hr>
+        <div class="row-align">
+            <h4>CONTRIBUTIONS STATISTICS</h4>
+            <div class="floatline"  *ngIf="eventSumsData">
+                <div *ngFor="let event of eventSumsData; let i = index" >
+                    {{ i + 1 }} : <span>{{event.id ? getEventName(event.id) : '--'}} :::: {{ event.sum ? event.sum : 0}} XAF , Collected By : {{ event.collected_by ? event.collected_by : '---'}} </span>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="h2-style">
+              <span>
+                <strong>GRAND TOTAL: {{contributionSum}} &nbsp; XAF</strong>  
+              </span>
+        </div>
+        <hr>
+        <table class="table-dsgn">
+            <thead class="style-header">
+                <tr>
+                    <th scope="col">SN</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Recorded At</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="allContributions">
+                <tr *ngFor="let contribution of allContributions; let i = index" class="table_row">
+                    <td>{{ i + 1 }}</td>
+                    <td style="text-align: left">{{ contribution.full_name }}</td>
+                    <td id="p_name">{{ contribution.soba_event_id ? getEventName(contribution.soba_event_id) : '---'}}</td>
+                    <td>{{ contribution.amount ? contribution.amount : '--' }}</td>
+                    <td id="p_name">{{ contribution.comment ? contribution.comment : '--' }}</td>
+                    <td style="text-align: left">{{ contribution.contribution_status_id ? getStatusName(contribution.contribution_status_id) : '--' }}</td>
+                    <td id="p_name">{{ contribution.created_at ? _core.getDate(contribution.created_at) : '--' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <span>Generated date : {{currentDate}}</span>
+        <div class="signature mt-5">
+            <label for="sign">Name and signature: &nbsp;</label>
+            <hr id="sign" />
+        </div>
+    </div>
+</div>
+<!-- End print prescription-->
+
+
+<ngx-loading [show]="loadingData" [config]="{
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop: true,
+    animationType: animationType
+  }"></ngx-loading>
+
+<app-footer></app-footer>

@@ -1,0 +1,173 @@
+<!-- Navbar STart -->
+<header id="topnav" class="defaultscroll sticky" (window:scroll)="windowScroll()" [class]="navClass"
+  [ngClass]="{'tagline-height': sliderTopbar == true}">
+  <div class="container">
+    <!-- Logo container-->
+    <div>
+      <a class="logo" routerLink="/" *ngIf="navClass !== 'nav-light'">
+        <img src="assets/images/logo-dark.png" class="l-dark logo-light-mode" height="45" alt="">
+        <img src="assets/images/logo-light.png" class="logo-dark-mode" height="45" alt="">
+      </a>
+
+      <ul class="buy-button list-inline mb-0" *ngIf="shopPages == true">
+        <li class="list-inline-item mb-0">
+          <div class="dropdown" ngbDropdown>
+            <button type="button" class="btn btn-link text-decoration-none dropdown-toggle p-0 pe-2" ngbDropdownToggle
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="uil uil-search h5 text-muted"></i>
+            </button>
+            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 py-0"
+              style="width: 300px;" ngbDropdownMenu>
+              <form>
+                <input type="text" id="text" name="name" class="form-control border bg-white" placeholder="Search...">
+              </form>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="buy-button list-inline mb-0" *ngIf="buttonList == true">
+        <li class="list-inline-item mb-0 ms-1">
+          <div class="dropdown">
+            <button type="button" class="btn btn-link text-decoration-none dropdown-toggle p-0 pe-2"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="uil uil-search text-muted"></i>
+            </button>
+            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 py-0"
+              style="width: 300px;">
+              <form>
+                <input type="text" id="text" name="name" class="form-control border bg-white" placeholder="Search...">
+              </form>
+            </div>
+          </div>
+        </li>
+        <li class="list-inline-item mb-0 ms-1">
+          <a href="javascript:void(0)" class="btn btn-icon btn-primary"><i class="uil uil-facebook-f icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0 ms-1">
+          <a href="javascript:void(0)" class="btn btn-icon btn-primary"><i class="uil uil-github icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0 ms-1">
+          <a href="javascript:void(0)" class="btn btn-icon btn-primary"><i class="uil uil-twitter icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0 ms-1">
+          <a href="javascript:void(0)" class="btn btn-icon btn-primary"><i class="uil uil-linkedin-alt icons"></i></a>
+        </li>
+      </ul>
+
+      <ul class="buy-button list-inline mb-0" *ngIf="isdeveloper == true">
+        <li class="list-inline-item mb-0">
+          <div class="dropdown">
+            <button type="button" class="btn btn-link text-decoration-none dropdown-toggle p-0 pe-2"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="uil uil-search text-muted"></i>
+            </button>
+            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 py-0"
+              style="width: 300px;">
+              <form>
+                <input type="text" id="text2" name="name" class="form-control border bg-white" placeholder="Search...">
+              </form>
+            </div>
+          </div>
+        </li>
+        <li class="list-inline-item mb-0 pe-1">
+          <a href="#" class="btn btn-icon btn-soft-primary"><i class="uil uil-github icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0 pe-1">
+          <a href="#" class="btn btn-icon btn-soft-primary"><i class="mdi mdi-stack-overflow mdi-18px icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0">
+          <a href="javascript:void(0)" class="btn btn-icon btn-soft-primary" (click)="developerModal(content)"
+            data-bs-toggle="modal" data-bs-target="#loginform"><i class="uil uil-user icons"></i></a>
+        </li>
+      </ul>
+
+      <a class="logo" routerLink="/" *ngIf="navClass === 'nav-light'">
+        <img src="assets/images/logo-dark.png" class="l-dark" height="45" alt="">
+        <img src="assets/images/logo-light.png" class="l-light" height="45" alt="">
+      </a>
+    </div>
+
+    <!--Action button-->
+    <span *ngIf="!buttonList && !isdeveloper && !shopPages">
+      <div class="buy-button">
+        <ng-template [ngIf]="navClass === 'nav-light'">
+          <a *ngIf="!loggedIn" routerLink="/login" class="btn btn-primary login-btn-primary">
+            <i-feather name="log-in" class="icons mail"></i-feather> Login
+          </a>
+          <a *ngIf="!loggedIn" routerLink="/login" class="btn btn-light login-btn-light">
+            <i-feather name="log-in" class="icons mail"></i-feather> Login
+          </a>
+          <a *ngIf="loggedIn && role == '2'" routerLink="/console" class="btn btn-primary login-btn-primary">
+            <i-feather name="user" class="icons mail"></i-feather> Console
+          </a>
+        </ng-template>
+        <ng-template [ngIf]="navClass !== 'nav-light'">
+          <a *ngIf="!loggedIn" routerLink="/login" class="btn btn-primary">
+            <i-feather name="log-in" class="icons mail"></i-feather> Login
+          </a>
+          <a *ngIf="loggedIn && role == '2'" routerLink="/console/" class="btn btn-primary">
+            <i-feather name="user" class="icons mail"></i-feather> Console
+          </a>
+        </ng-template>
+      </div>
+    </span>
+    <!--end Action button-->
+
+    <div class="menu-extras">
+      <div class="menu-item">
+        <!-- Mobile menu toggle-->
+        <a class="navbar-toggle" id="isToggle" (click)="toggleMenu()" [ngClass]="{'open': isCondensed === true}">
+          <div class="lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </a>
+        <!-- End mobile menu toggle-->
+      </div>
+    </div>
+
+    <div id="navigation">
+      <!-- Navigation Menu-->
+      <ul class="navigation-menu" [class]="navClass">
+        <li><a routerLink="/" class="nav-link-ref">{{"Home" | translate}}</a></li>
+        <!-- <li class="has-submenu">
+          <a href="javascript:void(0)" (click)="onMenuClick($event)">{{"Consulate General" | translate}}</a><span class="menu-arrow"></span>
+          <ul class="submenu">
+            <li><a routerLink="/consul-general" class="nav-link-ref">{{"Consul General's Message" | translate}}</a></li>
+            <li><a routerLink="/team" class="nav-link-ref">{{"Team" | translate}}</a></li>
+            <li><a routerLink="/news" class="nav-link-ref">{{"News and Events" | translate}}</a></li>
+            <li><a routerLink="/activities" class="nav-link-ref">{{"Activities" | translate}}</a></li>
+            <li><a routerLink="/press-release" class="nav-link-ref">{{"Press Release" | translate}}</a></li>
+            <li><a routerLink="/gallery" class="nav-link-ref" >{{"Gallery" | translate}}</a></li>
+            <li><a routerLink="/faqs" class="nav-link-ref">{{"FAQs" | translate}}</a></li>
+            <li><a routerLink="/about" class="nav-link-ref">{{"About Us" | translate}}</a></li>
+          </ul>
+        </li> -->
+        <li><a routerLink="/contributions" class="nav-link-ref">{{"Contributions" | translate}}</a></li>
+        <li><a href="javascript:void(0)" class="nav-link-ref">{{"EXCO" | translate}}</a></li>
+        <li><a href="javascript:void(0)" class="nav-link-ref">{{"Gallery" | translate}}</a></li>
+        <li><a routerLink="/contact" class="nav-link-ref">{{"Contact" | translate}}</a></li>
+      </ul>
+      <!--end navigation menu-->
+      <!-- <div class="buy-menu-btn d-none">
+        <a *ngIf="!loggedIn" routerLink="/login" target="_blank" class="btn btn-primary">
+          <i-feather name="log-in" class="icons mail"></i-feather> Login
+        </a>
+        <a *ngIf="loggedIn && role == '1'" routerLink="/console" target="_blank" class="btn btn-primary">
+          <i-feather name="user" class="icons mail"></i-feather> Console
+        </a>
+        <a *ngIf="loggedIn && role == '2'" routerLink="/dashboard" target="_blank" class="btn btn-primary">
+          <i-feather name="user" class="icons mail"></i-feather> Dashboard
+        </a>
+      </div> -->
+      <!--end login button-->
+      <!--end login button-->
+    </div>
+    <!--end navigation-->
+  </div>
+  <!--end container-->
+</header>
+<!--end header-->
+<!-- Navbar End -->

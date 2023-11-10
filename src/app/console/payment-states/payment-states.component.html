@@ -1,0 +1,96 @@
+<!-- Hero Start -->
+<section class="bg-half bg-light d-table w-100" id="home">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+                <div class="page-next-level">
+                    <h4 class="title"> PaymentStates </h4>
+                    <div class="page-next">
+                        <nav aria-label="breadcrumb" class="d-inline-block">
+                            <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                <li class="breadcrumb-item"><a routerLink="/console/">Console</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">PaymentStates</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+<!--end section-->
+<!-- Hero End -->
+
+<div class="row p-3">
+    <div class="col-12 mx-auto">
+        <div class="bg-white shadow-sm rounded p-3 pt-sm-4 pb-sm-5 px-sm-4 mb-4">
+            <span><a class="btn btn-success btn-sm addButton mb-4" (click)="openPaymentStateModal('addPaymentState', null)">
+                    <i-feather name="plus" class="icons"></i-feather>
+                </a></span>
+
+
+            <dx-data-grid #paymentStatesContainer id="paymentStatesContainer" [dataSource]="paymentStates" [columnAutoWidth]="true"
+                [showBorders]="true" [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
+                [allowCollapsing]="false" [wordWrapEnabled]="true" [hoverStateEnabled]="true"
+                (onFileSaving)="_core.onFileSaving($event, 'paymentStates')">
+                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
+                </dxo-pager>
+                <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
+                </dxo-search-panel>
+
+                <!-- Columns -->
+                <dxi-column dataField="name" [caption]="'Name' | translate">
+                </dxi-column>
+                <dxi-column dataField="description" [caption]="'Description' | translate">
+                </dxi-column>
+                <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
+                    [caption]="'Creation date' | translate">
+                </dxi-column>
+                <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
+                </dxi-column>
+
+
+                <div *dxTemplate="let cell of 'createdAtTemplate'">
+                    <span>
+                        {{ cell.data.created_at ? getDate(cell.data.created_at) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'actionsTemplate'">
+                    <div class="mainActions">
+                        <ul>
+                            <li>
+                                <i-feather name="edit" class="icons blue feather-icon" [title]="'Edit PaymentState' | translate"
+                                    (click)="openPaymentStateModal('updatePaymentState', cell.data)"></i-feather>
+                            </li>
+                            <li>
+                                <i-feather name="trash" class="icons red feather-icon"
+                                    [title]="'Delete PaymentState' | translate" (click)="openPaymentStateModal('deletePaymentState', cell.data)">
+                                </i-feather>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <dxo-export [enabled]="true" fileName="paymentStates" [allowExportSelectedData]="false"
+                    [customizeExcelCell]="customizeExcelCell"></dxo-export>
+                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+            </dx-data-grid>
+        </div>
+    </div>
+</div>
+
+<app-modal-payment-state #paymentStateModals [paymentState]="thePaymentState" [origin]="origin" [action]="paymentStateModalAction"
+    (paymentStateModalClosed)="onPaymentStateModalClosed()">
+</app-modal-payment-state>
+
+<ngx-loading [show]="loadingData" [config]="{
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop: true,
+    animationType: animationType
+  }"></ngx-loading>

@@ -1,0 +1,146 @@
+<app-header></app-header>
+
+<!-- Hero Start -->
+<section class="bg-half-260 w-100 d-table" data-jarallax='{"speed": 0.5}'
+  style="background: url('assets/images/event/event.jpg') center center;" id="home">
+  <div class="bg-overlay bg-primary bg-gradient" style="opacity: 0.4;"></div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center">
+        <div class="title-heading">
+          <h4 class="text-success mb-3">{{_core.getDate(events[0]?.deadline)}}</h4>
+          <h1 class="display-4 title-dark text-white fw-bold mb-3">Contributions' Deadline</h1>
+          <p class="para-desc title-dark mx-auto text-light">Kindly ensure all financial obligations are met on or
+            before this date so as to
+            ensure the monies are handed over on time.
+          </p>
+
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div id="eventdown">
+                <ul class="count-down list-unstyled">
+                  <li id="days" class="count-number list-inline-item px-4">{{_days}}<p class="count-head">Days</p>
+                  </li>
+                  <li id="hours" class="count-number list-inline-item px-4">{{_hours}}<p class="count-head">Hours</p>
+                  </li>
+                  <li id="mins" class="count-number list-inline-item px-4">{{_minutes}}<p class="count-head">Minutes</p>
+                  </li>
+                  <li id="secs" class="count-number list-inline-item px-4">{{_seconds}}<p class="count-head">Seconds</p>
+                  </li>
+                  <li id="end" class="h1"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <a href="javascript:void(0)" class="btn btn-success mt-2 me-2"><i class="uil uil-ticket"></i>VIEW
+            CONTRIBUTIONS</a>
+        </div>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+  </div>
+  <!--end container-->
+</section>
+<!--end section-->
+
+<!-- Shape Start -->
+<div class="position-relative">
+  <div class="shape overflow-hidden text-light">
+    <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+    </svg>
+  </div>
+</div>
+<!--Shape End-->
+
+<!-- Shape Start -->
+<div class="position-relative">
+  <div class="shape overflow-hidden text-white">
+    <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+    </svg>
+  </div>
+</div>
+<!--Shape End-->
+
+<!-- Schedule Start -->
+<section class="section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 text-center">
+        <div class="section-title mb-4 pb-2">
+          <h4 class="title mb-4">Contribution Schedules</h4>
+          <p class="text-muted para-desc mx-auto mb-0">Stay up to date with the <span
+              class="text-primary fw-bold">Contributions</span> of the SOBA-06 class.</p>
+        </div>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end row-->
+
+    <div class="row mt-4 pt-2 justify-content-center">
+
+      <div class="row">
+        <div class="col-lg-6 mt-4 pt-2" *ngFor="let event of events;let i = index">
+          <div class="card event-schedule rounded border">
+            <div class="card-body">
+              <div class="media">
+                <ul class="date text-center text-primary me-3 mb-0 list-unstyled">
+                  <li class="day font-weight-bold mb-2">{{event.amount}}</li>
+                </ul>
+                <div class="media-body content">
+                  <h4><a href="javascript:void(0)" class="text-dark title">{{event.name}}</a>
+                  </h4>
+                  <p class="text-muted location-time"><span class="text-dark h6">Beneficiary : </span><span
+                      class="text-danger">{{getMemberName(event.soba_member_id)}}</span> <br>
+                    <span class="text-dark h6">Deadline:</span>{{_core.getShortDate(event.deadline)}}<br>
+                    <span class="text-dark h6">Collected By :</span>{{event.collected_by}}<br>
+                    <span class="text-dark h6">Status : </span> <span class="badge">{{getStatusName(event.soba_status_id)}}</span>
+                  </p>
+                  <a class="btn btn-sm btn-outline-primary mouse-down">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end col-->
+      </div>
+      <!--end row-->
+    </div>
+
+
+  </div>
+  <!--end container-->
+</section>
+<!--end section-->
+<!-- Schedule End -->
+
+<!-- Shape Start -->
+<div class="position-relative">
+  <div class="shape overflow-hidden text-light">
+    <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+    </svg>
+  </div>
+</div>
+<!--Shape End-->
+
+<!-- Shape Start -->
+<div class="position-relative">
+  <div class="shape overflow-hidden text-footer">
+    <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+    </svg>
+  </div>
+</div>
+<!--Shape End-->
+
+<!-- Back to top -->
+<a href="javascript: void(0);" class="btn btn-icon btn-primary back-to-top" id="back-to-top" [ngxScrollTo]="'#home'">
+  <i-feather name="arrow-up" class="icons"></i-feather>
+</a>
+<!-- Back to top -->
+
+<app-footer></app-footer>

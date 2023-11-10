@@ -1,0 +1,233 @@
+<ng-template #eventModal let-c="close" let-d="dismiss">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="row no-gutters">
+                <div class="col">
+                    <h5 class="text-3 font-weight-400 m-2">
+                        {{ modalTitle | translate }}
+                        <button type="button" class="close font-weight-400 modal-close" data-dismiss="modal"
+                            aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                    <hr />
+                    <div class="px-3" *ngIf="event && action == 'view'">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                {{ "Name" | translate }}
+                                <span class="float-right text-3">{{ event.name }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Description" | translate }}
+                                <span class="float-right text-3">{{ event.description }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Amount" | translate }}
+                                <span class="float-right text-3">{{ event.amount }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Payment State" | translate }}
+                                <span class="float-right text-3">{{ event.soba_payment_state }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Category" | translate }}
+                                <span class="float-right text-3">{{ event.soba_category_id }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Deadline" | translate }}
+                                <span class="float-right text-3">{{ event.deadline }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Handed Over date" | translate }}
+                                <span class="float-right text-3">{{ event.handed_over_date }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Handed Over by" | translate }}
+                                <span class="float-right text-3">{{ event.handed_over_by }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Collected By" | translate }}
+                                <span class="float-right text-3">{{ event.collected_by }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Comment" | translate }}
+                                <span class="float-right text-3">{{ event.comment }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Status" | translate }}
+                                <span class="float-right text-3">{{ event.soba_status_id }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Member" | translate }}
+                                <span class="float-right text-3">{{ event.soba_member_id }}</span>
+                            </li>
+                        </ul>
+                        <hr class="mb-2" />
+                    </div>
+                    <div class="px-3">
+                        <form class="form" id="eventForm" [formGroup]="eventForm" (ngSubmit)="onSubmitEvent()">
+
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="name" formControlName="name" required
+                                        placeholder="Name" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="name" formControlName="description"
+                                        required placeholder="Description" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="amount" formControlName="amount"
+                                        required placeholder="Amount" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                      action == 'updateEvent' ||
+                      action == 'addEvent'
+                    ">
+                                <ng-multiselect-dropdown [placeholder]="'Payment States' | translate"
+                                    [settings]="dropdownSettings" [data]="paymentStates"
+                                    [formControl]="$any(eventForm).controls['soba_payment_state']"
+                                    (onSelect)="onPaymentStateSelect($event)"
+                                    (onDeSelect)="onPaymentStateDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                      action == 'updateEvent' ||
+                      action == 'addEvent'
+                    ">
+                                <ng-multiselect-dropdown [placeholder]="'Categories' | translate"
+                                    [settings]="dropdownSettings" [data]="categories"
+                                    [formControl]="$any(eventForm).controls['soba_category_id']"
+                                    (onSelect)="onCategorySelect($event)" (onDeSelect)="onCategoryDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <div class="input-group">
+                                    <input type="date" class="form-control" id="deadline" formControlName="deadline"
+                                        required placeholder="Deadline" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <div class="input-group">
+                                    <input type="date" class="form-control" id="handed_over_date"
+                                        formControlName="handed_over_date" required placeholder="Handed Over Date" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="handed_over_by"
+                                        formControlName="handed_over_by" required placeholder="Handed Over By" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="collected_by"
+                                        formControlName="collected_by" required placeholder="Collected By" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="comment" formControlName="comment"
+                                        required placeholder="Comment" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateEvent' ||
+                            action == 'addEvent'
+                          ">
+                                <ng-multiselect-dropdown [placeholder]="'Statuses' | translate"
+                                    [settings]="dropdownSettings" [data]="statuses"
+                                    [formControl]="$any(eventForm).controls['soba_status_id']"
+                                    (onSelect)="onStatusSelect($event)" (onDeSelect)="onStatusDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                                action == 'updateEvent' ||
+                                action == 'addEvent'
+                            ">
+                                <ng-multiselect-dropdown [placeholder]="'Beneficiary' | translate"
+                                    [settings]="memberDropdownSettings" [data]="members"
+                                    [formControl]="$any(eventForm).controls['soba_member_id']"
+                                    (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+
+
+                            <button #eventSubmitBtn type="submit" class="hidden"></button>
+                        </form>
+                    </div>
+                    <div class="px-3" *ngIf="event && action == 'deleteEvent'">
+                        <p class="text-3 text-center text-muted">{{ modalText }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div>
+                <button class="btn btn-default btn-sm" (click)="restoreEventForm()" *ngIf="
+              action == 'updateEvent'
+            ">
+                    {{ "Restore" | translate }}
+                </button>
+                &nbsp;
+                <button class="btn btn-success btn-sm" [disabled]="loading || !eventFormIsValid()" *ngIf="
+              action == 'updateEvent' ||
+              action == 'addEvent'
+            " (click)="eventSubmitBtn.click()">
+                    <span *ngIf="action == 'updateEvent'">{{
+                        "Update" | translate
+                        }}</span>
+                    <span *ngIf="action == 'addEvent'">{{ "Add" | translate }}</span>
+                    &nbsp;
+                    <div class="spinner-border float-right" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+            </div>
+            <div *ngIf="action == 'deleteEvent'">
+                <button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-label="Close"
+                    (click)="d('Cross click')">
+                    {{ "Cancel" | translate }}
+                </button>
+                &nbsp;
+                <button class="btn btn-danger btn-sm" [disabled]="loading" (click)="deleteEvent()">
+                    {{ "Confirm" | translate }} &nbsp;
+                    <div class="spinner-border float-right" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ngx-loading [show]="loadingData" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"></ngx-loading>

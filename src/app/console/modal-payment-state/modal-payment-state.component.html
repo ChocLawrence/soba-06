@@ -1,0 +1,98 @@
+<ng-template #paymentStateModal let-c="close" let-d="dismiss">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="row no-gutters">
+                <div class="col">
+                    <h5 class="text-3 font-weight-400 m-2">
+                        {{ modalTitle | translate }}
+                        <button type="button" class="close font-weight-400 modal-close" data-dismiss="modal"
+                            aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                    <hr />
+                    <div class="px-3" *ngIf="paymentState && action == 'view'">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                {{ "Name" | translate }}
+                                <span class="float-right text-3">{{ paymentState.name }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Location" | translate }}
+                                <span class="float-right text-3">{{ paymentState.description }}</span>
+                            </li>
+                        </ul>
+                        <hr class="mb-2" />
+                    </div>
+                    <div class="px-3">
+                        <form class="form" id="PaymentStateForm" [formGroup]="paymentStateForm" (ngSubmit)="onSubmitPaymentState()">
+                            <div>
+                                <div class="vertical-input-group mb-2" *ngIf="
+                      action == 'updatePaymentState' ||
+                      action == 'addPaymentState'
+                    ">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="name" formControlName="name"
+                                            required placeholder="Name" />
+                                    </div>
+                                </div>
+                                <div class="vertical-input-group mb-2" *ngIf="
+                      action == 'updatePaymentState' ||
+                      action == 'addPaymentState'
+                    ">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="name" formControlName="description"
+                                            required placeholder="PaymentState description" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button #PaymentStateSubmitBtn type="submit" class="hidden"></button>
+                        </form>
+                    </div>
+                    <div class="px-3" *ngIf="paymentState && action == 'deletePaymentState'">
+                        <p class="text-3 text-center text-muted">{{ modalText }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div>
+                <button class="btn btn-default btn-sm" (click)="restorePaymentStateForm()" *ngIf="
+              action == 'updatePaymentState'
+            ">
+                    {{ "Restore" | translate }}
+                </button>
+                &nbsp;
+                <button class="btn btn-success btn-sm" [disabled]="loading || !paymentStateFormIsValid()" *ngIf="
+              action == 'updatePaymentState' ||
+              action == 'addPaymentState'
+            " (click)="PaymentStateSubmitBtn.click()">
+                    <span *ngIf="action == 'updatePaymentState'">{{
+                        "Update" | translate
+                        }}</span>
+                    <span *ngIf="action == 'addPaymentState'">{{ "Add" | translate }}</span>
+                    &nbsp;
+                    <div class="spinner-border float-right" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+            </div>
+            <div *ngIf="action == 'deletePaymentState'">
+                <button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-label="Close"
+                    (click)="d('Cross click')">
+                    {{ "Cancel" | translate }}
+                </button>
+                &nbsp;
+                <button class="btn btn-danger btn-sm" [disabled]="loading" (click)="deletePaymentState()">
+                    {{ "Confirm" | translate }}&nbsp;
+                    <div class="spinner-border float-right" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ngx-loading [show]="loadingData" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"></ngx-loading>

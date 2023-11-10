@@ -1,0 +1,140 @@
+<ng-template #contributionModal let-c="close" let-d="dismiss">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="row no-gutters">
+                <div class="col">
+                    <h5 class="text-3 font-weight-400 m-2">
+                        {{ modalTitle | translate }}
+                        <button type="button" class="close font-weight-400 modal-close" data-dismiss="modal"
+                            aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                    <hr />
+                    <div class="px-3" *ngIf="contribution && action == 'view'">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                {{ "Amount" | translate }}
+                                <span class="float-right text-3">{{ contribution.amount }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Event" | translate }}
+                                <span class="float-right text-3">{{ contribution.soba_event_id }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Status" | translate }}
+                                <span class="float-right text-3">{{ contribution.soba_status_id }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Member" | translate }}
+                                <span class="float-right text-3">{{ contribution.soba_member_id }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Comment" | translate }}
+                                <span class="float-right text-3">{{ contribution.comment }}</span>
+                            </li>
+                        </ul>
+                        <hr class="mb-2" />
+                    </div>
+                    <div class="px-3">
+                        <form class="form" id="contributionForm" [formGroup]="contributionForm" (ngSubmit)="onSubmitContribution()">
+
+                            <div class="vertical-input-group mb-2" *ngIf="
+                      action == 'updateContribution' ||
+                      action == 'addContribution'
+                    ">
+                                <ng-multiselect-dropdown [placeholder]="'Event' | translate"
+                                    [settings]="dropdownSettings" [data]="events"
+                                    [formControl]="$any(contributionForm).controls['soba_event_id']"
+                                    (onSelect)="onEventSelect($event)"
+                                    (onDeSelect)="onEventDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateContribution' ||
+                            action == 'addContribution'
+                        ">
+                            <ng-multiselect-dropdown [placeholder]="'Full Name' | translate"
+                                [settings]="memberDropdownSettings" [data]="members"
+                                [formControl]="$any(contributionForm).controls['soba_member_id']"
+                                (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateContribution' ||
+                            action == 'addContribution'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="amount" formControlName="amount"
+                                        required placeholder="Amount" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateContribution' ||
+                            action == 'addContribution'
+                          ">
+                                <ng-multiselect-dropdown [placeholder]="'Statuses' | translate"
+                                    [settings]="dropdownSettings" [data]="statuses"
+                                    [formControl]="$any(contributionForm).controls['soba_status_id']"
+                                    (onSelect)="onStatusSelect($event)" (onDeSelect)="onStatusDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateContribution' ||
+                            action == 'addContribution'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="comment" formControlName="comment"
+                                        required placeholder="Comment" />
+                                </div>
+                            </div>
+                            <button #contributionSubmitBtn type="submit" class="hidden"></button>
+                        </form>
+                    </div>
+                    <div class="px-3" *ngIf="contribution && action == 'deleteContribution'">
+                        <p class="text-3 text-center text-muted">{{ modalText }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div>
+                <button class="btn btn-default btn-sm" (click)="restoreContributionForm()" *ngIf="
+              action == 'updateContribution'
+            ">
+                    {{ "Restore" | translate }}
+                </button>
+                &nbsp;
+                <button class="btn btn-success btn-sm" [disabled]="loading || !contributionFormIsValid()" *ngIf="
+              action == 'updateContribution' ||
+              action == 'addContribution'
+            " (click)="contributionSubmitBtn.click()">
+                    <span *ngIf="action == 'updateContribution'">{{
+                        "Update" | translate
+                        }}</span>
+                    <span *ngIf="action == 'addContribution'">{{ "Add" | translate }}</span>
+                    &nbsp;
+                    <div class="spinner-border float-right" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+            </div>
+            <div *ngIf="action == 'deleteContribution'">
+                <button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-label="Close"
+                    (click)="d('Cross click')">
+                    {{ "Cancel" | translate }}
+                </button>
+                &nbsp;
+                <button class="btn btn-danger btn-sm" [disabled]="loading" (click)="deleteContribution()">
+                    {{ "Confirm" | translate }} &nbsp;
+                    <div class="spinner-border float-right" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ngx-loading [show]="loadingData" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"></ngx-loading>

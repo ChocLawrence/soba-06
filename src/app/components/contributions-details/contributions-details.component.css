@@ -1,0 +1,14 @@
+.app_color {
+  background-color: #815f38;
+  color: white;
+}
+
+.action {
+  text-align: justify;
+  display: none;
+}
+
+.act:hover .action {
+  display: inline;
+  cursor: pointer;
+}

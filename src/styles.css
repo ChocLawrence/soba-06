@@ -1,1 +1,116 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/*@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";*/
+/*@import '../src/assets/css/bootstrap.min.css';*/
+
+/* @import "~ngx-lightbox/lightbox.css"; */
+
+/* .swiper-button-next:after,
+.swiper-container-rtl .swiper-button-prev:after {
+  content: unset !important;
+} */
+
+.img-dashboard {
+    width: 100%;
+    height: 10px;
+  }
+  
+  .swiper-button-prev:after {
+    content: none !important;
+  }
+  
+  .modal-close {
+    float: right !important;
+    border-radius: 20% !important;
+  }
+  
+  
+  .hidden {
+    display: none;
+  }
+  
+  .mainActions {
+    position: absolute;
+    right: 0;
+    padding: 0 10px;
+    display: none;
+  }
+  
+  .mainActions ul {
+    list-style: none;
+    margin-bottom: 0;
+    display: inline-block;
+    padding-inline-start: 0;
+    background: #fafafa;
+  }
+  
+  .mainActions li {
+    display: inline;
+    margin-left: 25px;
+    opacity: 0.7;
+  }
+  
+  tr:hover .mainActions {
+    display: block;
+  }
+  
+  tr:hover .mainActions li:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    right: 0 !important;
+    left: auto !important;
+  }
+  
+  .pointer {
+    cursor: pointer;
+  }
+  
+  .grab {
+    cursor: grab;
+  }
+  
+  .help {
+    cursor: help;
+  }
+  
+  .green {
+    color: green;
+  }
+  
+  .orange {
+    color: rgb(243, 151, 45);
+  }
+  
+  .red {
+    color: red;
+  }
+  
+  .blue {
+    color: rgb(51, 166, 211);
+  }
+  
+  .multiselect-dropdown .dropdown-btn {
+    border: none !important;
+  }
+  
+  .feather-icon {
+    width: 17px !important;
+    height: auto !important;
+  }
+  
+  .text-white-50,
+  .text-white {
+    color: white !important;
+  }
+  
+  .text-black-50,
+  .text-black {
+    color: black !important;
+  }
+  
+  .pointer {
+    cursor: grab;
+  }

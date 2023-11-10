@@ -1,0 +1,153 @@
+<!-- Hero Start -->
+<section class="bg-half bg-light d-table w-100" id="home">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+                <div class="page-next-level">
+                    <h4 class="title"> Events </h4>
+                    <div class="page-next">
+                        <nav aria-label="breadcrumb" class="d-inline-block">
+                            <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                <li class="breadcrumb-item"><a routerLink="/console/">Console</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">Events</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+<!--end section-->
+<!-- Hero End -->
+
+<div class="row p-3">
+    <div class="col-12 mx-auto">
+        <div class="bg-white shadow-sm rounded p-3 pt-sm-4 pb-sm-5 px-sm-4 mb-4">
+            <span><a class="btn btn-success btn-sm addButton mb-4" (click)="openEventModal('addEvent', null)">
+                    <i-feather name="plus" class="icons"></i-feather>
+                </a></span>
+
+
+            <dx-data-grid #eventsContainer id="eventsContainer" [dataSource]="events" [columnAutoWidth]="true"
+                [showBorders]="true" [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
+                [allowCollapsing]="false" [wordWrapEnabled]="true" [hoverStateEnabled]="true"
+                (onFileSaving)="_core.onFileSaving($event, 'events')">
+                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
+                </dxo-pager>
+                <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
+                </dxo-search-panel>
+
+                <!-- Columns -->
+                <dxi-column dataField="name" [caption]="'Name' | translate">
+                </dxi-column>
+                <dxi-column dataField="description" [caption]="'Description' | translate">
+                </dxi-column>
+                <dxi-column dataField="amount" [caption]="'Amount' | translate">
+                </dxi-column>
+                <dxi-column dataField="soba_payment_state" [caption]="'Payment State' | translate"
+                    cellTemplate="paymentStateTemplate">
+                </dxi-column>
+                <dxi-column dataField="soba_category_id" [caption]="'Category' | translate"
+                    cellTemplate="categoryTemplate">
+                </dxi-column>
+                <dxi-column dataField="deadline" [caption]="'Deadline' | translate">
+                </dxi-column>
+                <dxi-column dataField="handed_over_date" [caption]="'Hand over date' | translate">
+                </dxi-column>
+                <dxi-column dataField="handed_over_by" [caption]="'Handed over by' | translate"
+                    cellTemplate="handOverByTemplate">
+                </dxi-column>
+                <dxi-column dataField="collected_by" [caption]="'Collected By' | translate">
+                </dxi-column>
+                <dxi-column dataField="comment" [caption]="'Comment' | translate">
+                </dxi-column>
+                <dxi-column dataField="soba_status_id" [caption]="'Status' | translate" cellTemplate="statusTemplate">
+                </dxi-column>
+                <dxi-column dataField="soba_member_id" [caption]="'Beneficiary' | translate"
+                    cellTemplate="memberTemplate">
+                </dxi-column>
+                <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
+                    [caption]="'Creation date' | translate">
+                </dxi-column>
+                <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
+                </dxi-column>
+
+                <div *dxTemplate="let cell of 'paymentStateTemplate'">
+                    <span>
+                        {{ cell.data.soba_payment_state ? getPaymentStateName(cell.data.soba_payment_state) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'categoryTemplate'">
+                    <span>
+                        {{ cell.data.soba_category_id ? getCategoryName(cell.data.soba_category_id) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'statusTemplate'">
+                    <span>
+                        {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'memberTemplate'">
+                    <span>
+                        {{ cell.data.soba_member_id ? getMemberName(cell.data.soba_member_id) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'handOverByTemplate'">
+                    <span>
+                        {{ cell.data.handed_over_by ? getMemberName(cell.data.handed_over_by) : "-" }}
+                    </span>
+                </div>
+
+
+                <div *dxTemplate="let cell of 'createdAtTemplate'">
+                    <span>
+                        {{ cell.data.created_at ? getDate(cell.data.created_at) : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'actionsTemplate'">
+                    <div class="mainActions">
+                        <ul>
+                            <li>
+                                <i-feather name="edit" class="icons blue feather-icon"
+                                    [title]="'Edit Event' | translate"
+                                    (click)="openEventModal('updateEvent', cell.data)"></i-feather>
+                            </li>
+                            <li>
+                                <i-feather name="trash" class="icons red feather-icon"
+                                    [title]="'Delete Event' | translate"
+                                    (click)="openEventModal('deleteEvent', cell.data)">
+                                </i-feather>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <dxo-export [enabled]="true" fileName="events" [allowExportSelectedData]="false"
+                    [customizeExcelCell]="customizeExcelCell"></dxo-export>
+                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+            </dx-data-grid>
+        </div>
+    </div>
+</div>
+
+<app-modal-event #eventModals [event]="theEvent" [origin]="origin" [categories]="categories" [statuses]="statuses"
+    [members]="members" [paymentStates]="paymentStates" [action]="eventModalAction"
+    (eventModalClosed)="onEventModalClosed()">
+</app-modal-event>
+
+<ngx-loading [show]="loadingData" [config]="{
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop: true,
+    animationType: animationType
+  }"></ngx-loading>

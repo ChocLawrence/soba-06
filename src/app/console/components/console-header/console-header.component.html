@@ -1,0 +1,371 @@
+<!-- TAGLINE START-->
+<div class="tagline bg-light" *ngIf="sliderTopbar == true">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-slider">
+          <ul class="list-inline mb-0 move-text">
+            <li class="list-inline-item px-2 mb-0"><b>EOG</b> $ 55.88 <span class="text-success">+$ 4.62 ( +9.01%
+                )</span></li>
+            <li class="list-inline-item px-2 mb-0"><b>CHKP</b> $ 120.03 <span class="text-danger">-$ 14.07 ( -10.49%
+                )</span></li>
+            <li class="list-inline-item px-2 mb-0"><b>FANG</b> $ 63.58 <span class="text-success">+$ 5.17 ( +8.84%
+                )</span></li>
+            <li class="list-inline-item px-2 mb-0"><b>M</b> $ 14.75 <span class="text-success">+$ 1.05 ( +7.66% )</span>
+            </li>
+            <li class="list-inline-item px-2 mb-0"><b>PKI</b> $ 139.72 <span class="text-danger">-$ 11.41 ( -7.55%
+                )</span></li>
+            <li class="list-inline-item px-2 mb-0"><b>ABMD</b> $ 326.23 <span class="text-danger">-$ 21.61 ( -6.21%
+                )</span></li>
+            <li class="list-inline-item px-2 mb-0"><b>BITCOIN</b> $ 37,471.47 <span class="text-danger">+$ 492.60 (
+                +1.33% )</span></li>
+            <li class="list-inline-item px-2 mb-0"><b>XRP</b> <span> $ 0.39</span><span class="text-muted"> UNCH</span>
+            </li>
+            <li class="list-inline-item px-2 mb-0"><b>LITECOIN</b> <span> $ 148.67</span><span class="text-danger">-$
+                5.58 ( -3.62% )</span></li>
+            <li class="list-inline-item px-2 mb-0"><b>BITCOIN CASH</b> <span> $ 427.37</span><span
+                class="text-danger">-$ 15.98 ( -3.60% )</span></li>
+            <li class="list-inline-item px-2 mb-0"><b>ETHEREUM</b> $ 1,647.87 <span class="text-danger">+$ 14.51 (
+                +0.89% )</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- TAGLINE END-->
+
+<!-- Navbar STart -->
+<header id="topnav" class="defaultscroll sticky" (window:scroll)="windowScroll()" [class]="navClass"
+  [ngClass]="{'tagline-height': sliderTopbar == true}">
+  <div class="container">
+    <!-- Logo container-->
+    <div>
+      <a class="logo" (click)="goToHome()" *ngIf="navClass !== 'nav-light'">
+        <img src="assets/images/logo-dark.png" class="l-dark logo-light-mode header-logo pointer" height="45" alt="">
+        <img src="assets/images/logo-light.png" class="logo-dark-mode header-logo pointer" height="45" alt="">
+      </a>
+
+      <ul class="buy-button list-inline mb-0" *ngIf="shopPages == true">
+        <li class="list-inline-item mb-0">
+          <div class="dropdown" ngbDropdown>
+            <button type="button" class="btn btn-link text-decoration-none dropdown-toggle p-0 pe-2" ngbDropdownToggle
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="uil uil-search h5 text-muted"></i>
+            </button>
+            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 py-0"
+              style="width: 300px;" ngbDropdownMenu>
+              <form>
+                <input type="text" id="text" name="name" class="form-control border bg-white" placeholder="Search...">
+              </form>
+            </div>
+          </div>
+        </li>
+        <li class="list-inline-item mb-0 pe-1">
+          <div class="dropdown" ngbDropdown>
+            <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle" ngbDropdownToggle
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                class="uil uil-shopping-cart align-middle icons"></i></button>
+            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 p-4"
+              ngbDropdownMenu style="width: 300px;">
+              <div class="pb-4">
+                <a href="javascript:void(0)" class="d-flex align-items-center">
+                  <img src="assets/images/shop/product/s-1.jpg" class="shadow rounded" style="max-height: 64px;" alt="">
+                  <div class="flex-1 text-start ms-3">
+                    <h6 class="text-dark mb-0">T-shirt (M)</h6>
+                    <p class="text-muted mb-0">$320 X 2</p>
+                  </div>
+                  <h6 class="text-dark mb-0">$640</h6>
+                </a>
+
+                <a href="javascript:void(0)" class="d-flex align-items-center mt-4">
+                  <img src="assets/images/shop/product/s-2.jpg" class="shadow rounded" style="max-height: 64px;" alt="">
+                  <div class="flex-1 text-start ms-3">
+                    <h6 class="text-dark mb-0">Bag</h6>
+                    <p class="text-muted mb-0">$50 X 5</p>
+                  </div>
+                  <h6 class="text-dark mb-0">$250</h6>
+                </a>
+
+                <a href="javascript:void(0)" class="d-flex align-items-center mt-4">
+                  <img src="assets/images/shop/product/s-3.jpg" class="shadow rounded" style="max-height: 64px;" alt="">
+                  <div class="flex-1 text-start ms-3">
+                    <h6 class="text-dark mb-0">Watch (Men)</h6>
+                    <p class="text-muted mb-0">$800 X 1</p>
+                  </div>
+                  <h6 class="text-dark mb-0">$800</h6>
+                </a>
+              </div>
+
+              <div class="d-flex align-items-center justify-content-between pt-4 border-top">
+                <h6 class="text-dark mb-0">Total($):</h6>
+                <h6 class="text-dark mb-0">$1690</h6>
+              </div>
+
+              <div class="mt-3 text-center">
+                <a href="javascript:void(0)" class="btn btn-primary me-2">View Cart</a>
+                <a href="javascript:void(0)" class="btn btn-primary">Checkout</a>
+              </div>
+              <p class="text-muted text-start mt-1 mb-0">*T&amp;C Apply</p>
+            </div>
+          </div>
+        </li>
+        <li class="list-inline-item mb-0 pe-1">
+          <a href="javascript:void(0);" class="btn btn-icon btn-soft-primary" (click)="wishListModal(content)"><i
+              class="uil uil-heart align-middle icons"></i></a>
+        </li>
+
+        <ng-template #content>
+          <div class="modal-content rounded shadow-lg border-0 overflow-hidden">
+            <div class="modal-body py-5">
+              <div class="text-center">
+                <div class="icon d-flex align-items-center justify-content-center bg-soft-danger rounded-circle mx-auto"
+                  style="height: 95px; width:95px;">
+                  <h1 class="mb-0"><i class="uil uil-heart-break align-middle"></i></h1>
+                </div>
+                <div class="mt-4">
+                  <h4>Your wishlist is empty.</h4>
+                  <p class="text-muted">Create your first wishlist request...</p>
+                  <div class="mt-4">
+                    <a href="javascript:void(0)" class="btn btn-outline-primary">+ Create new wishlist</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <li class="list-inline-item mb-0">
+          <div class="dropdown dropdown-primary" ngbDropdown>
+            <button type="button" class="btn btn-icon btn-soft-primary dropdown-toggle" ngbDropdownToggle
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                class="uil uil-user align-middle icons"></i></button>
+            <div class="dropdown-menu bg-white shadow rounded border-0 mt-3 py-3" ngbDropdownMenu style="width: 200px;">
+              <a class="dropdown-item text-dark" href="#"><i class="uil uil-user align-middle me-1"></i> Account</a>
+              <a class="dropdown-item text-dark" href="#"><i class="uil uil-clipboard-notes align-middle me-1"></i>
+                Order History</a>
+              <a class="dropdown-item text-dark" href="#"><i class="uil uil-arrow-circle-down align-middle me-1"></i>
+                Download</a>
+              <div class="dropdown-divider my-3 border-top"></div>
+              <a class="dropdown-item text-dark" (click)="logout()"><i
+                  class="uil uil-sign-out-alt align-middle me-1"></i>
+                Logout</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="buy-button list-inline mb-0" *ngIf="buttonList == true">
+        <li class="list-inline-item mb-0 ms-1">
+          <div class="dropdown">
+            <button type="button" class="btn btn-link text-decoration-none dropdown-toggle p-0 pe-2"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="uil uil-search text-muted"></i>
+            </button>
+            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 py-0"
+              style="width: 300px;">
+              <form>
+                <input type="text" id="text" name="name" class="form-control border bg-white" placeholder="Search...">
+              </form>
+            </div>
+          </div>
+        </li>
+        <li class="list-inline-item mb-0 ms-1">
+          <a href="javascript:void(0)" class="btn btn-icon btn-primary"><i class="uil uil-facebook-f icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0 ms-1">
+          <a href="javascript:void(0)" class="btn btn-icon btn-primary"><i class="uil uil-github icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0 ms-1">
+          <a href="javascript:void(0)" class="btn btn-icon btn-primary"><i class="uil uil-twitter icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0 ms-1">
+          <a href="javascript:void(0)" class="btn btn-icon btn-primary"><i class="uil uil-linkedin-alt icons"></i></a>
+        </li>
+      </ul>
+
+      <ul class="buy-button list-inline mb-0" *ngIf="isdeveloper == true">
+        <li class="list-inline-item mb-0">
+          <div class="dropdown">
+            <button type="button" class="btn btn-link text-decoration-none dropdown-toggle p-0 pe-2"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="uil uil-search text-muted"></i>
+            </button>
+            <div class="dropdown-menu dd-menu dropdown-menu-end bg-white shadow rounded border-0 mt-3 py-0"
+              style="width: 300px;">
+              <form>
+                <input type="text" id="text2" name="name" class="form-control border bg-white" placeholder="Search...">
+              </form>
+            </div>
+          </div>
+        </li>
+        <li class="list-inline-item mb-0 pe-1">
+          <a href="#" class="btn btn-icon btn-soft-primary"><i class="uil uil-github icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0 pe-1">
+          <a href="#" class="btn btn-icon btn-soft-primary"><i class="mdi mdi-stack-overflow mdi-18px icons"></i></a>
+        </li>
+        <li class="list-inline-item mb-0">
+          <a href="javascript:void(0)" class="btn btn-icon btn-soft-primary" (click)="developerModal(content)"
+            data-bs-toggle="modal" data-bs-target="#loginform"><i class="uil uil-user icons"></i></a>
+        </li>
+        <ng-template #content let-modal>
+          <div class="modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content rounded shadow-lg border-0 overflow-hidden position-relative">
+              <button type="button" class="btn-close position-absolute top-0 end-0 mt-2 me-2"
+                (click)="modal.dismiss('Cross click')" style="z-index: 1" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+              <div class="modal-body p-0">
+                <div class="container-fluid px-0">
+                  <div class="row align-items-center g-0">
+                    <div class="col-lg-6 col-md-5">
+                      <img src="assets/images/course/online/ab02.jpg" class="img-fluid" alt="">
+                    </div>
+                    <!--end col-->
+
+                    <div class="col-lg-6 col-md-7">
+                      <form class="login-form p-4">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label class="form-label">Your Email <span class="text-danger">*</span></label>
+                              <div class="form-icon position-relative">
+                                <i-feather name="user" class="fea icon-sm icons"></i-feather>
+                                <input type="email" class="form-control ps-5" placeholder="Email" name="email"
+                                  required="">
+                              </div>
+                            </div>
+                          </div>
+                          <!--end col-->
+
+                          <div class="col-lg-12">
+                            <div class="mb-3">
+                              <label class="form-label">Password <span class="text-danger">*</span></label>
+                              <div class="form-icon position-relative">
+                                <i-feather name="key" class="fea icon-sm icons"></i-feather>
+                                <input type="password" class="form-control ps-5" placeholder="Password" required="">
+                              </div>
+                            </div>
+                          </div>
+                          <!--end col-->
+
+                          <div class="col-lg-12">
+                            <div class="d-flex justify-content-between">
+                              <div class="mb-3">
+                                <div class="custom-control custom-checkbox">
+                                  <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                  <label class="custom-control-label ms-1" for="customCheck1">Remember me</label>
+                                </div>
+                              </div>
+                              <p class="forgot-pass mb-0"><a routerLink="/auth-re-password"
+                                  class="text-dark fw-bold">Forgot password ?</a></p>
+                            </div>
+                          </div>
+                          <!--end col-->
+
+                          <div class="col-lg-12 mb-0">
+                            <div class="d-grid">
+                              <button class="btn btn-primary">Sign in</button>
+                            </div>
+                          </div>
+                          <!--end col-->
+
+                          <div class="col-12 text-center">
+                            <p class="mb-0 mt-3"><small class="text-dark me-2">Don't have an account ?</small> <a
+                                routerLink="/auth-signup" class="text-dark fw-bold">Sign Up</a></p>
+                          </div>
+                          <!--end col-->
+                        </div>
+                        <!--end row-->
+                      </form>
+                    </div>
+                    <!--end col-->
+                  </div>
+                  <!--end row-->
+                </div>
+                <!--end container-->
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ul>
+
+      <a class="logo" (click)="goToHome()" *ngIf="navClass === 'nav-light'">
+        <img src="assets/images/logo-dark.png" class="l-dark pointer" height="45" alt="">
+        <img src="assets/images/logo-light.png" class="l-light pointer" height="45" alt="">
+      </a>
+    </div>
+
+    <span *ngIf="!buttonList && !isdeveloper && !shopPages">
+      <div class="buy-button">
+        <ng-template [ngIf]="navClass === 'nav-light'">
+          <a href="javascript: void(0);" (click)="logout()" class="btn btn-primary login-btn-primary">Logout</a>
+          <a href="javascript: void(0);" (click)="logout()" class="btn btn-light login-btn-light">Logout</a>
+        </ng-template>
+        <ng-template [ngIf]="navClass !== 'nav-light'">
+          <a href="javascript: void(0);" (click)="logout()" class="btn btn-primary">Logout</a> &nbsp;
+          <a routerLink="/console/notifications" class="notification pointer" *ngIf="unreadNotificationsCount > 0">
+            <i-feather name="bell" class="icons black feather-icon" title="{{ 'Notifications' | translate }}">
+            </i-feather>
+            <span class="badge">{{
+              unreadNotificationsCount
+              }}</span>
+          </a>
+        </ng-template>
+      </div>
+    </span>
+    <!--end login button-->
+
+    <div class="menu-extras">
+      <div class="menu-item">
+        <!-- Mobile menu toggle-->
+        <a class="navbar-toggle" id="isToggle" (click)="toggleMenu()" [ngClass]="{'open': isCondensed === true}">
+          <div class="lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </a>
+        <!-- End mobile menu toggle-->
+      </div>
+    </div>
+
+    <div id="navigation">
+      <!-- Navigation Menu-->
+      <ul class="navigation-menu" [class]="navClass">
+        <li><a routerLink="/console/dashboard" class="nav-link-ref">{{"Dashboard"| translate}}</a></li>
+        <li class="has-submenu">
+          <a href="javascript:void(0)" (click)="onMenuClick($event)">{{"Configurations" | translate}}</a><span
+            class="menu-arrow"></span>
+          <ul class="submenu">
+            <li><a class="nav-link-ref" routerLink="/console/categories">{{"Categories"| translate}}</a></li>
+            <li><a class="nav-link-ref" routerLink="/console/events">{{"Events"| translate}}</a></li>
+            <li><a class="nav-link-ref" routerLink="/console/branches">{{"Branches"| translate}}</a></li> 
+            <li><a class="nav-link-ref" routerLink="/console/payment-states">{{"Payment States"| translate}}</a></li>
+            <li><a class="nav-link-ref" routerLink="/console/eligibility">{{"Eligibility"| translate}}</a></li>
+            <li><a class="nav-link-ref" routerLink="/console/statuses">{{"Statuses"| translate}}</a></li>
+          </ul>
+        </li>
+        <li class="has-submenu">
+          <a href="javascript:void(0)" (click)="onMenuClick($event)">{{"Public"| translate}}</a><span
+            class="menu-arrow"></span>
+          <ul class="submenu">
+            <li><a routerLink="/console/contributions" class="nav-link-ref">{{"Contributions" | translate}}</a></li>
+          </ul>
+        </li>
+        <li><a routerLink="/console/members" class="nav-link-ref">{{"Members"| translate}}</a></li>
+
+      </ul>
+      <!--end navigation menu-->
+      <div class="buy-menu-btn d-none">
+        <a href="javascript: void(0);" (click)="logout()" class="btn btn-primary">{{"Logout"| translate}}</a>
+      </div>
+      <!--end login button-->
+      <!--end login button-->
+    </div>
+    <!--end navigation-->
+  </div>
+  <!--end container-->
+</header>
+<!--end header-->
+<!-- Navbar End -->

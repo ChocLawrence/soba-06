@@ -1,0 +1,28 @@
+<div class="row" *ngIf="posts.length > 0">
+    <div class="col-lg-4 col-md-6 mt-4 pt-2" *ngFor="let post of posts;let i = index">
+        <div class="card blog rounded border-0 shadow">
+            <div class="position-relative">
+                <img [src]="'data:image/png;base64,' + post.image" class="card-img-top rounded-top" alt="..." width="auto" height="250">
+                <div class="overlay rounded-top bg-dark"></div>
+            </div>
+            <div class="card-body content">
+                <h5><a routerLink="/news/{{post.slug}}" class="card-title title text-dark">{{_core.shortenText(post.title)}}</a>
+                </h5>
+                <div class="post-meta d-flex justify-content-between mt-3">
+                    <!-- <ul class="list-unstyled mb-0">
+                        <li class="list-inline-item me-2 mb-0"><a href="javascript:void(0)" class="text-muted like"><i
+                                    class="uil uil-heart me-1"></i>{{data.like}}</a></li>
+                        <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i
+                                    class="uil uil-comment me-1"></i>{{data.message}}</a></li>
+                    </ul> -->
+                    <a routerLink="/news/{{post.slug}}"href="javascript:void(0);" class="text-muted readmore">{{"Read More" | translate}}
+                        <i class="uil uil-angle-right-b"></i></a>
+                </div>
+            </div>
+            <div class="author">
+                <small class="text-light user d-block"><i class="uil uil-user"></i>&nbsp;{{post.title}}</small>
+                <small class="text-light date"><i class="uil uil-calendar-alt"></i>&nbsp;{{_core.formatDate(post.date)}}</small>
+            </div>
+        </div>
+    </div>
+</div>

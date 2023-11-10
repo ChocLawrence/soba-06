@@ -1,0 +1,189 @@
+<ng-template #memberModal let-c="close" let-d="dismiss">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="row no-gutters">
+                <div class="col">
+                    <h5 class="text-3 font-weight-400 m-2">
+                        {{ modalTitle | translate }}
+                        <button type="button" class="close font-weight-400 modal-close" data-dismiss="modal"
+                            aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                    <hr />
+                    <div class="px-3" *ngIf="member && action == 'view'">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                {{ "Full Name" | translate }}
+                                <span class="float-right text-3">{{ member.full_name }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "DOB" | translate }}
+                                <span class="float-right text-3">{{ member.dob }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Address" | translate }}
+                                <span class="float-right text-3">{{ member.address }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Email" | translate }}
+                                <span class="float-right text-3">{{ member.email }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Phone" | translate }}
+                                <span class="float-right text-3">{{ member.phone }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Bio" | translate }}
+                                <span class="float-right text-3">{{ member.bio }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Status" | translate }}
+                                <span class="float-right text-3">{{ member.soba_status_id }}</span>
+                            </li>
+                            <li class="mb-2">
+                                {{ "Branch" | translate }}
+                                <span class="float-right text-3">{{ member.soba_branch_id }}</span>
+                            </li>
+                        </ul>
+                        <hr class="mb-2" />
+                    </div>
+                    <div class="px-3">
+                        <form class="form" id="memberForm" [formGroup]="memberForm" (ngSubmit)="onSubmitMember()">
+
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateMember' ||
+                            action == 'addMember'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="full_name" formControlName="full_name" required
+                                        placeholder="Full Name" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateMember' ||
+                            action == 'addMember'
+                          ">
+                                <div class="input-group">
+                                    <input type="date" class="form-control" id="full_name" formControlName="dob"
+                                        required placeholder="DOB" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateMember' ||
+                            action == 'addMember'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="address" formControlName="address"
+                                        required placeholder="Address" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateMember' ||
+                            action == 'addMember'
+                          ">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" id="email" formControlName="email"
+                                        required placeholder="Email" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateMember' ||
+                            action == 'addMember'
+                          ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="phone" formControlName="phone"
+                                        required placeholder="Phone" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateMember' ||
+                            action == 'addMember'
+                          ">
+                                <div class="input-group">
+                                    <input type="bio" class="form-control" id="bio" formControlName="bio"
+                                        required placeholder="Bio" />
+                                </div>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                      action == 'updateMember' ||
+                      action == 'addMember'
+                    ">
+                                <ng-multiselect-dropdown [placeholder]="'Statuses' | translate"
+                                    [settings]="dropdownSettings" [data]="statuses"
+                                    [formControl]="$any(memberForm).controls['soba_status_id']"
+                                    (onSelect)="onStatusSelect($event)"
+                                    (onDeSelect)="onStatusDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateMember' ||
+                            action == 'addMember'
+                          ">
+                                <ng-multiselect-dropdown [placeholder]="'Branches' | translate"
+                                    [settings]="dropdownSettings" [data]="branches"
+                                    [formControl]="$any(memberForm).controls['soba_branch_id']"
+                                    (onSelect)="onBranchSelect($event)" (onDeSelect)="onBranchDeSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <div class="vertical-input-group mb-2" *ngIf="
+                            action == 'updateMember' ||
+                            action == 'addMember'
+                          ">
+                                            <div class="input-group">
+                                                <input accept="image/png,image/jpg,image/jpeg" type="file"
+                                                    formControlName="image" (change)="fileChanged($event)" />
+                                                <p class="mt-4">
+                                                    <img class="photo" src="{{ preview ? preview : default }}" alt="" />
+                                                </p>
+                                            </div>
+                                        </div>
+                            <button #memberSubmitBtn type="submit" class="hidden"></button>
+                        </form>
+                    </div>
+                    <div class="px-3" *ngIf="member && action == 'deleteMember'">
+                        <p class="text-3 text-center text-muted">{{ modalText }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div>
+                <button class="btn btn-default btn-sm" (click)="restoreMemberForm()" *ngIf="
+              action == 'updateMember'
+            ">
+                    {{ "Restore" | translate }}
+                </button>
+                &nbsp;
+                <button class="btn btn-success btn-sm" [disabled]="loading || !memberFormIsValid()" *ngIf="
+              action == 'updateMember' ||
+              action == 'addMember'
+            " (click)="memberSubmitBtn.click()">
+                    <span *ngIf="action == 'updateMember'">{{
+                        "Update" | translate
+                        }}</span>
+                    <span *ngIf="action == 'addMember'">{{ "Add" | translate }}</span>
+                    &nbsp;
+                    <div class="spinner-border float-right" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+            </div>
+            <div *ngIf="action == 'deleteMember'">
+                <button class="btn btn-secondary btn-sm" data-dismiss="modal" aria-label="Close"
+                    (click)="d('Cross click')">
+                    {{ "Cancel" | translate }}
+                </button>
+                &nbsp;
+                <button class="btn btn-danger btn-sm" [disabled]="loading" (click)="deleteMember()">
+                    {{ "Confirm" | translate }} &nbsp;
+                    <div class="spinner-border float-right" role="status" *ngIf="loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ngx-loading [show]="loadingData" [config]="{ backdropBorderRadius: '3px', fullScreenBackdrop: true }"></ngx-loading>

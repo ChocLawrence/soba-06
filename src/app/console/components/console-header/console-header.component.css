@@ -1,0 +1,31 @@
+.header-logo {
+    height: 45px !important;
+}
+
+.notification {
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.black {
+    color: black;
+}
+
+.notification .badge {
+    position: absolute;
+    top: 25px;
+    right: 17px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+}
+
+.icons {
+    width: 25px !important;
+    height: 25px !important;
+}
