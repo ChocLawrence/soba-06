@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "node --max-old-space-size=8192 ./node_modules/@angular/cli/bin/ng build --configuration production && mv dist/cameroon-consulat _static",
+    "build": "node --max-old-space-size=8192 ./node_modules/@angular/cli/bin/ng build --configuration production && mv dist/soba-06 _static",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
