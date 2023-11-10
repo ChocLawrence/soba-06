@@ -31,112 +31,114 @@
                     <i-feather name="plus" class="icons"></i-feather>
                 </a></span>
 
+            <div *ngIf="events && events.length>0">
+                <dx-data-grid #eventsContainer id="eventsContainer" [dataSource]="events" [columnAutoWidth]="true"
+                    [showBorders]="true" [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
+                    [allowCollapsing]="false" [wordWrapEnabled]="true" [hoverStateEnabled]="true"
+                    (onFileSaving)="_core.onFileSaving($event, 'events')">
+                    <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                    <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+                    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
+                    </dxo-pager>
+                    <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
+                    </dxo-search-panel>
 
-            <dx-data-grid #eventsContainer id="eventsContainer" [dataSource]="events" [columnAutoWidth]="true"
-                [showBorders]="true" [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
-                [allowCollapsing]="false" [wordWrapEnabled]="true" [hoverStateEnabled]="true"
-                (onFileSaving)="_core.onFileSaving($event, 'events')">
-                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
-                <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
-                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
-                </dxo-pager>
-                <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
-                </dxo-search-panel>
+                    <!-- Columns -->
+                    <dxi-column dataField="name" [caption]="'Name' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="description" [caption]="'Description' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="amount" [caption]="'Amount' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="soba_payment_state" [caption]="'Payment State' | translate"
+                        cellTemplate="paymentStateTemplate">
+                    </dxi-column>
+                    <dxi-column dataField="soba_category_id" [caption]="'Category' | translate"
+                        cellTemplate="categoryTemplate">
+                    </dxi-column>
+                    <dxi-column dataField="deadline" [caption]="'Deadline' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="handed_over_date" [caption]="'Hand over date' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="handed_over_by" [caption]="'Handed over by' | translate"
+                        cellTemplate="handOverByTemplate">
+                    </dxi-column>
+                    <dxi-column dataField="collected_by" [caption]="'Collected By' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="comment" [caption]="'Comment' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
+                        cellTemplate="statusTemplate">
+                    </dxi-column>
+                    <dxi-column dataField="soba_member_id" [caption]="'Beneficiary' | translate"
+                        cellTemplate="memberTemplate">
+                    </dxi-column>
+                    <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
+                        [caption]="'Creation date' | translate">
+                    </dxi-column>
+                    <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
+                    </dxi-column>
 
-                <!-- Columns -->
-                <dxi-column dataField="name" [caption]="'Name' | translate">
-                </dxi-column>
-                <dxi-column dataField="description" [caption]="'Description' | translate">
-                </dxi-column>
-                <dxi-column dataField="amount" [caption]="'Amount' | translate">
-                </dxi-column>
-                <dxi-column dataField="soba_payment_state" [caption]="'Payment State' | translate"
-                    cellTemplate="paymentStateTemplate">
-                </dxi-column>
-                <dxi-column dataField="soba_category_id" [caption]="'Category' | translate"
-                    cellTemplate="categoryTemplate">
-                </dxi-column>
-                <dxi-column dataField="deadline" [caption]="'Deadline' | translate">
-                </dxi-column>
-                <dxi-column dataField="handed_over_date" [caption]="'Hand over date' | translate">
-                </dxi-column>
-                <dxi-column dataField="handed_over_by" [caption]="'Handed over by' | translate"
-                    cellTemplate="handOverByTemplate">
-                </dxi-column>
-                <dxi-column dataField="collected_by" [caption]="'Collected By' | translate">
-                </dxi-column>
-                <dxi-column dataField="comment" [caption]="'Comment' | translate">
-                </dxi-column>
-                <dxi-column dataField="soba_status_id" [caption]="'Status' | translate" cellTemplate="statusTemplate">
-                </dxi-column>
-                <dxi-column dataField="soba_member_id" [caption]="'Beneficiary' | translate"
-                    cellTemplate="memberTemplate">
-                </dxi-column>
-                <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
-                    [caption]="'Creation date' | translate">
-                </dxi-column>
-                <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
-                </dxi-column>
-
-                <div *dxTemplate="let cell of 'paymentStateTemplate'">
-                    <span>
-                        {{ cell.data.soba_payment_state ? getPaymentStateName(cell.data.soba_payment_state) : "-" }}
-                    </span>
-                </div>
-
-                <div *dxTemplate="let cell of 'categoryTemplate'">
-                    <span>
-                        {{ cell.data.soba_category_id ? getCategoryName(cell.data.soba_category_id) : "-" }}
-                    </span>
-                </div>
-
-                <div *dxTemplate="let cell of 'statusTemplate'">
-                    <span>
-                        {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
-                    </span>
-                </div>
-
-                <div *dxTemplate="let cell of 'memberTemplate'">
-                    <span>
-                        {{ cell.data.soba_member_id ? getMemberName(cell.data.soba_member_id) : "-" }}
-                    </span>
-                </div>
-
-                <div *dxTemplate="let cell of 'handOverByTemplate'">
-                    <span>
-                        {{ cell.data.handed_over_by ? getMemberName(cell.data.handed_over_by) : "-" }}
-                    </span>
-                </div>
-
-
-                <div *dxTemplate="let cell of 'createdAtTemplate'">
-                    <span>
-                        {{ cell.data.created_at ? getDate(cell.data.created_at) : "-" }}
-                    </span>
-                </div>
-
-                <div *dxTemplate="let cell of 'actionsTemplate'">
-                    <div class="mainActions">
-                        <ul>
-                            <li>
-                                <i-feather name="edit" class="icons blue feather-icon"
-                                    [title]="'Edit Event' | translate"
-                                    (click)="openEventModal('updateEvent', cell.data)"></i-feather>
-                            </li>
-                            <li>
-                                <i-feather name="trash" class="icons red feather-icon"
-                                    [title]="'Delete Event' | translate"
-                                    (click)="openEventModal('deleteEvent', cell.data)">
-                                </i-feather>
-                            </li>
-                        </ul>
+                    <div *dxTemplate="let cell of 'paymentStateTemplate'">
+                        <span>
+                            {{ cell.data.soba_payment_state ? getPaymentStateName(cell.data.soba_payment_state) : "-" }}
+                        </span>
                     </div>
-                </div>
 
-                <dxo-export [enabled]="true" fileName="events" [allowExportSelectedData]="false"
-                    [customizeExcelCell]="customizeExcelCell"></dxo-export>
-                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
-            </dx-data-grid>
+                    <div *dxTemplate="let cell of 'categoryTemplate'">
+                        <span>
+                            {{ cell.data.soba_category_id ? getCategoryName(cell.data.soba_category_id) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'statusTemplate'">
+                        <span>
+                            {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'memberTemplate'">
+                        <span>
+                            {{ cell.data.soba_member_id ? getMemberName(cell.data.soba_member_id) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'handOverByTemplate'">
+                        <span>
+                            {{ cell.data.handed_over_by ? getMemberName(cell.data.handed_over_by) : "-" }}
+                        </span>
+                    </div>
+
+
+                    <div *dxTemplate="let cell of 'createdAtTemplate'">
+                        <span>
+                            {{ cell.data.created_at ? getDate(cell.data.created_at) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'actionsTemplate'">
+                        <div class="mainActions">
+                            <ul>
+                                <li>
+                                    <i-feather name="edit" class="icons blue feather-icon"
+                                        [title]="'Edit Event' | translate"
+                                        (click)="openEventModal('updateEvent', cell.data)"></i-feather>
+                                </li>
+                                <li>
+                                    <i-feather name="trash" class="icons red feather-icon"
+                                        [title]="'Delete Event' | translate"
+                                        (click)="openEventModal('deleteEvent', cell.data)">
+                                    </i-feather>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <dxo-export [enabled]="true" fileName="events" [allowExportSelectedData]="false"
+                        [customizeExcelCell]="customizeExcelCell"></dxo-export>
+                    <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                </dx-data-grid>
+            </div>
         </div>
     </div>
 </div>

@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-10 text-center">
         <div class="title-heading">
-          <h4 class="text-success mb-3">{{_core.getDate(events[0]?.deadline)}}</h4>
+          <h4 class="text-success mb-3" *ngIf="events && events.length>0">{{_core.getDate(events[0]?.deadline)}}</h4>
           <h1 class="display-4 title-dark text-white fw-bold mb-3">Contributions' Deadline</h1>
           <p class="para-desc title-dark mx-auto text-light">Kindly ensure all financial obligations are met on or
             before this date so as to
@@ -99,7 +99,7 @@
                     <span class="text-dark h6">Collected By :</span>{{event.collected_by}}<br>
                     <span class="text-dark h6">Status : </span> <span class="badge">{{getStatusName(event.soba_status_id)}}</span>
                   </p>
-                  <a class="btn btn-sm btn-outline-primary mouse-down">View Details</a>
+                  <a routerLink="/contributions/details" class="btn btn-sm btn-outline-primary mouse-down">View Details</a>
                 </div>
               </div>
             </div>

@@ -220,7 +220,6 @@ export class ContributionsComponent implements OnInit {
       soba_status_id : this.ongoingStatus
     };
 
-
     this.eventsService
       .getEvents(dataObject)
       .then((events) => {

@@ -32,100 +32,103 @@
                 </a></span>
 
 
-            <dx-data-grid #membersContainer id="membersContainer" [dataSource]="members" [columnAutoWidth]="true"
-                [showBorders]="true" [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
-                [allowCollapsing]="false" [wordWrapEnabled]="true" [hoverStateEnabled]="true"
-                (onFileSaving)="_core.onFileSaving($event, 'members')">
-                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
-                <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
-                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
-                </dxo-pager>
-                <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
-                </dxo-search-panel>
+            <div *ngIf="members && members.length>0">
 
-                <!-- Columns -->
-                <dxi-column dataField="full_name" [caption]="'Full Name' | translate">
-                </dxi-column>
-                <dxi-column dataField="image" [caption]="'Image' | translate" cellTemplate="imageTemplate">
-                </dxi-column>
-                <dxi-column dataField="dob" [caption]="'DOB' | translate">
-                </dxi-column>
-                <dxi-column dataField="address" [caption]="'Address' | translate">
-                </dxi-column>
-                <dxi-column dataField="email" [caption]="'Email' | translate">
-                </dxi-column>
-                <dxi-column dataField="phone" [caption]="'Phone' | translate">
-                </dxi-column>
-                <dxi-column dataField="bio" [caption]="'Bio' | translate">
-                </dxi-column>
-                <dxi-column dataField="soba_status_id" [caption]="'Status' | translate" cellTemplate="statusTemplate">
-                </dxi-column>
-                <dxi-column dataField="soba_branch_id" [caption]="'Branch' | translate"
-                    cellTemplate="branchTemplate">
-                </dxi-column>
-                <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
-                    [caption]="'Creation date' | translate">
-                </dxi-column>
-                <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
-                </dxi-column>
+                <dx-data-grid #membersContainer id="membersContainer" [dataSource]="members" [columnAutoWidth]="true"
+                    [showBorders]="true" [showRowLines]="true" [showColumnLines]="false" [allowColumnReordering]="true"
+                    [allowCollapsing]="false" [wordWrapEnabled]="true" [hoverStateEnabled]="true"
+                    (onFileSaving)="_core.onFileSaving($event, 'members')">
+                    <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                    <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+                    <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
+                    </dxo-pager>
+                    <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
+                    </dxo-search-panel>
 
-                <div *dxTemplate="let cell of 'imageTemplate'">
-                    <span *ngIf="cell.data.image && cell.data.image!=='default.png'">
-                        <img [src]="'data:image/png;base64,' +  cell.data.image" alt="" width="100" height="100"
-                            class="photo">
-                    </span>
-                    <span *ngIf="cell.data.image == 'default.png'">
-                        <i-feather name="x-circle" class="icons blue feather-icon"></i-feather>
-                    </span>
-                </div>
+                    <!-- Columns -->
+                    <dxi-column dataField="full_name" [caption]="'Full Name' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="image" [caption]="'Image' | translate" cellTemplate="imageTemplate">
+                    </dxi-column>
+                    <dxi-column dataField="dob" [caption]="'DOB' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="address" [caption]="'Address' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="email" [caption]="'Email' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="phone" [caption]="'Phone' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="bio" [caption]="'Bio' | translate">
+                    </dxi-column>
+                    <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
+                        cellTemplate="statusTemplate">
+                    </dxi-column>
+                    <dxi-column dataField="soba_branch_id" [caption]="'Branch' | translate"
+                        cellTemplate="branchTemplate">
+                    </dxi-column>
+                    <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
+                        [caption]="'Creation date' | translate">
+                    </dxi-column>
+                    <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
+                    </dxi-column>
 
-                <div *dxTemplate="let cell of 'statusTemplate'">
-                    <span>
-                        {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
-                    </span>
-                </div>
-
-                <div *dxTemplate="let cell of 'branchTemplate'">
-                    <span>
-                        {{ cell.data.soba_branch_id ? getBranchName(cell.data.soba_branch_id) : "-" }}
-                    </span>
-                </div>
-
-                <div *dxTemplate="let cell of 'createdAtTemplate'">
-                    <span>
-                        {{ cell.data.created_at ? getDate(cell.data.created_at) : "-" }}
-                    </span>
-                </div>
-
-                <div *dxTemplate="let cell of 'actionsTemplate'">
-                    <div class="mainActions">
-                        <ul>
-                            <li>
-                                <i-feather name="edit" class="icons blue feather-icon"
-                                    [title]="'Edit Member' | translate"
-                                    (click)="openMemberModal('updateMember', cell.data)"></i-feather>
-                            </li>
-                            <li>
-                                <i-feather name="trash" class="icons red feather-icon"
-                                    [title]="'Delete Member' | translate"
-                                    (click)="openMemberModal('deleteMember', cell.data)">
-                                </i-feather>
-                            </li>
-                        </ul>
+                    <div *dxTemplate="let cell of 'imageTemplate'">
+                        <span *ngIf="cell.data.image && cell.data.image!=='default.png'">
+                            <img [src]="'data:image/png;base64,' +  cell.data.image" alt="" width="100" height="100"
+                                class="photo">
+                        </span>
+                        <span *ngIf="cell.data.image == 'default.png'">
+                            <i-feather name="x-circle" class="icons blue feather-icon"></i-feather>
+                        </span>
                     </div>
-                </div>
 
-                <dxo-export [enabled]="true" fileName="members" [allowExportSelectedData]="false"
-                    [customizeExcelCell]="customizeExcelCell"></dxo-export>
-                <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
-            </dx-data-grid>
+                    <div *dxTemplate="let cell of 'statusTemplate'">
+                        <span>
+                            {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'branchTemplate'">
+                        <span>
+                            {{ cell.data.soba_branch_id ? getBranchName(cell.data.soba_branch_id) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'createdAtTemplate'">
+                        <span>
+                            {{ cell.data.created_at ? getDate(cell.data.created_at) : "-" }}
+                        </span>
+                    </div>
+
+                    <div *dxTemplate="let cell of 'actionsTemplate'">
+                        <div class="mainActions">
+                            <ul>
+                                <li>
+                                    <i-feather name="edit" class="icons blue feather-icon"
+                                        [title]="'Edit Member' | translate"
+                                        (click)="openMemberModal('updateMember', cell.data)"></i-feather>
+                                </li>
+                                <li>
+                                    <i-feather name="trash" class="icons red feather-icon"
+                                        [title]="'Delete Member' | translate"
+                                        (click)="openMemberModal('deleteMember', cell.data)">
+                                    </i-feather>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <dxo-export [enabled]="true" fileName="members" [allowExportSelectedData]="false"
+                        [customizeExcelCell]="customizeExcelCell"></dxo-export>
+                    <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+                </dx-data-grid>
+            </div>
         </div>
     </div>
 </div>
 
-<app-modal-member #memberModals [member]="theMember" [origin]="origin" [statuses]="statuses"
-    [branches]="branches"  [action]="memberModalAction"
-    (memberModalClosed)="onMemberModalClosed()">
+<app-modal-member #memberModals [member]="theMember" [origin]="origin" [statuses]="statuses" [branches]="branches"
+    [action]="memberModalAction" (memberModalClosed)="onMemberModalClosed()">
 </app-modal-member>
 
 <ngx-loading [show]="loadingData" [config]="{
