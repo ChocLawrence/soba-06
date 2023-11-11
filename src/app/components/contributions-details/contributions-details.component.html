@@ -57,7 +57,7 @@
                 <p class="mb-4 mt-4"><strong>Search Contributions</strong></p>
                 <div class="row mb-4">
                     <div class="col-md-3">
-                        <ng-multiselect-dropdown [placeholder]="'Beneficiary' | translate"
+                        <ng-multiselect-dropdown [placeholder]="'Full Names' | translate"
                             [settings]="memberDropdownSettings" [data]="members"
                             [formControl]="$any(searchContributionForm).controls['soba_member_id']"
                             (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
@@ -81,9 +81,9 @@
                             class="btn btn-outline-success my-2 my-sm-0" type="submit">
                             <i-feather name="refresh-ccw" class="icons"></i-feather>
                         </button>
-
+                         &nbsp;&nbsp;
                         <span class="spanAction pointer" title="Print" (click)="printContributions()">
-                            <i class="fa fa-print"></i> PRINT
+                            <i-feather name="printer" class="icons"></i-feather>
                         </span>
                     </div>
                 </div>
@@ -99,8 +99,6 @@
                     </dxo-paging>
                     <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
                     </dxo-pager>
-                    <dxo-search-panel [visible]="true" [width]="240" [placeholder]="'Search...' | translate">
-                    </dxo-search-panel>
                     <dxo-group-panel [visible]="true"></dxo-group-panel>
                     <dxo-grouping #expand [autoExpandAll]="autoExpand" expandMode="rowClick"></dxo-grouping>
 
@@ -177,9 +175,6 @@
                             </ul>
                         </div>
                     </div>
-
-                    <dxo-export [enabled]="true" [formats]="['pdf']" fileName="contributions"
-                        [allowExportSelectedData]="false" [customizeExcelCell]="customizeExcelCell"></dxo-export>
                 </dx-data-grid>
             </div>
             <div *ngIf="!allContributions.length">
