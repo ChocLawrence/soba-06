@@ -79,7 +79,7 @@ export class ModalEventComponent implements OnInit {
       collected_by: ["", Validators.required],
       comment: ["",],
       soba_status_id: [""],
-      soba_member_id: ["", Validators.required],
+      soba_member_id: [""],
     });
   }
 
