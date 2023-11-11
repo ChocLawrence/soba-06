@@ -39,7 +39,7 @@
                         <i class="fa fa-plus"></i>&nbsp;{{ "New" | translate }} </span>&nbsp;
                 </div> -->
 
-                <div class="col-2">
+                <!-- <div class="col-2">
                     <form [formGroup]="layoutFormGroup">
                         <select (ngModelChange)="onLayoutSelect(expand)" id="layout" class="form-control"
                             formControlName="layout">
@@ -49,7 +49,7 @@
                             <option value="linear">{{ "Linear" | translate }}</option>
                         </select>
                     </form>
-                </div>
+                </div> -->
             </div>
             <form class="form-inline d-inline" (ngSubmit)="onSubmitSearchContributions()"
                 [formGroup]="searchContributionForm">
@@ -81,7 +81,7 @@
                             class="btn btn-outline-success my-2 my-sm-0" type="submit">
                             <i-feather name="refresh-ccw" class="icons"></i-feather>
                         </button>
-                         &nbsp;&nbsp;
+                        &nbsp;&nbsp;
                         <span class="spanAction pointer" title="Print" (click)="printContributions()">
                             <i-feather name="printer" class="icons"></i-feather>
                         </span>
@@ -187,9 +187,9 @@
 
 <!-- print prescription-->
 <div #printableArea style="display: none">
-    <div *ngIf="pageCount === 1" style="font-size: small !important">
+    <div *ngIf="pageCount === 1">
         <div class="h2-style">
-           <img src="/assets/images/logo-dark.png" alt="" width="200" height="auto">
+            <img src="/assets/images/logo-dark.png" alt="" width="200" height="auto">
         </div>
         <hr>
         <div class="h2-style">
@@ -198,20 +198,21 @@
         <hr>
         <div class="row-align">
             <h4>CONTRIBUTIONS STATISTICS</h4>
-            <div class="floatline"  *ngIf="eventSumsData">
-                <div *ngFor="let event of eventSumsData; let i = index" >
-                    {{ i + 1 }} : <span>{{event.id ? getEventName(event.id) : '--'}} :::: {{ event.sum ? event.sum : 0}} XAF , Collected By : {{ event.collected_by ? event.collected_by : '---'}} </span>
+            <div class="floatline" *ngIf="eventSumsData">
+                <div *ngFor="let event of eventSumsData; let i = index">
+                    {{ i + 1 }} : <span>{{event.id ? getEventName(event.id) : '--'}} :::: {{ event.sum ? event.sum : 0}}
+                        XAF , Collected By : {{ event.collected_by ? event.collected_by : '---'}} </span>
                     <hr>
                 </div>
             </div>
         </div>
         <div class="h2-style">
-              <span>
-                <strong>GRAND TOTAL: {{contributionSum}} &nbsp; XAF</strong>  
-              </span>
+            <span>
+                <strong>GRAND TOTAL: {{contributionSum}} &nbsp; XAF</strong>
+            </span>
         </div>
         <hr>
-        <table class="table-dsgn">
+        <table class="table">
             <thead class="style-header">
                 <tr>
                     <th scope="col">SN</th>
@@ -227,10 +228,12 @@
                 <tr *ngFor="let contribution of allContributions; let i = index" class="table_row">
                     <td>{{ i + 1 }}</td>
                     <td style="text-align: left">{{ contribution.full_name }}</td>
-                    <td id="p_name">{{ contribution.soba_event_id ? getEventName(contribution.soba_event_id) : '---'}}</td>
+                    <td id="p_name">{{ contribution.soba_event_id ? getEventName(contribution.soba_event_id) : '---'}}
+                    </td>
                     <td>{{ contribution.amount ? contribution.amount : '--' }}</td>
                     <td id="p_name">{{ contribution.comment ? contribution.comment : '--' }}</td>
-                    <td style="text-align: left">{{ contribution.contribution_status_id ? getStatusName(contribution.contribution_status_id) : '--' }}</td>
+                    <td style="text-align: left">{{ contribution.contribution_status_id ?
+                        getStatusName(contribution.contribution_status_id) : '--' }}</td>
                     <td id="p_name">{{ contribution.created_at ? _core.getDate(contribution.created_at) : '--' }}</td>
                 </tr>
             </tbody>
