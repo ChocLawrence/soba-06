@@ -90,8 +90,8 @@
                             action == 'addEvent'
                           ">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="amount" formControlName="amount"
-                                        required placeholder="Amount" />
+                                    <input type="number" class="form-control" id="amount" formControlName="amount"
+                                        required placeholder="Amount"  min="1000"/>
                                 </div>
                             </div>
                             <div class="vertical-input-group mb-2" *ngIf="

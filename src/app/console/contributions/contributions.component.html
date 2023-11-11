@@ -86,13 +86,21 @@
                     <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
                         cellTemplate="statusTemplate">
                     </dxi-column>
-                    <dxi-column dataField="comment" [caption]="'Comment' | translate">
+                    <dxi-column dataField="comment" [caption]="'Comment' | translate" cellTemplate="commentTemplate">
                     </dxi-column>
                     <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
                         [caption]="'Recorded Date' | translate">
                     </dxi-column>
                     <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
                     </dxi-column>
+
+
+                    <div *dxTemplate="let cell of 'commentTemplate'">
+                        <span>
+                            {{ cell.data.comment ? cell.data.comment : "--" }}
+                        </span>
+                    </div>
+
 
                     <div *dxTemplate="let cell of 'eventTemplate'">
                         <span>

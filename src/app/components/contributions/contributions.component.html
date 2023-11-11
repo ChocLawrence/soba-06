@@ -88,7 +88,7 @@
             <div class="card-body">
               <div class="media">
                 <ul class="date text-center text-primary me-3 mb-0 list-unstyled">
-                  <li class="day font-weight-bold mb-2">{{event.amount}}</li>
+                  <li class="day amount font-weight-bold mb-2">{{event.amount}} XAF</li>
                 </ul>
                 <div class="media-body content">
                   <h4><a href="javascript:void(0)" class="text-dark title">{{event.name}}</a>
@@ -97,7 +97,7 @@
                       class="text-danger">{{getMemberName(event.soba_member_id)}}</span> <br>
                     <span class="text-dark h6">Deadline:</span>{{_core.getShortDate(event.deadline)}}<br>
                     <span class="text-dark h6">Collected By :</span>{{event.collected_by}}<br>
-                    <span class="text-dark h6">Status : </span> <span class="badge">{{getStatusName(event.soba_status_id)}}</span>
+                    <span class="text-dark h6">Status : </span> <span class="badge-ongoing">{{getStatusName(event.soba_status_id)}}</span>
                   </p>
                   <a routerLink="/contributions/details" class="btn btn-sm btn-outline-primary mouse-down">View Details</a>
                 </div>
