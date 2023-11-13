@@ -10,7 +10,7 @@ export class UrlsService {
     let returnUrl = "";
 
     if (url.includes("localhost")) {
-      returnUrl = "http://urchin-app-mnvhl.ondigitalocean.app/api/";
+      returnUrl = "http://localhost:8000/api/";
     } else if (url.includes("cameroon-consulat.org")) {
       returnUrl = "https://api.cameroon-consulat.org/api/";
     } else {
@@ -26,7 +26,7 @@ export class UrlsService {
     let returnUrl = "";
 
     if (url.includes("localhost")) {
-      returnUrl = "http://urchin-app-mnvhl.ondigitalocean.app/storage/";
+      returnUrl = "http:///localhost:8000/storage/";
     } else if (url.includes("cameroon-consulat.org")) {
       returnUrl = "https://api.cameroon-consulat.org/storage/";
     } else {

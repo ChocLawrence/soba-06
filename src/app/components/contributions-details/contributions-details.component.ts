@@ -5,7 +5,7 @@ import { EventsService } from '../../services/events.service';
 import { StatusesService } from '../../services/statuses.service';
 import { PaymentStatesService } from '../../services/payment-states.service';
 import { MembersService } from '../../services/members.service';
-import { PrintingService } from "../../services/printing.service";
+import { PrintingService } from '../../services/printing.service';
 import { routerTransition } from '../../router.animations';
 import * as _ from 'lodash';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -23,6 +23,8 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { DxDataGridComponent } from 'devextreme-angular';
 
+import { Pipe, PipeTransform } from '@angular/core';
+
 @Component({
   selector: 'app-contributions-details',
   templateUrl: './contributions-details.component.html',
@@ -31,9 +33,8 @@ import { DxDataGridComponent } from 'devextreme-angular';
 export class ContributionsDetailsComponent implements OnInit {
   @ViewChild('contributionsContainer', { static: false })
   contributionsDataGrid: DxDataGridComponent;
-  @ViewChild("expand", { static: true }) expand: any;
-  @ViewChild("printableArea", { static: true }) printableArea: any;
-
+  @ViewChild('expand', { static: true }) expand: any;
+  @ViewChild('printableArea', { static: true }) printableArea: any;
 
   public dropdownSettings: any = {
     singleSelection: true,
@@ -75,6 +76,7 @@ export class ContributionsDetailsComponent implements OnInit {
   public defaultDataObject = { pageSize: this.pageSize };
   public limit = 10;
   public contributionsCount = 0;
+  public eventsCount = 0;
   public animationType = 'wanderingCubes';
 
   public theContribution: any;
@@ -114,15 +116,14 @@ export class ContributionsDetailsComponent implements OnInit {
     this.initLayoutForm();
   }
 
-
   //SEARCH BEGIN
 
   initLayoutForm() {
     this.layoutFormGroup = this.fb.group({
-      layout: [""],
+      layout: [''],
     });
   }
-  
+
   loadLayoutForm() {
     this.layoutFormGroup.patchValue({
       layout: this.layout,
@@ -133,14 +134,13 @@ export class ContributionsDetailsComponent implements OnInit {
     let layoutChooser = this.layoutFormGroup.controls['layout'].value;
     if (!this._core.isEmptyOrNull(layoutChooser)) {
       this.layout = layoutChooser;
-      if (this.layout == "expand") {
+      if (this.layout == 'expand') {
         event.autoExpandAll = true;
       } else {
         event.autoExpandAll = false;
       }
     }
   }
-
 
   initSearchContributionsForm() {
     this.searchContributionForm = this.fb.group({
@@ -233,7 +233,8 @@ export class ContributionsDetailsComponent implements OnInit {
   public checkStatusSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedStatus = this.searchContributionForm.value. contribution_status_id;
+    const selectedStatus =
+      this.searchContributionForm.value.contribution_status_id;
 
     if (selectedStatus.length == 1) {
       this.searchContributionForm.patchValue({
@@ -339,7 +340,9 @@ export class ContributionsDetailsComponent implements OnInit {
     this.eventsService
       .getEvents(this.defaultDataObject)
       .then((events) => {
+        this.eventsCount = events.data.length;
         this.events = events.data;
+        this.getEventColumnHeaders();
         this.loadingData = false;
       })
       .catch((e) => {
@@ -348,10 +351,11 @@ export class ContributionsDetailsComponent implements OnInit {
       });
   }
 
+  getEventColumnHeaders() {}
+
   getContributions(searchObject: any) {
     this.loadingData = true;
-
-    if(searchObject.contribution_status_id){
+    if (searchObject.contribution_status_id) {
       searchObject.soba_status_id = searchObject.contribution_status_id;
     }
 
@@ -359,6 +363,7 @@ export class ContributionsDetailsComponent implements OnInit {
       .getContributions(searchObject)
       .then((contributions) => {
         this.contributionsCount = contributions.data.length;
+
         this.contributions = this._core.normalizeKeys(contributions.data);
         this.getMembers(searchObject);
         this.loadingData = false;
@@ -371,9 +376,11 @@ export class ContributionsDetailsComponent implements OnInit {
 
   getMembers(searchObject) {
     this.loadingData = true;
-    if(searchObject.contribution_status_id) delete searchObject.soba_status_id;
-    let dataObject = !this._core.isEmptyOrNull(searchObject) ? searchObject : this.defaultDataObject;
-    
+    if (searchObject.contribution_status_id) delete searchObject.soba_status_id;
+    let dataObject = !this._core.isEmptyOrNull(searchObject)
+      ? searchObject
+      : this.defaultDataObject;
+
     this.membersService
       .getMembers(dataObject)
       .then((allMembers) => {
@@ -388,18 +395,26 @@ export class ContributionsDetailsComponent implements OnInit {
               });
 
               if (!this._core.isEmptyOrNull(contributions.length)) {
-
-                contributions.forEach((item)=>{
-                  let pushItem = { ...item, ...member };
-                  pushItem.contribution_status_id = item.soba_status_id;
-                  data.push(pushItem);
+                let pushItem = {};
+                let contributionTotal = 0;
+                contributions.forEach((contribution, index) => {
+                  // let pushItem = { ...item, ...member };
+                  // pushItem.contribution_status_id = item.soba_status_id;
+                  //data.push(pushItem);
+                  member['event_' + contribution.soba_event_id] =
+                    contribution.soba_event_id;
+                  member['amount_' + contribution.soba_event_id] =
+                    contribution.amount;
+                  member['status_' + contribution.soba_event_id] =
+                    contribution.soba_status_id;
+                  contributionTotal += Number(contribution.amount);
                 });
-
-              }else{
+                pushItem = { ...member, total: contributionTotal };
+                data.push(pushItem);
+              } else {
                 let pushItem = { ...member };
                 data.push(pushItem);
               }
-   
             }
           });
         }
@@ -408,7 +423,6 @@ export class ContributionsDetailsComponent implements OnInit {
         data = _.orderBy(data, ['full_name'], ['asc']);
         this.allContributions = data;
         this.tempAllContributions = this.allContributions;
-
         //console.log(data.length);
 
         this.loadingData = false;
@@ -456,30 +470,40 @@ export class ContributionsDetailsComponent implements OnInit {
   printContributions() {
     this.loadingData = true;
     this.pageCount = 1;
-    this.contributionSum = this.sum(this.allContributions);
+    this.contributionSum = this.sumAllContributions(this.allContributions);
     //get sum of individual events
     let data = [];
     this.events.forEach((event) => {
       //for each event, filter contributions and sum amount
-       
+
       let contributions = this.contributions.filter((item) => {
         return item.soba_event_id == event.id;
       });
-     
-      let eventSum = this.sum(contributions);
-      data.push({sum:eventSum,id:event.id, collected_by:event.collected_by});
 
+      let eventSum = this.sumContributions(contributions);
+      data.push({
+        sum: eventSum,
+        id: event.id,
+        collected_by: event.collected_by,
+      });
     });
     this.eventSumsData = data;
     this.printingService.print(this.printableArea);
     this.loadingData = false;
   }
 
-   sum( obj ) {
+  sumAllContributions( obj ) {
+    let sum = obj.reduce(function (s, a) {
+      return s + (isNaN(Number(a.total)) ? 0 : Number(a.total));
+    }, 0);
+    return sum
+  }
+
+  sumContributions(obj) {
     let sum = obj.reduce(function (s, a) {
       return s + (isNaN(Number(a.amount)) ? 0 : Number(a.amount));
     }, 0);
-    return sum
+    return sum;
   }
 
   //END PRINT
