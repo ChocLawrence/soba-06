@@ -145,8 +145,7 @@ export class ContributionsDetailsComponent implements OnInit {
   initSearchContributionsForm() {
     this.searchContributionForm = this.fb.group({
       soba_member_id: [''],
-      soba_event_id: [''],
-      contribution_status_id: [''],
+      soba_event_id: ['']
     });
   }
 
@@ -173,17 +172,6 @@ export class ContributionsDetailsComponent implements OnInit {
     this.getContributions(values);
 
     //this.allContributions = filteredContributions;
-  }
-
-  public onStatusSelect(contribution: any) {
-    this.checkStatusSelection(contribution);
-  }
-
-  public onStatusDeSelect(contribution: any) {
-    this.searchContributionForm.patchValue({
-      contribution_status_id: null,
-    });
-    this.onSubmitSearchContributions();
   }
 
   public onMemberSelect(contribution: any) {
@@ -230,24 +218,6 @@ export class ContributionsDetailsComponent implements OnInit {
     this.onSubmitSearchContributions();
   }
 
-  public checkStatusSelection(contribution: any) {
-    let value: any = contribution;
-    // get packages and separate with commas
-    const selectedStatus =
-      this.searchContributionForm.value.contribution_status_id;
-
-    if (selectedStatus.length == 1) {
-      this.searchContributionForm.patchValue({
-        contribution_status_id: selectedStatus,
-      });
-    } else {
-      this.searchContributionForm.patchValue({
-        contribution_status_id: null,
-      });
-    }
-
-    this.onSubmitSearchContributions();
-  }
 
   public checkMemberSelection(contribution: any) {
     let value: any = contribution;
@@ -355,9 +325,6 @@ export class ContributionsDetailsComponent implements OnInit {
 
   getContributions(searchObject: any) {
     this.loadingData = true;
-    if (searchObject.contribution_status_id) {
-      searchObject.soba_status_id = searchObject.contribution_status_id;
-    }
 
     this.contributionsService
       .getContributions(searchObject)
@@ -376,7 +343,6 @@ export class ContributionsDetailsComponent implements OnInit {
 
   getMembers(searchObject) {
     this.loadingData = true;
-    if (searchObject.contribution_status_id) delete searchObject.soba_status_id;
     let dataObject = !this._core.isEmptyOrNull(searchObject)
       ? searchObject
       : this.defaultDataObject;

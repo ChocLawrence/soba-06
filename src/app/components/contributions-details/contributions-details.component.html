@@ -70,11 +70,6 @@
                         </ng-multiselect-dropdown>
                     </div>
                     <div class="col-md-3">
-                        <ng-multiselect-dropdown [placeholder]="'Statuses' | translate" [settings]="dropdownSettings"
-                            [data]="statuses"
-                            [formControl]="$any(searchContributionForm).controls['contribution_status_id']"
-                            (onSelect)="onStatusSelect($event)" (onDeSelect)="onStatusDeSelect($event)">
-                        </ng-multiselect-dropdown>
                     </div>
                     <div class="col-md-3">
                         <button (click)="resetForm()" title="Reset Search Filter"
