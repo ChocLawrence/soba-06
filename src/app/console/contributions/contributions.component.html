@@ -65,7 +65,7 @@
             </form>
             <div *ngIf="contributions && contributions.length>0">
                 <dx-data-grid #contributionsContainer id="contributionsContainer" [dataSource]="contributions"
-                    [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true" [showColumnLines]="false"
+                    [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true" [showColumnLines]="true"
                     [allowColumnReordering]="true" [allowCollapsing]="false" [wordWrapEnabled]="true"
                     [hoverStateEnabled]="true" (onFileSaving)="_core.onFileSaving($event, 'Contributions')">
                     <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
