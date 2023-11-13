@@ -424,7 +424,6 @@ export class ContributionsDetailsComponent implements OnInit {
         this.allContributions = data;
         this.tempAllContributions = this.allContributions;
         //console.log(data.length);
-
         this.loadingData = false;
       })
       .catch((e) => {
@@ -458,7 +457,7 @@ export class ContributionsDetailsComponent implements OnInit {
     let event = this.events.filter((item) => {
       return item.id == value;
     });
-    return event[0].name;
+    return event[0].name ? event[0].name : '--';
   }
 
   oncontributionUpdated(id: any) {
