@@ -373,6 +373,8 @@ export class ContributionsDetailsComponent implements OnInit {
                     contribution.amount;
                   member['status_' + contribution.soba_event_id] =
                     contribution.soba_status_id;
+                  member['date_' + contribution.soba_event_id] =
+                    contribution.created_at;
                   contributionTotal += Number(contribution.amount);
                 });
                 pushItem = { ...member, total: contributionTotal };
