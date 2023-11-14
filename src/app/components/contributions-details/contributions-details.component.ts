@@ -400,6 +400,26 @@ export class ContributionsDetailsComponent implements OnInit {
       });
   }
 
+  computeDate(contribution:any) {
+    
+    let date = '--';
+
+    if(contribution.date_1){
+       date = this._core.getDate(contribution.date_1);
+    }else if(contribution.date_2){
+      date =  this._core.getDate(contribution.date_2);
+    }else if(contribution.date_3){
+      date =  this._core.getDate(contribution.date_3);
+    }else if(contribution.date_4){
+      date =  this._core.getDate(contribution.date_4);
+    }else if(contribution.date_5){
+      date =  this._core.getDate(contribution.date_5);
+    }
+
+    return date;
+
+  }
+
   getCategoryName(value: string) {
     let category = this.events.filter((item) => {
       return item.id == value;

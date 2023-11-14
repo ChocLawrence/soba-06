@@ -181,7 +181,7 @@
 
                     <div *dxTemplate="let cell of 'createdAtTemplate'">
                         <span>
-                            {{ cell.data.date_1 ? getDate(cell.data.date_1) : "-" }}
+                            {{ computeDate(cell.data) }}
                         </span>
                     </div>
 
@@ -213,7 +213,7 @@
         </div>
         <hr>
         <div class="h2-style">
-            <h2 class="text-center"> SOBA 06 CLASS CONTRIBUTIONS</h2>
+            <h2 class="text-center">SOBA 06 CLASS CONTRIBUTIONS</h2>
         </div>
         <hr>
         <div class="row-align">
@@ -254,10 +254,10 @@
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_4 ? contribution.amount_4 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_5 ? contribution.amount_5 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;"id="p_name">{{ contribution.total ? contribution.total : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse;" id="p_name">{{ contribution.created_at ? _core.getDate(contribution.created_at) : '--' }}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse;" id="p_name">{{ computeDate(contribution) }}</td>
                 </tr>
             </tbody>
-        </table>
+        </table> 
         <hr>
         <span>Generated date : {{currentDate}}</span>
         <div class="signature mt-5">
