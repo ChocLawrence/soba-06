@@ -25,6 +25,7 @@ export class ContributionsComponent implements OnInit {
   navClass = 'nav-light';
 
   public loadingData = false;
+  public deadlineState = null;
   public events: any[] = [];
   public members: any[] = [];
   public paymentStates: any[] = [];
@@ -226,6 +227,9 @@ export class ContributionsComponent implements OnInit {
         this.eventsCount = events.data.length;
         this.events = this._core.normalizeKeys(events.data);
         this.deadline = this.events[0].deadline;
+        if(this.deadline <  new Date().getDate){
+          this.deadlineState = "Deadline has passed";
+        }
         this.setTimeline();
         this.loadingData = false;
       })

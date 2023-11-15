@@ -85,7 +85,7 @@
             </form>
             <div *ngIf="allContributions && allContributions.length>0">
                 <dx-data-grid #contributionsContainer id="contributionsContainer" [dataSource]="allContributions"
-                    [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true" [showColumnLines]="true"
+                    [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true" [showColumnLines]="false"
                     [allowColumnReordering]="true" [allowCollapsing]="false" [wordWrapEnabled]="true"
                     [hoverStateEnabled]="true" [noDataText]="'No data available' | translate"
                     (onFileSaving)="_core.onFileSaving($event, 'Contributions')">
@@ -136,8 +136,8 @@
                     <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
                         [caption]="'Recorded Date' | translate">
                     </dxi-column>
-                    <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
-                    </dxi-column>
+                    <!-- <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
+                    </dxi-column> -->
 
                     <div *dxTemplate="let info of 'event1TitleHeaderTemplate'">
                         <p style="font-size:16px">{{getEventName('1')}}</p>
@@ -185,7 +185,7 @@
                         </span>
                     </div>
 
-                    <div *dxTemplate="let cell of 'actionsTemplate'">
+                    <!-- <div *dxTemplate="let cell of 'actionsTemplate'">
                         <div class="mainActions">
                             <ul>
                                 <li>
@@ -194,7 +194,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                 </dx-data-grid>
             </div>
             <div *ngIf="!allContributions.length">

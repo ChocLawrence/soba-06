@@ -17,7 +17,7 @@
 
           <div class="row">
             <div class="col-md-12 text-center">
-              <div id="eventdown">
+              <div id="eventdown" *ngIf="!deadlineState">
                 <ul class="count-down list-unstyled">
                   <li id="days" class="count-number list-inline-item px-4">{{_days}}<p class="count-head">Days</p>
                   </li>
@@ -29,6 +29,9 @@
                   </li>
                   <li id="end" class="h1"></li>
                 </ul>
+              </div>
+              <div *ngIf="deadlineState">
+                  <span class="display-4 title-dark text-red fw-bold mb-3">{{deadlineState}}</span>
               </div>
             </div>
           </div>
