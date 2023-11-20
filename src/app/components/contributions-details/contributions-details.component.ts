@@ -437,6 +437,8 @@ export class ContributionsDetailsComponent implements OnInit {
       date =  this._core.getDate(contribution.date_6);
     }else if(contribution.date_7){
       date =  this._core.getDate(contribution.date_7);
+    }else if(contribution.date_8){
+      date =  this._core.getDate(contribution.date_8);
     }
 
     return date;
