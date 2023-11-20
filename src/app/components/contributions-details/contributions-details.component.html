@@ -104,15 +104,9 @@
 
                     <dxi-column dataField="amount_1" headerCellTemplate="event1TitleHeaderTemplate">
                     </dxi-column>
-                    <!-- <dxi-column width="auto" dataField="event_2" [caption]="'Event2' | translate"
-                        cellTemplate="event2Template">
-                    </dxi-column>  -->
                     <dxi-column dataField="amount_2" [caption]="'Amount' | translate"
                         headerCellTemplate="event2TitleHeaderTemplate">
                     </dxi-column>
-                    <!-- <dxi-column width="auto" dataField="event_3" [caption]="'Event3' | translate"
-                        cellTemplate="event3Template">
-                    </dxi-column> -->
                     <dxi-column dataField="amount_3" [caption]="'Amount' | translate"
                         headerCellTemplate="event3TitleHeaderTemplate">
                     </dxi-column>
@@ -121,9 +115,13 @@
                         headerCellTemplate="event4TitleHeaderTemplate">
                     </dxi-column>
 
-                    <!-- <dxi-column dataField="amount_5" [caption]="'Amount' | translate"
+                    <dxi-column dataField="amount_5" [caption]="'Amount' | translate"
                         headerCellTemplate="event5TitleHeaderTemplate">
-                    </dxi-column> -->
+                    </dxi-column>
+
+                    <dxi-column dataField="amount_6" [caption]="'Amount' | translate"
+                        headerCellTemplate="event6TitleHeaderTemplate">
+                    </dxi-column>
 
                     <dxi-column dataField="total" [caption]="'Total' | translate"
                     cellTemplate="totalTemplate">
@@ -131,8 +129,6 @@
                     <!-- <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
                         cellTemplate="statusTemplate">
                     </dxi-column> -->
-                    <dxi-column dataField="comment" [caption]="'Comment' | translate" cellTemplate="commentTemplate">
-                    </dxi-column>
                     <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
                         [caption]="'Recorded Date' | translate">
                     </dxi-column>
@@ -153,6 +149,14 @@
 
                     <div *dxTemplate="let info of 'event4TitleHeaderTemplate'">
                         <p style="font-size:16px">{{getEventName('4')}}</p>
+                    </div>
+
+                    <div *dxTemplate="let info of 'event5TitleHeaderTemplate'">
+                        <p style="font-size:16px">{{getEventName('5')}}</p>
+                    </div>
+
+                    <div *dxTemplate="let info of 'event6TitleHeaderTemplate'">
+                        <p style="font-size:16px">{{getEventName('6')}}</p>
                     </div>
 
                     <!-- <div *dxTemplate="let info of 'event5TitleHeaderTemplate'">
@@ -253,6 +257,7 @@
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_3 ? contribution.amount_3 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_4 ? contribution.amount_4 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_5 ? contribution.amount_5 : '--' }}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_6 ? contribution.amount_6 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;"id="p_name">{{ contribution.total ? contribution.total : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse;" id="p_name">{{ computeDate(contribution) }}</td>
                 </tr>

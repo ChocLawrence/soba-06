@@ -67,10 +67,12 @@ export class ContributionsDetailsComponent implements OnInit {
   public allContributions: any[] = [];
   public tempAllContributions: any[] = [];
   public contributionSum;
+  public ongoingStatus:any;
   public eventSumsData: any[] = [];
   public members: any[] = [];
   public paymentStates: any[] = [];
   public events: any[] = [];
+  public ongoingEvents: any[] = [];
   public statuses: any[] = [];
   public pageSize = 10;
   public defaultDataObject = { pageSize: this.pageSize };
@@ -108,7 +110,6 @@ export class ContributionsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getContributions(this.defaultDataObject);
     this.getPaymentStates();
     this.getEvents();
     this.getStatuses();
@@ -169,9 +170,13 @@ export class ContributionsDetailsComponent implements OnInit {
     //this.getMembers(values);
     //filter contributions
 
-    this.getContributions(values);
+    let eventObj = [];
+    if(values.soba_event_id){
+      eventObj.push(values.soba_event_id[0].id);
+      values.soba_event_id =  eventObj;
+    }
 
-    //this.allContributions = filteredContributions;
+    this.getContributions(values);
   }
 
   public onMemberSelect(contribution: any) {
@@ -243,37 +248,6 @@ export class ContributionsDetailsComponent implements OnInit {
 
   //SEARCH END
 
-  //GROUPING
-
-  calculGrouping = (rowData: any) => {
-    return rowData.created_at;
-  };
-
-  public getTitle(cellInfo) {
-    let stateValue = 'Continues on next page';
-    //code has to be adjustment depending on how many groupings are allowed
-    //the more grouping the grid has, the deeper the items[0].State goes into the object
-
-    if (
-      cellInfo.row.data.collapsedItems &&
-      cellInfo.row.data.collapsedItems.length != 0
-    ) {
-      let member = cellInfo.row.data.collapsedItems[0].id;
-      stateValue = `
-      ${this.getMemberName(member)}`;
-      return stateValue;
-    } else if (cellInfo.row.data.items && cellInfo.row.data.items.length != 0) {
-      let member = cellInfo.row.data.items[0].id;
-      stateValue = `
-      ${this.getMemberName(member)}`;
-      return stateValue;
-    }
-
-    return stateValue;
-  }
-
-  //END GROUPING
-
   getPaymentStates() {
     this.loadingData = true;
 
@@ -296,6 +270,9 @@ export class ContributionsDetailsComponent implements OnInit {
       .getStatuses()
       .then((statuses) => {
         this.statuses = statuses.data;
+        let ongoingStatus = this.getStatus("ongoing");
+        this.ongoingStatus = ongoingStatus;
+        this.getOngoingEvents();
         this.loadingData = false;
       })
       .catch((e) => {
@@ -303,6 +280,29 @@ export class ContributionsDetailsComponent implements OnInit {
         this._core.handleError(e);
       });
   }
+
+  getOngoingEvents(){
+
+    if(this.events && this.ongoingStatus){
+
+      let ongoingEvents = this.events.filter((item) => {
+        return item.soba_status_id == this.ongoingStatus[0].id;
+      });
+
+      this.ongoingEvents = ongoingEvents;
+
+    }
+
+    this.getContributions(this.defaultDataObject);
+    
+  }
+
+  getStatus(value: string) {
+    let status = this.statuses.filter((item) => {
+      return item.slug == value.toString();
+    });
+    return status;
+}
 
   getEvents() {
     this.loadingData = true;
@@ -325,6 +325,22 @@ export class ContributionsDetailsComponent implements OnInit {
 
   getContributions(searchObject: any) {
     this.loadingData = true;
+
+    //check for ongoing
+    //&& this._core.isEmptyOrNull(searchObject.soba_event_id)
+    
+    if(this.ongoingEvents.length>0){
+      let ongoingObject = [];
+
+      this.ongoingEvents.forEach((item)=>{
+        ongoingObject.push(item.id)
+      });
+
+      searchObject.soba_event_id = ongoingObject;
+
+    }
+    
+    //end check for ongoing events
 
     this.contributionsService
       .getContributions(searchObject)
@@ -353,20 +369,22 @@ export class ContributionsDetailsComponent implements OnInit {
         let data = [];
 
         this.members = this._core.normalizeKeys(allMembers.data);
+
         if (allMembers.data.length != 0) {
           allMembers.data.forEach((member) => {
+
             if (!this._core.isEmptyOrNull(this.contributions.length)) {
+
               let contributions = this.contributions.filter((item) => {
                 return item.soba_member_id == member.id;
               });
 
               if (!this._core.isEmptyOrNull(contributions.length)) {
+
                 let pushItem = {};
                 let contributionTotal = 0;
+
                 contributions.forEach((contribution, index) => {
-                  // let pushItem = { ...item, ...member };
-                  // pushItem.contribution_status_id = item.soba_status_id;
-                  //data.push(pushItem);
                   member['event_' + contribution.soba_event_id] =
                     contribution.soba_event_id;
                   member['amount_' + contribution.soba_event_id] =
@@ -375,7 +393,8 @@ export class ContributionsDetailsComponent implements OnInit {
                     contribution.soba_status_id;
                   member['date_' + contribution.soba_event_id] =
                     contribution.created_at;
-                  contributionTotal += Number(contribution.amount);
+                  contributionTotal += contribution.amount ? Number(contribution.amount) : Number(0);
+
                 });
                 pushItem = { ...member, total: contributionTotal };
                 data.push(pushItem);
@@ -414,6 +433,10 @@ export class ContributionsDetailsComponent implements OnInit {
       date =  this._core.getDate(contribution.date_4);
     }else if(contribution.date_5){
       date =  this._core.getDate(contribution.date_5);
+    }else if(contribution.date_6){
+      date =  this._core.getDate(contribution.date_6);
+    }else if(contribution.date_7){
+      date =  this._core.getDate(contribution.date_7);
     }
 
     return date;
@@ -445,10 +468,10 @@ export class ContributionsDetailsComponent implements OnInit {
     let event = this.events.filter((item) => {
       return item.id == value;
     });
-    return event[0].name ? event[0].name : '--';
+    return event && event[0] && event[0].name ? event[0].name : '--';
   }
 
-  oncontributionUpdated(id: any) {
+  onContributionUpdated(id: any) {
     //this.getcontribution(id, 'update');
   }
 

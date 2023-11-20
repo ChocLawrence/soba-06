@@ -40,7 +40,7 @@ export class ContributionsService {
     }
 
     if (!this.core.isEmptyOrNull(dataObject.soba_event_id)) {
-      url += `&soba_event_id=${encodeURIComponent(dataObject.soba_event_id[0].id)}`;
+      url += `&soba_event_id=${encodeURIComponent(dataObject.soba_event_id)}`;
     }
 
     if (!this.core.isEmptyOrNull(dataObject.soba_status_id)) {
