@@ -115,13 +115,15 @@
                         headerCellTemplate="event4TitleHeaderTemplate">
                     </dxi-column>
 
+                    <dxi-column dataField="amount_6" [caption]="'Amount' | translate"
+                        headerCellTemplate="event6TitleHeaderTemplate">
+                    </dxi-column>
+
                     <dxi-column dataField="amount_8" [caption]="'Amount' | translate"
                         headerCellTemplate="event8TitleHeaderTemplate">
                     </dxi-column>
 
-                    <dxi-column dataField="amount_6" [caption]="'Amount' | translate"
-                        headerCellTemplate="event6TitleHeaderTemplate">
-                    </dxi-column>
+                   
 
                     <dxi-column dataField="total" [caption]="'Total' | translate"
                     cellTemplate="totalTemplate">
@@ -151,14 +153,15 @@
                         <p style="font-size:16px">{{getEventName('4')}}</p>
                     </div>
 
-                    <div *dxTemplate="let info of 'event8TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('8')}}</p>
-                    </div>
-
                     <div *dxTemplate="let info of 'event6TitleHeaderTemplate'">
                         <p style="font-size:16px">{{getEventName('6')}}</p>
                     </div>
 
+                    <div *dxTemplate="let info of 'event8TitleHeaderTemplate'">
+                        <p style="font-size:16px">{{getEventName('8')}}</p>
+                    </div>
+
+                  
                     <!-- <div *dxTemplate="let info of 'event5TitleHeaderTemplate'">
                         <p style="font-size:16px">{{getEventName('5')}}</p>
                     </div> -->
@@ -256,8 +259,8 @@
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_2 ? contribution.amount_2 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_3 ? contribution.amount_3 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_4 ? contribution.amount_4 : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_8 ? contribution.amount_8 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_6 ? contribution.amount_6 : '--' }}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_8 ? contribution.amount_8 : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse; text-align: center;"id="p_name">{{ contribution.total ? contribution.total : '--' }}</td>
                     <td style="border: 1px solid black;border-collapse: collapse;" id="p_name">{{ computeDate(contribution) }}</td>
                 </tr>
