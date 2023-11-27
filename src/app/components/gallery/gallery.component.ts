@@ -9,7 +9,7 @@ import { Lightbox } from "ngx-lightbox";
   styleUrls: ["./gallery.component.css"],
 })
 export class GalleryComponent implements OnInit {
-  public title = "Gallery - Consulate General of Cameroon in Paris,France";
+  public title = "Gallery - SOBA-06 Class";
   public date = new Date();
   private _album = [];
 
@@ -28,62 +28,62 @@ export class GalleryComponent implements OnInit {
   list = [
     {
       id: 1,
-      image: "assets/images/work/1.jpg",
-      title: "GROUP PICTURE, NEW CONSUL GENERAL",
+      image: "assets/images/gallery/1.jpg",
+      title: "GROUP PICTURE, SOBA GENERAL ELECTIONS 2020",
       text: "Events",
       category: "events",
     },
     {
       id: 2,
-      image: "assets/images/work/2.jpg",
-      title: "MME CHANTAL BIYA REÇOIT UNE DÉLÉGATION",
-      text: "News",
-      category: "news",
+      image: "assets/images/gallery/2.jpg",
+      title: "SOBA GENERAL ELECTIONS NOVEMBER 2023",
+      text: "Events",
+      category: "events",
     },
     {
       id: 3,
-      image: "assets/images/work/3.jpg",
-      title: "YAOUNDÉ ET MALABO SE CONCERTENT",
-      text: "Diplomacy",
-      category: "diplomacy",
+      image: "assets/images/gallery/3.jpg",
+      title: "COURTESY VISIT",
+      text: "General",
+      category: "general",
     },
     {
       id: 4,
-      image: "assets/images/work/4.jpg",
+      image: "assets/images/gallery/4.jpg",
       title:
-        "BUREAU CHARGÉ DE L'ACCOMPAGNEMENT DE LA DIASPORA CAMEROUNAISE DE FRANCE",
+        "ESEME EMMANUEL AND PONE EUGENE",
       text: "News",
       category: "news",
     },
-    {
-      id: 5,
-      image: "assets/images/work/5.jpg",
-      title: "JOHN BILLY EKO, NOUVEAU CONSUL GÉNÉRAL A PARIS",
-      text: "Events",
-      category: "events",
-    },
-    {
-      id: 6,
-      image: "assets/images/work/6.jpg",
-      title: "L'AMBASSADEUR D'ESPAGNE EN FIN DE SEJOUR",
-      text: "Diplomacy",
-      category: "diplomacy",
-    },
-    {
-      id: 7,
-      image: "assets/images/work/7.jpg",
-      title: "NOUVEAU CONSUL GÉNÉRAL A PARIS,SERRAGE DE MAINS",
-      text: "Events",
-      category: "events",
-    },
-    {
-      id: 8,
-      image: "assets/images/work/8.jpg",
-      title:
-        "LE TCHAD REMERCIE LE CAMEROUN POUR SON SOUTIEN AU DIALOGUE NATIONAL",
-      text: "Diplomacy",
-      category: "diplomacy",
-    },
+    // {
+    //   id: 5,
+    //   image: "assets/images/gallery/5.jpg",
+    //   title: "JOHN BILLY EKO, NOUVEAU CONSUL GÉNÉRAL A PARIS",
+    //   text: "Events",
+    //   category: "events",
+    // },
+    // {
+    //   id: 6,
+    //   image: "assets/images/gallery/6.jpg",
+    //   title: "L'AMBASSADEUR D'ESPAGNE EN FIN DE SEJOUR",
+    //   text: "General",
+    //   category: "general",
+    // },
+    // {
+    //   id: 7,
+    //   image: "assets/images/gallery/7.jpg",
+    //   title: "NOUVEAU CONSUL GÉNÉRAL A PARIS,SERRAGE DE MAINS",
+    //   text: "Events",
+    //   category: "events",
+    // },
+    // {
+    //   id: 8,
+    //   image: "assets/images/gallery/8.jpg",
+    //   title:
+    //     "LE TCHAD REMERCIE LE CAMEROUN POUR SON SOUTIEN AU DIALOGUE NATIONAL",
+    //   text: "General",
+    //   category: "general",
+    // },
   ];
 
   constructor(
@@ -93,13 +93,13 @@ export class GalleryComponent implements OnInit {
   ) {
     //this.list.forEach((element, i) => {
     for (var i = 1; i <= this.list.length; i++) {
-      const src = "../../../assets/images/work/" + i + ".jpg";
+      const src = "../../../assets/images/gallery/" + i + ".jpg";
       const caption =
         "" +
         i +
         " " +
         (this.list[i - 1]?.title ? this.list[i - 1]?.title : " ");
-      const thumb = "../../../assets/images/work/" + i + "-thumb.jpg";
+      const thumb = "../../../assets/images/gallery/" + i + "-thumb.jpg";
       const item = {
         src: src,
         caption: caption,
@@ -119,12 +119,12 @@ export class GalleryComponent implements OnInit {
     this.metaTagService.addTags([
       {
         name: "description",
-        content: "Gallery of the Consulate General of Cameroon in Paris,France",
+        content: "Gallery of the SOBA-06 Class",
       },
       {
         name: "keywords",
         content:
-          "gallery of the  Consulate General of Cameroon in Paris,France, consulate general gallery",
+          "gallery of the  SOBA-06 Class, soba 06 gallery",
       },
       { name: "robots", content: "index, follow" },
       { name: "author", content: "Lawrence Elango" },

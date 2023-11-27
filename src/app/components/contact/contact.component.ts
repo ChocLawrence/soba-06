@@ -13,7 +13,7 @@ import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 export class ContactComponent implements OnInit {
   
 
-  public title = "Contact Us - Consulate General of Cameroon in Paris,France";
+  public title = "Contact Us - SOBA-06";
   public date = new Date();
   public loading = false;
   public destination: any;

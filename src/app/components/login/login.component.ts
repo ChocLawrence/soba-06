@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   public state = "pending";
   loginForm: FormGroup;
 
-  public title = "Login | Consulate General of Cameroon in Paris,France";
+  public title = "Login | SOBA-06 Class";
   public date = new Date();
 
   constructor(
@@ -46,12 +46,12 @@ export class LoginComponent implements OnInit {
       {
         name: "description",
         content:
-          "Login to the Consulate General of Cameroon in Paris,France, Cameroon",
+          "Login to the SOBA-06 Class, Cameroon",
       },
       {
         name: "keywords",
         content:
-          "Login to Consulate General of Cameroon in Paris,France,consulate general of cameroon in france,cameroon france consulate",
+          "Login to SOBA-06 Class,consulate general of cameroon in france,cameroon france consulate",
       },
       { name: "robots", content: "index, follow" },
       { name: "author", content: "Lawrence Elango" },
