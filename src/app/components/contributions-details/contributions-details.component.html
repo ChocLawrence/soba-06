@@ -123,16 +123,18 @@
                         headerCellTemplate="event8TitleHeaderTemplate">
                     </dxi-column>
 
-                   
+                    <dxi-column dataField="amount_9" [caption]="'Amount' | translate"
+                        headerCellTemplate="event9TitleHeaderTemplate">
+                    </dxi-column>
 
-                    <dxi-column dataField="total" [caption]="'Total' | translate"
+                    <dxi-column dataField="total" [caption]="'TOTAL' | translate"
                     cellTemplate="totalTemplate">
                     </dxi-column>
                     <!-- <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
                         cellTemplate="statusTemplate">
                     </dxi-column> -->
                     <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
-                        [caption]="'Recorded Date' | translate">
+                        [caption]="'Last Recorded' | translate">
                     </dxi-column>
                     <!-- <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
                     </dxi-column> -->
@@ -159,6 +161,10 @@
 
                     <div *dxTemplate="let info of 'event8TitleHeaderTemplate'">
                         <p style="font-size:16px">{{getEventName('8')}}</p>
+                    </div>
+
+                    <div *dxTemplate="let info of 'event9TitleHeaderTemplate'">
+                        <p style="font-size:16px">{{getEventName('9') | uppercase}}</p>
                     </div>
 
                   

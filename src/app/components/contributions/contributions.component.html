@@ -96,11 +96,12 @@
                 <div class="media-body content">
                   <h4><a href="javascript:void(0)" class="text-dark title">{{event.name}}</a>
                   </h4>
-                  <p class="text-muted location-time"><span class="text-dark h6">Beneficiary : </span><span
-                      class="text-danger">{{getMemberName(event.soba_member_id)}}</span> <br>
-                    <span class="text-dark h6">Deadline:</span>{{_core.getShortDate(event.deadline)}}<br>
-                    <span class="text-dark h6">Collected By :</span>{{event.collected_by}}<br>
-                    <span class="text-dark h6">Status : </span> <span class="badge-ongoing">{{getStatusName(event.soba_status_id)}}</span>
+                  <p class="text-muted location-time">
+                    <span *ngIf="event.soba_member_id"><span class="text-dark h6">Beneficiary : </span><span
+                      class="text-danger">{{getMemberName(event.soba_member_id)}}</span><br></span>
+                    <span class="text-dark h6">Deadline :&nbsp;</span>{{_core.getShortDate(event.deadline)}}<br>
+                    <span class="text-dark h6">Collected By :&nbsp;</span>{{event.collected_by}}<br>
+                    <span class="text-dark h6">Status :&nbsp;</span> <span class="badge-ongoing">{{getStatusName(event.soba_status_id)}}</span>
                   </p>
                   <a routerLink="/contributions/details" class="btn btn-sm btn-outline-primary mouse-down">View Details</a>
                 </div>
