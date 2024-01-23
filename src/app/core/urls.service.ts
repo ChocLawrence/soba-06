@@ -10,11 +10,11 @@ export class UrlsService {
     let returnUrl = "";
 
     if (url.includes("localhost")) {
-      returnUrl = "http://urchin-app-mnvhl.ondigitalocean.app/api/";
+      returnUrl = "https://cgapi.foodstability.com/api/";
     } else if (url.includes("cameroon-consulat.org")) {
-      returnUrl = "https://api.cameroon-consulat.org/api/";
+      returnUrl = "https://cgapi.foodstability.com/api/";
     } else {
-      returnUrl = "https://urchin-app-mnvhl.ondigitalocean.app/api/";
+      returnUrl = "https://cgapi.foodstability.com/api/";
     }
 
     return returnUrl;
@@ -26,11 +26,11 @@ export class UrlsService {
     let returnUrl = "";
 
     if (url.includes("localhost")) {
-      returnUrl = "http://urchin-app-mnvhl.ondigitalocean.app/storage/";
+      returnUrl = "https://cgapi.foodstability.com/storage/";
     } else if (url.includes("cameroon-consulat.org")) {
-      returnUrl = "https://api.cameroon-consulat.org/storage/";
+      returnUrl = "https://cgapi.foodstability.com/storage/";
     } else {
-      returnUrl = "https://urchin-app-mnvhl.ondigitalocean.app/storage/";
+      returnUrl = "https://cgapi.foodstability.com/storage/";
     }
     
     return returnUrl;
