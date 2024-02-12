@@ -69,9 +69,9 @@ export class ModalContributionComponent implements OnInit {
   ngOnInit(): void {
     this.contributionForm = this.fb.group({
       amount: ["", Validators.required],
-      soba_event_id: ["", Validators.required],
-      soba_status_id: [""],
-      soba_member_id: ["", Validators.required],
+      event_id: ["", Validators.required],
+      status_id: [""],
+      member_id: ["", Validators.required],
       comment: ["",]
     });
   }
@@ -87,7 +87,7 @@ export class ModalContributionComponent implements OnInit {
 
   public onEventDeSelect(contribution: any) {
     this.contributionForm.patchValue({
-      soba_event_id: null,
+      event_id: null,
     });
   }
 
@@ -97,7 +97,7 @@ export class ModalContributionComponent implements OnInit {
 
   public onStatusDeSelect(contribution: any) {
     this.contributionForm.patchValue({
-      soba_status_id: null,
+      status_id: null,
     });
   }
 
@@ -107,22 +107,22 @@ export class ModalContributionComponent implements OnInit {
 
   public onMemberDeSelect(contribution: any) {
     this.contributionForm.patchValue({
-      soba_member_id: null,
+      member_id: null,
     });
   }
 
   public checkEventSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedEvent = this.contributionForm.value.soba_event_id;
+    const selectedEvent = this.contributionForm.value.event_id;
 
     if (selectedEvent.length == 1) {
       this.contributionForm.patchValue({
-        soba_event_id: selectedEvent,
+        event_id: selectedEvent,
       });
     } else {
       this.contributionForm.patchValue({
-        soba_event_id: null,
+        event_id: null,
       });
     }
   }
@@ -131,15 +131,15 @@ export class ModalContributionComponent implements OnInit {
   public checkStatusSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedStatus= this.contributionForm.value.soba_status_id;
+    const selectedStatus= this.contributionForm.value.status_id;
 
     if (selectedStatus.length == 1) {
       this.contributionForm.patchValue({
-        soba_status_id: selectedStatus,
+        status_id: selectedStatus,
       });
     } else {
       this.contributionForm.patchValue({
-        soba_status_id: null,
+        status_id: null,
       });
     }
   }
@@ -147,15 +147,15 @@ export class ModalContributionComponent implements OnInit {
   public checkMemberSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedMember= this.contributionForm.value.soba_member_id;
+    const selectedMember= this.contributionForm.value.member_id;
 
     if (selectedMember.length == 1) {
       this.contributionForm.patchValue({
-        soba_member_id: selectedMember,
+        member_id: selectedMember,
       });
     } else {
       this.contributionForm.patchValue({
-        soba_member_id: null,
+        member_id: null,
       });
     }
   }
@@ -183,7 +183,7 @@ export class ModalContributionComponent implements OnInit {
           this.core.ngbModalOptions
         );
       } else if (this.action == "deleteContribution") {
-        this.modalTitle = "Delete Contribution" + " | " + `${this.contribution.soba_event_id}`;
+        this.modalTitle = "Delete Contribution" + " | " + `${this.contribution.event_id}`;
         this.modalText = "Are you sure you want to delete ?";
         this.populateContributionForm();
         this.modalReference = this.modalService.open(
@@ -282,28 +282,28 @@ export class ModalContributionComponent implements OnInit {
   }
 
   getContributionName() {
-    return this.contribution.soba_event_id;
+    return this.contribution.event_id;
   }
 
   populateContributionForm() {
     let selectedEvent = this.events.filter((paymentState: { id: any }) => {
-      return paymentState.id == this.contribution.soba_event_id;
+      return paymentState.id == this.contribution.event_id;
     });
 
     let selectedStatus = this.statuses.filter((status: { id: any }) => {
-      return status.id == this.contribution.soba_status_id;
+      return status.id == this.contribution.status_id;
     });
 
     let selectedMember = this.members.filter((member: { id: any }) => {
-      return member.id == this.contribution.soba_member_id;
+      return member.id == this.contribution.member_id;
     });
 
 
     this.contributionForm.patchValue({
       amount: this.contribution.amount, 
-      soba_member_id: selectedMember,
-      soba_event_id: selectedEvent,
-      soba_status_id: selectedStatus,
+      member_id: selectedMember,
+      event_id: selectedEvent,
+      status_id: selectedStatus,
       comment: this.contribution.comment,
     });
   }
@@ -312,9 +312,9 @@ export class ModalContributionComponent implements OnInit {
     if (this.action == "addContribution" || this.action == "updateContribution") {
       return (
         this.contributionForm.controls["amount"].valid &&
-        this.contributionForm.controls["soba_event_id"].valid &&
-        this.contributionForm.controls["soba_status_id"].valid &&
-        this.contributionForm.controls["soba_member_id"].valid
+        this.contributionForm.controls["event_id"].valid &&
+        this.contributionForm.controls["status_id"].valid &&
+        this.contributionForm.controls["member_id"].valid
       );
     } else {
       return false;

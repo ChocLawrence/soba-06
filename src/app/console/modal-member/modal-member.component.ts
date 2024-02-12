@@ -67,8 +67,8 @@ export class ModalMemberComponent implements OnInit {
       email: [""],
       phone: ["", Validators.required],
       bio: [""],
-      soba_status_id: [""],
-      soba_branch_id: ["", Validators.required],
+      status_id: [""],
+      branch_id: ["", Validators.required],
     });
   }
 
@@ -102,7 +102,7 @@ export class ModalMemberComponent implements OnInit {
 
   public onStatusDeSelect(status: any) {
     this.memberForm.patchValue({
-      soba_status_id: null,
+      status_id: null,
     });
   }
 
@@ -112,22 +112,22 @@ export class ModalMemberComponent implements OnInit {
 
   public onBranchDeSelect(member: any) {
     this.memberForm.patchValue({
-      soba_branch_id: null,
+      branch_id: null,
     });
   }
 
   public checkBranchSelection(branch: any) {
     let value: any = branch;
     // get packages and separate with commas
-    const selectedBranch = this.memberForm.value.soba_branch_id;
+    const selectedBranch = this.memberForm.value.branch_id;
 
     if (selectedBranch.length == 1) {
       this.memberForm.patchValue({
-        soba_branch_id: selectedBranch,
+        branch_id: selectedBranch,
       });
     } else {
       this.memberForm.patchValue({
-        soba_branch_id: null,
+        branch_id: null,
       });
     }
   }
@@ -135,15 +135,15 @@ export class ModalMemberComponent implements OnInit {
   public checkStatusSelection(status: any) {
     let value: any = status;
     // get packages and separate with commas
-    const selectedStatus= this.memberForm.value.soba_status_id;
+    const selectedStatus= this.memberForm.value.status_id;
 
     if (selectedStatus.length == 1) {
       this.memberForm.patchValue({
-        soba_status_id: selectedStatus,
+        status_id: selectedStatus,
       });
     } else {
       this.memberForm.patchValue({
-        soba_status_id: null,
+        status_id: null,
       });
     }
   }
@@ -151,15 +151,15 @@ export class ModalMemberComponent implements OnInit {
   public checkMemberSelection(member: any) {
     let value: any = member;
     // get packages and separate with commas
-    const selectedMember= this.memberForm.value.soba_branch_id;
+    const selectedMember= this.memberForm.value.branch_id;
 
     if (selectedMember.length == 1) {
       this.memberForm.patchValue({
-        soba_branch_id: selectedMember,
+        branch_id: selectedMember,
       });
     } else {
       this.memberForm.patchValue({
-        soba_branch_id: null,
+        branch_id: null,
       });
     }
   }
@@ -292,11 +292,11 @@ export class ModalMemberComponent implements OnInit {
 
   populateMemberForm() {
     let selectedStatus = this.statuses.filter((status: { id: any }) => {
-      return status.id == this.member.soba_status_id;
+      return status.id == this.member.status_id;
     });
 
     let selectedBranch = this.branches.filter((branch: { id: any }) => {
-      return branch.id == this.member.soba_branch_id;
+      return branch.id == this.member.branch_id;
     });
 
 
@@ -308,8 +308,8 @@ export class ModalMemberComponent implements OnInit {
       email: this.member.email,
       phone: this.member.phone,
       bio: this.member.bio,
-      soba_status_id: selectedStatus,
-      soba_branch_id: selectedBranch,
+      status_id: selectedStatus,
+      branch_id: selectedBranch,
      
     });
   }

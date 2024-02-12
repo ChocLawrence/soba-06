@@ -27,11 +27,11 @@
                             </li>
                             <li class="mb-2">
                                 {{ "Payment State" | translate }}
-                                <span class="float-right text-3">{{ event.soba_payment_state }}</span>
+                                <span class="float-right text-3">{{ event.payment_state }}</span>
                             </li>
                             <li class="mb-2">
                                 {{ "Category" | translate }}
-                                <span class="float-right text-3">{{ event.soba_category_id }}</span>
+                                <span class="float-right text-3">{{ event.category_id }}</span>
                             </li>
                             <li class="mb-2">
                                 {{ "Deadline" | translate }}
@@ -55,11 +55,11 @@
                             </li>
                             <li class="mb-2">
                                 {{ "Status" | translate }}
-                                <span class="float-right text-3">{{ event.soba_status_id }}</span>
+                                <span class="float-right text-3">{{ event.status_id }}</span>
                             </li>
                             <li class="mb-2">
                                 {{ "Member" | translate }}
-                                <span class="float-right text-3">{{ event.soba_member_id }}</span>
+                                <span class="float-right text-3">{{ event.member_id }}</span>
                             </li>
                         </ul>
                         <hr class="mb-2" />
@@ -100,7 +100,7 @@
                     ">
                                 <ng-multiselect-dropdown [placeholder]="'Payment States' | translate"
                                     [settings]="dropdownSettings" [data]="paymentStates"
-                                    [formControl]="$any(eventForm).controls['soba_payment_state']"
+                                    [formControl]="$any(eventForm).controls['payment_state']"
                                     (onSelect)="onPaymentStateSelect($event)"
                                     (onDeSelect)="onPaymentStateDeSelect($event)">
                                 </ng-multiselect-dropdown>
@@ -111,7 +111,7 @@
                     ">
                                 <ng-multiselect-dropdown [placeholder]="'Categories' | translate"
                                     [settings]="dropdownSettings" [data]="categories"
-                                    [formControl]="$any(eventForm).controls['soba_category_id']"
+                                    [formControl]="$any(eventForm).controls['category_id']"
                                     (onSelect)="onCategorySelect($event)" (onDeSelect)="onCategoryDeSelect($event)">
                                 </ng-multiselect-dropdown>
                             </div>
@@ -166,7 +166,7 @@
                           ">
                                 <ng-multiselect-dropdown [placeholder]="'Statuses' | translate"
                                     [settings]="dropdownSettings" [data]="statuses"
-                                    [formControl]="$any(eventForm).controls['soba_status_id']"
+                                    [formControl]="$any(eventForm).controls['status_id']"
                                     (onSelect)="onStatusSelect($event)" (onDeSelect)="onStatusDeSelect($event)">
                                 </ng-multiselect-dropdown>
                             </div>
@@ -176,7 +176,7 @@
                             ">
                                 <ng-multiselect-dropdown [placeholder]="'Beneficiary' | translate"
                                     [settings]="memberDropdownSettings" [data]="members"
-                                    [formControl]="$any(eventForm).controls['soba_member_id']"
+                                    [formControl]="$any(eventForm).controls['member_id']"
                                     (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
                                 </ng-multiselect-dropdown>
                             </div>

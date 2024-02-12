@@ -145,8 +145,8 @@ export class ContributionsDetailsComponent implements OnInit {
 
   initSearchContributionsForm() {
     this.searchContributionForm = this.fb.group({
-      soba_member_id: [''],
-      soba_event_id: ['']
+      member_id: [''],
+      event_id: ['']
     });
   }
 
@@ -171,9 +171,9 @@ export class ContributionsDetailsComponent implements OnInit {
     //filter contributions
 
     let eventObj = [];
-    if(values.soba_event_id){
-      eventObj.push(values.soba_event_id[0].id);
-      values.soba_event_id =  eventObj;
+    if(values.event_id){
+      eventObj.push(values.event_id[0].id);
+      values.event_id =  eventObj;
     }
 
     this.getContributions(values);
@@ -185,7 +185,7 @@ export class ContributionsDetailsComponent implements OnInit {
 
   public onMemberDeSelect(contribution: any) {
     this.searchContributionForm.patchValue({
-      soba_member_id: null,
+      member_id: null,
     });
     this.onSubmitSearchContributions();
   }
@@ -200,7 +200,7 @@ export class ContributionsDetailsComponent implements OnInit {
 
   public onEventDeSelect(contribution: any) {
     this.searchContributionForm.patchValue({
-      soba_event_id: null,
+      event_id: null,
     });
     this.onSubmitSearchContributions();
   }
@@ -208,15 +208,15 @@ export class ContributionsDetailsComponent implements OnInit {
   public checkEventSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedEvent = this.searchContributionForm.value.soba_event_id;
+    const selectedEvent = this.searchContributionForm.value.event_id;
 
     if (selectedEvent.length == 1) {
       this.searchContributionForm.patchValue({
-        soba_event_id: selectedEvent,
+        event_id: selectedEvent,
       });
     } else {
       this.searchContributionForm.patchValue({
-        soba_event_id: null,
+        event_id: null,
       });
     }
 
@@ -227,15 +227,15 @@ export class ContributionsDetailsComponent implements OnInit {
   public checkMemberSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedMember = this.searchContributionForm.value.soba_member_id;
+    const selectedMember = this.searchContributionForm.value.member_id;
 
     if (selectedMember.length == 1) {
       this.searchContributionForm.patchValue({
-        soba_member_id: selectedMember,
+        member_id: selectedMember,
       });
     } else {
       this.searchContributionForm.patchValue({
-        soba_member_id: null,
+        member_id: null,
       });
     }
 
@@ -286,7 +286,7 @@ export class ContributionsDetailsComponent implements OnInit {
     if(this.events && this.ongoingStatus){
 
       let ongoingEvents = this.events.filter((item) => {
-        return item.soba_status_id == this.ongoingStatus[0].id;
+        return item.status_id == this.ongoingStatus[0].id;
       });
 
       this.ongoingEvents = ongoingEvents;
@@ -327,7 +327,7 @@ export class ContributionsDetailsComponent implements OnInit {
     this.loadingData = true;
 
     //check for ongoing
-    //&& this._core.isEmptyOrNull(searchObject.soba_event_id)
+    //&& this._core.isEmptyOrNull(searchObject.event_id)
     
     if(this.ongoingEvents.length>0){
       let ongoingObject = [];
@@ -336,7 +336,7 @@ export class ContributionsDetailsComponent implements OnInit {
         ongoingObject.push(item.id)
       });
 
-      searchObject.soba_event_id = ongoingObject;
+      searchObject.event_id = ongoingObject;
 
     }
     
@@ -376,7 +376,7 @@ export class ContributionsDetailsComponent implements OnInit {
             if (!this._core.isEmptyOrNull(this.contributions.length)) {
 
               let contributions = this.contributions.filter((item) => {
-                return item.soba_member_id == member.id;
+                return item.member_id == member.id;
               });
 
               if (!this._core.isEmptyOrNull(contributions.length)) {
@@ -385,13 +385,13 @@ export class ContributionsDetailsComponent implements OnInit {
                 let contributionTotal = 0;
 
                 contributions.forEach((contribution, index) => {
-                  member['event_' + contribution.soba_event_id] =
-                    contribution.soba_event_id;
-                  member['amount_' + contribution.soba_event_id] =
+                  member['event_' + contribution.event_id] =
+                    contribution.event_id;
+                  member['amount_' + contribution.event_id] =
                     contribution.amount;
-                  member['status_' + contribution.soba_event_id] =
-                    contribution.soba_status_id;
-                  member['date_' + contribution.soba_event_id] =
+                  member['status_' + contribution.event_id] =
+                    contribution.status_id;
+                  member['date_' + contribution.event_id] =
                     contribution.created_at;
                   contributionTotal += contribution.amount ? Number(contribution.amount) : Number(0);
 
@@ -489,7 +489,7 @@ export class ContributionsDetailsComponent implements OnInit {
       //for each event, filter contributions and sum amount
 
       let contributions = this.contributions.filter((item) => {
-        return item.soba_event_id == event.id;
+        return item.event_id == event.id;
       });
 
       let eventSum = this.sumContributions(contributions);

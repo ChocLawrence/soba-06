@@ -23,7 +23,7 @@ export class EventsService {
     private urlService: UrlsService,
     public core: CoreService
   ) {
-    this.apiUrl = `${this.urlService.apiUrl()}` + 's_events';
+    this.apiUrl = `${this.urlService.apiUrl()}` + 'events';
     this.httpOptions = this.core.httpOptions;
   }
 
@@ -34,27 +34,27 @@ export class EventsService {
       url += `amount=${encodeURIComponent(dataObject.amount)}`;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_event_id)) {
-      url += `&soba_event_id=${encodeURIComponent(
-        dataObject.soba_event_id[0].id
+    if (!this.core.isEmptyOrNull(dataObject.event_id)) {
+      url += `&event_id=${encodeURIComponent(
+        dataObject.event_id[0].id
       )}`;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_category_id)) {
-      url += `&soba_category_id=${encodeURIComponent(
-        dataObject.soba_category_id[0].id
+    if (!this.core.isEmptyOrNull(dataObject.category_id)) {
+      url += `&category_id=${encodeURIComponent(
+        dataObject.category_id[0].id
       )}`;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_status_id)) {
-      url += `&soba_status_id=${encodeURIComponent(
-        dataObject.soba_status_id[0].id
+    if (!this.core.isEmptyOrNull(dataObject.status_id)) {
+      url += `&status_id=${encodeURIComponent(
+        dataObject.status_id[0].id
       )}`;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_member_id)) {
-      url += `&soba_member_id=${encodeURIComponent(
-        dataObject.soba_member_id[0].id
+    if (!this.core.isEmptyOrNull(dataObject.member_id)) {
+      url += `&member_id=${encodeURIComponent(
+        dataObject.member_id[0].id
       )}`;
     }
 
@@ -102,12 +102,12 @@ export class EventsService {
       params.append('amount', dataObject.amount);
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_payment_state)) {
-      params.append('soba_payment_state', dataObject.soba_payment_state[0].id);
+    if (!this.core.isEmptyOrNull(dataObject.payment_state)) {
+      params.append('payment_state', dataObject.payment_state[0].id);
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_category_id)) {
-      params.append('soba_category_id', dataObject.soba_category_id[0].id);
+    if (!this.core.isEmptyOrNull(dataObject.category_id)) {
+      params.append('category_id', dataObject.category_id[0].id);
     }
 
     if (!this.core.isEmptyOrNull(dataObject.deadline)) {
@@ -130,12 +130,12 @@ export class EventsService {
       params.append('comment', dataObject.comment);
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_status_id)) {
-      params.append('soba_status_id', dataObject.soba_status_id[0].id);
+    if (!this.core.isEmptyOrNull(dataObject.status_id)) {
+      params.append('status_id', dataObject.status_id[0].id);
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_member_id)) {
-      params.append('soba_member_id', dataObject.soba_member_id[0].id);
+    if (!this.core.isEmptyOrNull(dataObject.member_id)) {
+      params.append('member_id', dataObject.member_id[0].id);
     }
 
     return this.core.makeRemoteRequest(url, 'post', params, this.httpOptions);
@@ -167,13 +167,13 @@ export class EventsService {
       params = dataObject;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_payment_state)) {
-      dataObject.soba_payment_state = dataObject.soba_payment_state[0].id;
+    if (!this.core.isEmptyOrNull(dataObject.payment_state)) {
+      dataObject.payment_state = dataObject.payment_state[0].id;
       params = dataObject;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_category_id)) {
-      dataObject.soba_category_id = dataObject.soba_category_id[0].id;
+    if (!this.core.isEmptyOrNull(dataObject.category_id)) {
+      dataObject.category_id = dataObject.category_id[0].id;
       params = dataObject;
     }
 
@@ -197,13 +197,13 @@ export class EventsService {
       params = dataObject;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_status_id)) {
-      dataObject.soba_status_id = dataObject.soba_status_id[0].id;
+    if (!this.core.isEmptyOrNull(dataObject.status_id)) {
+      dataObject.status_id = dataObject.status_id[0].id;
       params = dataObject;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_member_id)) {
-      dataObject.soba_member_id = dataObject.soba_member_id[0].id;
+    if (!this.core.isEmptyOrNull(dataObject.member_id)) {
+      dataObject.member_id = dataObject.member_id[0].id;
       params = dataObject;
     }
 

@@ -71,15 +71,15 @@ export class ModalEventComponent implements OnInit {
       name: ["", Validators.required],
       description: ["", Validators.required],
       amount: ["", Validators.required],
-      soba_payment_state: ["", Validators.required],
-      soba_category_id: ["", Validators.required],
+      payment_state: ["", Validators.required],
+      category_id: ["", Validators.required],
       deadline: ["", Validators.required],
       handed_over_date: [""],
       handed_over_by: [""],
       collected_by: ["", Validators.required],
       comment: ["",],
-      soba_status_id: [""],
-      soba_member_id: [""],
+      status_id: [""],
+      member_id: [""],
     });
   }
 
@@ -94,7 +94,7 @@ export class ModalEventComponent implements OnInit {
 
   public onPaymentStateDeSelect(event: any) {
     this.eventForm.patchValue({
-      soba_payment_state: null,
+      payment_state: null,
     });
   }
 
@@ -104,7 +104,7 @@ export class ModalEventComponent implements OnInit {
 
   public onCategoryDeSelect(event: any) {
     this.eventForm.patchValue({
-      soba_category_id: null,
+      category_id: null,
     });
   }
 
@@ -114,7 +114,7 @@ export class ModalEventComponent implements OnInit {
 
   public onStatusDeSelect(event: any) {
     this.eventForm.patchValue({
-      soba_status_id: null,
+      status_id: null,
     });
   }
 
@@ -124,22 +124,22 @@ export class ModalEventComponent implements OnInit {
 
   public onMemberDeSelect(event: any) {
     this.eventForm.patchValue({
-      soba_member_id: null,
+      member_id: null,
     });
   }
 
   public checkPaymentStateSelection(event: any) {
     let value: any = event;
     // get packages and separate with commas
-    const selectedPaymentState = this.eventForm.value.soba_payment_state;
+    const selectedPaymentState = this.eventForm.value.payment_state;
 
     if (selectedPaymentState.length == 1) {
       this.eventForm.patchValue({
-        soba_payment_state: selectedPaymentState,
+        payment_state: selectedPaymentState,
       });
     } else {
       this.eventForm.patchValue({
-        soba_payment_state: null,
+        payment_state: null,
       });
     }
   }
@@ -148,15 +148,15 @@ export class ModalEventComponent implements OnInit {
   public checkCategorySelection(event: any) {
     let value: any = event;
     // get packages and separate with commas
-    const selectedCategory = this.eventForm.value.soba_category_id;
+    const selectedCategory = this.eventForm.value.category_id;
 
     if (selectedCategory.length == 1) {
       this.eventForm.patchValue({
-        soba_category_id: selectedCategory,
+        category_id: selectedCategory,
       });
     } else {
       this.eventForm.patchValue({
-        soba_category_id: null,
+        category_id: null,
       });
     }
   }
@@ -164,15 +164,15 @@ export class ModalEventComponent implements OnInit {
   public checkStatusSelection(event: any) {
     let value: any = event;
     // get packages and separate with commas
-    const selectedStatus= this.eventForm.value.soba_status_id;
+    const selectedStatus= this.eventForm.value.status_id;
 
     if (selectedStatus.length == 1) {
       this.eventForm.patchValue({
-        soba_status_id: selectedStatus,
+        status_id: selectedStatus,
       });
     } else {
       this.eventForm.patchValue({
-        soba_status_id: null,
+        status_id: null,
       });
     }
   }
@@ -180,15 +180,15 @@ export class ModalEventComponent implements OnInit {
   public checkMemberSelection(event: any) {
     let value: any = event;
     // get packages and separate with commas
-    const selectedMember= this.eventForm.value.soba_member_id;
+    const selectedMember= this.eventForm.value.member_id;
 
     if (selectedMember.length == 1) {
       this.eventForm.patchValue({
-        soba_member_id: selectedMember,
+        member_id: selectedMember,
       });
     } else {
       this.eventForm.patchValue({
-        soba_member_id: null,
+        member_id: null,
       });
     }
   }
@@ -315,24 +315,24 @@ export class ModalEventComponent implements OnInit {
   }
 
   getEventName() {
-    return this.event.soba_payment_state;
+    return this.event.payment_state;
   }
 
   populateEventForm() {
     let selectedPaymentState = this.paymentStates.filter((paymentState: { id: any }) => {
-      return paymentState.id == this.event.soba_payment_state;
+      return paymentState.id == this.event.payment_state;
     });
 
     let selectedCategory = this.categories.filter((category: { id: any }) => {
-      return category.id == this.event.soba_category_id;
+      return category.id == this.event.category_id;
     });
 
     let selectedStatus = this.statuses.filter((status: { id: any }) => {
-      return status.id == this.event.soba_status_id;
+      return status.id == this.event.status_id;
     });
 
     let selectedMember = this.members.filter((member: { id: any }) => {
-      return member.id == this.event.soba_member_id;
+      return member.id == this.event.member_id;
     });
 
 
@@ -340,15 +340,15 @@ export class ModalEventComponent implements OnInit {
       name: this.event.name,
       description: this.event.description,
       amount: this.event.amount,
-      soba_payment_state: selectedPaymentState,
-      soba_category_id: selectedCategory,
+      payment_state: selectedPaymentState,
+      category_id: selectedCategory,
       deadline: this.event.deadline,
       handed_over_date: this.event.handed_over_date,
       handed_over_by: this.event.handed_over_by,
       collected_by: this.event.collected_by,
       comment: this.event.comment,
-      soba_status_id: selectedStatus,
-      soba_member_id: selectedMember,
+      status_id: selectedStatus,
+      member_id: selectedMember,
      
     });
   }
@@ -359,11 +359,11 @@ export class ModalEventComponent implements OnInit {
         this.eventForm.controls["name"].valid &&
         this.eventForm.controls["description"].valid &&
         this.eventForm.controls["amount"].valid &&
-        this.eventForm.controls["soba_payment_state"].valid &&
-        this.eventForm.controls["soba_category_id"].valid &&
+        this.eventForm.controls["payment_state"].valid &&
+        this.eventForm.controls["category_id"].valid &&
         this.eventForm.controls["deadline"].valid &&
-        this.eventForm.controls["soba_status_id"].valid &&
-        this.eventForm.controls["soba_member_id"].valid
+        this.eventForm.controls["status_id"].valid &&
+        this.eventForm.controls["member_id"].valid
       );
     } else {
       return false;

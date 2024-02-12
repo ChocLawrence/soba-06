@@ -95,9 +95,9 @@ export class ContributionsComponent implements OnInit {
 
   initSearchContributionsForm() {
     this.searchContributionForm = this.fb.group({
-      soba_member_id: [""],
-      soba_event_id: [""],
-      soba_status_id: [""]
+      member_id: [""],
+      event_id: [""],
+      status_id: [""]
     });
   }
 
@@ -128,7 +128,7 @@ export class ContributionsComponent implements OnInit {
 
   public onStatusDeSelect(contribution: any) {
     this.searchContributionForm.patchValue({
-      soba_status_id: null,
+      status_id: null,
     });
   }
 
@@ -138,7 +138,7 @@ export class ContributionsComponent implements OnInit {
 
   public onMemberDeSelect(contribution: any) {
     this.searchContributionForm.patchValue({
-      soba_member_id: null,
+      member_id: null,
     });
   }
 
@@ -152,7 +152,7 @@ export class ContributionsComponent implements OnInit {
 
   public onEventDeSelect(contribution: any) {
     this.searchContributionForm.patchValue({
-      soba_event_id: null,
+      event_id: null,
     });
   }
 
@@ -160,15 +160,15 @@ export class ContributionsComponent implements OnInit {
   public checkEventSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedEvent = this.searchContributionForm.value.soba_event_id;
+    const selectedEvent = this.searchContributionForm.value.event_id;
 
     if (selectedEvent.length == 1) {
       this.searchContributionForm.patchValue({
-        soba_event_id: selectedEvent,
+        event_id: selectedEvent,
       });
     } else {
       this.searchContributionForm.patchValue({
-        soba_event_id: null,
+        event_id: null,
       });
     }
   }
@@ -177,15 +177,15 @@ export class ContributionsComponent implements OnInit {
   public checkStatusSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedStatus= this.searchContributionForm.value.soba_status_id;
+    const selectedStatus= this.searchContributionForm.value.status_id;
 
     if (selectedStatus.length == 1) {
       this.searchContributionForm.patchValue({
-        soba_status_id: selectedStatus,
+        status_id: selectedStatus,
       });
     } else {
       this.searchContributionForm.patchValue({
-        soba_status_id: null,
+        status_id: null,
       });
     }
   }
@@ -193,15 +193,15 @@ export class ContributionsComponent implements OnInit {
   public checkMemberSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
-    const selectedMember= this.searchContributionForm.value.soba_member_id;
+    const selectedMember= this.searchContributionForm.value.member_id;
 
     if (selectedMember.length == 1) {
       this.searchContributionForm.patchValue({
-        soba_member_id: selectedMember,
+        member_id: selectedMember,
       });
     } else {
       this.searchContributionForm.patchValue({
-        soba_member_id: null,
+        member_id: null,
       });
     }
   }

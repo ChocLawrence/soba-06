@@ -39,19 +39,19 @@
                     <div class="col-md-3">
                         <ng-multiselect-dropdown [placeholder]="'Beneficiary' | translate"
                             [settings]="memberDropdownSettings" [data]="members"
-                            [formControl]="$any(searchContributionForm).controls['soba_member_id']"
+                            [formControl]="$any(searchContributionForm).controls['member_id']"
                             (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
                         </ng-multiselect-dropdown>
                     </div>
                     <div class="col-md-3">
                         <ng-multiselect-dropdown [placeholder]="'Event' | translate" [settings]="dropdownSettings"
-                            [data]="events" [formControl]="$any(searchContributionForm).controls['soba_event_id']"
+                            [data]="events" [formControl]="$any(searchContributionForm).controls['event_id']"
                             (onSelect)="onEventSelect($event)" (onDeSelect)="onEventDeSelect($event)">
                         </ng-multiselect-dropdown>
                     </div>
                     <div class="col-md-3">
                         <ng-multiselect-dropdown [placeholder]="'Statuses' | translate" [settings]="dropdownSettings"
-                            [data]="statuses" [formControl]="$any(searchContributionForm).controls['soba_status_id']"
+                            [data]="statuses" [formControl]="$any(searchContributionForm).controls['status_id']"
                             (onSelect)="onStatusSelect($event)" (onDeSelect)="onStatusDeSelect($event)">
                         </ng-multiselect-dropdown>
                     </div>
@@ -76,14 +76,14 @@
                     </dxo-search-panel>
 
                     <!-- Columns -->
-                    <dxi-column width="auto" dataField="soba_member_id" [caption]="'Full Name' | translate"
+                    <dxi-column width="300" dataField="member_id" [caption]="'Full Name' | translate"
                         cellTemplate="memberTemplate">
                     </dxi-column>
-                    <dxi-column dataField="soba_event_id" [caption]="'Event' | translate" cellTemplate="eventTemplate">
+                    <dxi-column dataField="event_id" [caption]="'Event' | translate" cellTemplate="eventTemplate">
                     </dxi-column>
                     <dxi-column dataField="amount" [caption]="'Amount' | translate">
                     </dxi-column>
-                    <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
+                    <dxi-column dataField="status_id" [caption]="'Status' | translate"
                         cellTemplate="statusTemplate">
                     </dxi-column>
                     <!-- <dxi-column dataField="comment" [caption]="'Comment' | translate" cellTemplate="commentTemplate">
@@ -104,19 +104,19 @@
 
                     <div *dxTemplate="let cell of 'eventTemplate'">
                         <span>
-                            {{ cell.data.soba_event_id ? getEventName(cell.data.soba_event_id) : "-" }}
+                            {{ cell.data.event_id ? getEventName(cell.data.event_id) : "-" }}
                         </span>
                     </div>
 
                     <div *dxTemplate="let cell of 'statusTemplate'">
                         <span>
-                            {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
+                            {{ cell.data.status_id ? getStatusName(cell.data.status_id) : "-" }}
                         </span>
                     </div>
 
                     <div *dxTemplate="let cell of 'memberTemplate'">
                         <span>
-                            {{ cell.data.soba_member_id ? getMemberName(cell.data.soba_member_id) : "-" }}
+                            {{ cell.data.member_id ? getMemberName(cell.data.member_id) : "-" }}
                         </span>
                     </div>
 

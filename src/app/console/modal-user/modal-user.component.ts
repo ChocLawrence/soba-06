@@ -29,7 +29,6 @@ export class ModalUserComponent implements OnInit {
 
 
   @Input() user: any;
-
   @Input() action: any;
   @Input() origin: any;
   @Output() userModalClosed = new EventEmitter();

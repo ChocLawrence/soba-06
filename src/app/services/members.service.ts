@@ -27,7 +27,7 @@ export class MembersService {
     public core: CoreService
   ) {
 
-    this.apiUrl = `${this.urlService.apiUrl()}` + 's_members';
+    this.apiUrl = `${this.urlService.apiUrl()}` + 'members';
     this.httpOptions = this.core.httpOptions;
   }
 
@@ -35,12 +35,12 @@ export class MembersService {
   getMembers(dataObject: any): Promise<any> {
     let url = this.apiUrl + '?';
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_status_id)) {
-      url += `&soba_status_id=${encodeURIComponent(dataObject.soba_status_id[0].id)}`;
+    if (!this.core.isEmptyOrNull(dataObject.status_id)) {
+      url += `&status_id=${encodeURIComponent(dataObject.status_id[0].id)}`;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_member_id)) {
-      url += `&soba_member_id=${encodeURIComponent(dataObject.soba_member_id[0].id)}`;
+    if (!this.core.isEmptyOrNull(dataObject.member_id)) {
+      url += `&member_id=${encodeURIComponent(dataObject.member_id[0].id)}`;
     }
 
     if (!this.core.isEmptyOrNull(dataObject.keyword)) {
@@ -104,12 +104,12 @@ export class MembersService {
       params.append("bio", dataObject.bio);
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_status_id)) {
-      params.append("soba_status_id", dataObject.soba_status_id[0].id);
+    if (!this.core.isEmptyOrNull(dataObject.status_id)) {
+      params.append("status_id", dataObject.status_id[0].id);
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_branch_id)) {
-      params.append("soba_branch_id", dataObject.soba_branch_id[0].id);
+    if (!this.core.isEmptyOrNull(dataObject.branch_id)) {
+      params.append("branch_id", dataObject.branch_id[0].id);
     }
 
 
@@ -163,12 +163,12 @@ export class MembersService {
       params.append("bio", dataObject.bio);
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_status_id)) {
-      params.append("soba_status_id", dataObject.soba_status_id[0].id);
+    if (!this.core.isEmptyOrNull(dataObject.status_id)) {
+      params.append("status_id", dataObject.status_id[0].id);
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.soba_branch_id)) {
-      params.append("soba_branch_id", dataObject.soba_branch_id[0].id);
+    if (!this.core.isEmptyOrNull(dataObject.branch_id)) {
+      params.append("branch_id", dataObject.branch_id[0].id);
     }
 
 

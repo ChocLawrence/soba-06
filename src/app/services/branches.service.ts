@@ -27,7 +27,7 @@ export class BranchesService {
     public core: CoreService
   ) {
 
-    this.apiUrl = `${this.urlService.apiUrl()}` + 's_branches';
+    this.apiUrl = `${this.urlService.apiUrl()}` + 'branches';
     this.httpOptions = this.core.httpOptions;
   }
 

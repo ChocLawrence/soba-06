@@ -59,13 +59,13 @@
                     <div class="col-md-3">
                         <ng-multiselect-dropdown [placeholder]="'Full Names' | translate"
                             [settings]="memberDropdownSettings" [data]="members"
-                            [formControl]="$any(searchContributionForm).controls['soba_member_id']"
+                            [formControl]="$any(searchContributionForm).controls['member_id']"
                             (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
                         </ng-multiselect-dropdown>
                     </div>
                     <div class="col-md-3">
                         <ng-multiselect-dropdown [placeholder]="'Event' | translate" [settings]="dropdownSettings"
-                            [data]="events" [formControl]="$any(searchContributionForm).controls['soba_event_id']"
+                            [data]="events" [formControl]="$any(searchContributionForm).controls['event_id']"
                             (onSelect)="onEventSelect($event)" (onDeSelect)="onEventDeSelect($event)">
                         </ng-multiselect-dropdown>
                     </div>
@@ -130,7 +130,7 @@
                     <dxi-column dataField="total" [caption]="'TOTAL' | translate"
                     cellTemplate="totalTemplate">
                     </dxi-column>
-                    <!-- <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
+                    <!-- <dxi-column dataField="status_id" [caption]="'Status' | translate"
                         cellTemplate="statusTemplate">
                     </dxi-column> -->
                     <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"

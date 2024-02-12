@@ -60,10 +60,10 @@
                     </dxi-column>
                     <dxi-column dataField="bio" [caption]="'Bio' | translate">
                     </dxi-column>
-                    <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
+                    <dxi-column dataField="status_id" [caption]="'Status' | translate"
                         cellTemplate="statusTemplate">
                     </dxi-column>
-                    <dxi-column dataField="soba_branch_id" [caption]="'Branch' | translate"
+                    <dxi-column dataField="branch_id" [caption]="'Branch' | translate"
                         cellTemplate="branchTemplate">
                     </dxi-column>
                     <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
@@ -84,13 +84,13 @@
 
                     <div *dxTemplate="let cell of 'statusTemplate'">
                         <span>
-                            {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
+                            {{ cell.data.status_id ? getStatusName(cell.data.status_id) : "-" }}
                         </span>
                     </div>
 
                     <div *dxTemplate="let cell of 'branchTemplate'">
                         <span>
-                            {{ cell.data.soba_branch_id ? getBranchName(cell.data.soba_branch_id) : "-" }}
+                            {{ cell.data.branch_id ? getBranchName(cell.data.branch_id) : "-" }}
                         </span>
                     </div>
 

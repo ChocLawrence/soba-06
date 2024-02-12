@@ -27,7 +27,7 @@ export class CategoriesService {
     public core: CoreService
   ) {
 
-    this.apiUrl = `${this.urlService.apiUrl()}` + 's_categories';
+    this.apiUrl = `${this.urlService.apiUrl()}` + 'categories';
     this.httpOptions = this.core.httpOptions;
   }
 

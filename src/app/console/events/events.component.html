@@ -50,10 +50,10 @@
                     </dxi-column>
                     <dxi-column dataField="amount" [caption]="'Amount' | translate">
                     </dxi-column>
-                    <dxi-column dataField="soba_payment_state" [caption]="'Payment State' | translate"
+                    <dxi-column dataField="payment_state" [caption]="'Payment State' | translate"
                         cellTemplate="paymentStateTemplate">
                     </dxi-column>
-                    <dxi-column dataField="soba_category_id" [caption]="'Category' | translate"
+                    <dxi-column dataField="category_id" [caption]="'Category' | translate"
                         cellTemplate="categoryTemplate">
                     </dxi-column>
                     <dxi-column dataField="deadline" [caption]="'Deadline' | translate">
@@ -67,10 +67,10 @@
                     </dxi-column>
                     <dxi-column dataField="comment" [caption]="'Comment' | translate">
                     </dxi-column>
-                    <dxi-column dataField="soba_status_id" [caption]="'Status' | translate"
+                    <dxi-column dataField="status_id" [caption]="'Status' | translate"
                         cellTemplate="statusTemplate">
                     </dxi-column>
-                    <dxi-column dataField="soba_member_id" [caption]="'Beneficiary' | translate"
+                    <dxi-column dataField="member_id" [caption]="'Beneficiary' | translate"
                         cellTemplate="memberTemplate">
                     </dxi-column>
                     <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
@@ -81,25 +81,25 @@
 
                     <div *dxTemplate="let cell of 'paymentStateTemplate'">
                         <span>
-                            {{ cell.data.soba_payment_state ? getPaymentStateName(cell.data.soba_payment_state) : "-" }}
+                            {{ cell.data.payment_state ? getPaymentStateName(cell.data.payment_state) : "-" }}
                         </span>
                     </div>
 
                     <div *dxTemplate="let cell of 'categoryTemplate'">
                         <span>
-                            {{ cell.data.soba_category_id ? getCategoryName(cell.data.soba_category_id) : "-" }}
+                            {{ cell.data.category_id ? getCategoryName(cell.data.category_id) : "-" }}
                         </span>
                     </div>
 
                     <div *dxTemplate="let cell of 'statusTemplate'">
                         <span>
-                            {{ cell.data.soba_status_id ? getStatusName(cell.data.soba_status_id) : "-" }}
+                            {{ cell.data.status_id ? getStatusName(cell.data.status_id) : "-" }}
                         </span>
                     </div>
 
                     <div *dxTemplate="let cell of 'memberTemplate'">
                         <span>
-                            {{ cell.data.soba_member_id ? getMemberName(cell.data.soba_member_id) : "-" }}
+                            {{ cell.data.member_id ? getMemberName(cell.data.member_id) : "-" }}
                         </span>
                     </div>
 

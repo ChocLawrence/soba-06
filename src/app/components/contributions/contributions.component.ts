@@ -218,7 +218,7 @@ export class ContributionsComponent implements OnInit {
     this.loadingData = true;
 
     let dataObject = {
-      soba_status_id : this.ongoingStatus
+      status_id : this.ongoingStatus
     };
 
     this.eventsService

@@ -27,7 +27,7 @@ export class PaymentStatesService {
     public core: CoreService
   ) {
 
-    this.apiUrl = `${this.urlService.apiUrl()}` + 's_payment_states';
+    this.apiUrl = `${this.urlService.apiUrl()}` + 'payment_states';
     this.httpOptions = this.core.httpOptions;
   }
 

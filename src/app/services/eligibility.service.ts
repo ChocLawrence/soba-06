@@ -27,7 +27,7 @@ export class EligibilityService {
     public core: CoreService
   ) {
 
-    this.apiUrl = `${this.urlService.apiUrl()}` + 's_eligibility';
+    this.apiUrl = `${this.urlService.apiUrl()}` + 'eligibility';
     this.httpOptions = this.core.httpOptions;
   }
 

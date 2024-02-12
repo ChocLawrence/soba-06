@@ -27,7 +27,7 @@ export class StatusesService {
     public core: CoreService
   ) {
 
-    this.apiUrl = `${this.urlService.apiUrl()}` + 's_statuses';
+    this.apiUrl = `${this.urlService.apiUrl()}` + 'statuses';
     this.httpOptions = this.core.httpOptions;
   }
 
