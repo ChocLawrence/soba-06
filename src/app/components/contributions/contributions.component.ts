@@ -225,13 +225,17 @@ export class ContributionsComponent implements OnInit {
       .getEvents(dataObject)
       .then((events) => {
         this.eventsCount = events.data.length;
-        this.events = this._core.normalizeKeys(events.data);
-        this.deadline = this.events[0].deadline;
-        var todayDate = new Date().toISOString().slice(0, 10);
-        if(this.deadline <  todayDate){
-          this.deadlineState = "Deadline has passed";
+
+        if(this.eventsCount>0){
+          this.events = this._core.normalizeKeys(events.data);
+          this.deadline = this.events[0].deadline;
+          var todayDate = new Date().toISOString().slice(0, 10);
+          if(this.deadline <  todayDate){
+            this.deadlineState = "Deadline has passed";
+          }
+          this.setTimeline();
         }
-        this.setTimeline();
+        
         this.loadingData = false;
       })
       .catch((e) => {

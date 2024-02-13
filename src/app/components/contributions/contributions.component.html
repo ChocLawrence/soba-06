@@ -8,32 +8,38 @@
     <div class="row justify-content-center">
       <div class="col-lg-10 text-center">
         <div class="title-heading">
-          <h4 class="text-success mb-3" *ngIf="events && events.length>0">{{_core.getDate(events[0]?.deadline)}}</h4>
-          <h1 class="display-4 title-dark text-white fw-bold mb-3">Contributions' Deadline</h1>
-          <p class="para-desc title-dark mx-auto text-light">Kindly ensure all financial obligations are met on or
-            before this date so as to
-            ensure the monies are handed over on time.
-          </p>
+          <div *ngIf="events && events.length>0">
+            <h4 class="text-success mb-3">{{_core.getDate(events[0]?.deadline)}}</h4>
+            <h1 class="display-4 title-dark text-white fw-bold mb-3">Contributions' Deadline</h1>
+            <p class="para-desc title-dark mx-auto text-light">Kindly ensure all financial obligations are met on or
+              before this date so as to
+              ensure the monies are handed over on time.
+            </p>
 
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <div id="eventdown" *ngIf="!deadlineState">
-                <ul class="count-down list-unstyled">
-                  <li id="days" class="count-number list-inline-item px-4">{{_days}}<p class="count-head">Days</p>
-                  </li>
-                  <li id="hours" class="count-number list-inline-item px-4">{{_hours}}<p class="count-head">Hours</p>
-                  </li>
-                  <li id="mins" class="count-number list-inline-item px-4">{{_minutes}}<p class="count-head">Minutes</p>
-                  </li>
-                  <li id="secs" class="count-number list-inline-item px-4">{{_seconds}}<p class="count-head">Seconds</p>
-                  </li>
-                  <li id="end" class="h1"></li>
-                </ul>
-              </div>
-              <div *ngIf="deadlineState">
-                  <span class="display-4 title-dark text-red fw-bold mb-3">{{deadlineState}}</span>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <div id="eventdown" *ngIf="!deadlineState">
+                  <ul class="count-down list-unstyled">
+                    <li id="days" class="count-number list-inline-item px-4">{{_days}}<p class="count-head">Days</p>
+                    </li>
+                    <li id="hours" class="count-number list-inline-item px-4">{{_hours}}<p class="count-head">Hours</p>
+                    </li>
+                    <li id="mins" class="count-number list-inline-item px-4">{{_minutes}}<p class="count-head">Minutes</p>
+                    </li>
+                    <li id="secs" class="count-number list-inline-item px-4">{{_seconds}}<p class="count-head">Seconds</p>
+                    </li>
+                    <li id="end" class="h1"></li>
+                  </ul>
+                </div>
+                <div *ngIf="deadlineState">
+                    <span class="display-4 title-dark text-red fw-bold mb-3">{{deadlineState}}</span>
+                </div>
               </div>
             </div>
+          </div>
+
+          <div *ngIf="events && events.length == 0">
+            <h1 class="display-4 title-dark text-white fw-bold mb-3">Contributions</h1>
           </div>
 
           <a routerLink="/contributions/details" class="btn btn-success mt-2 me-2"><i class="uil uil-ticket"></i> &nbsp;VIEW
@@ -74,7 +80,8 @@
     <div class="row justify-content-center">
       <div class="col-12 text-center">
         <div class="section-title mb-4 pb-2">
-          <h4 class="title mb-4">Contribution Schedules</h4>
+          <h4 class="title mb-4" *ngIf="events && events.length>0">Contribution Schedules</h4>
+          <h4 class="title mb-4" *ngIf="events && events.length == 0">No ongoing Contribution</h4>
           <p class="text-muted para-desc mx-auto mb-0">Stay up to date with the <span
               class="text-primary fw-bold">Contributions</span> of the SOBA-06 class.</p>
         </div>
@@ -83,7 +90,7 @@
     </div>
     <!--end row-->
 
-    <div class="row mt-4 pt-2 justify-content-center">
+    <div class="row mt-4 pt-2 justify-content-center" *ngIf="events && events.length>0">
 
       <div class="row">
         <div class="col-lg-6 mt-4 pt-2" *ngFor="let event of events;let i = index">

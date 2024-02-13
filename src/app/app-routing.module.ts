@@ -9,7 +9,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ConsoleModule } from './console/console.module';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { ContributionsComponent } from './components/contributions/contributions.component';
-import { ContributionsDetailsComponent } from './components/contributions-details/contributions-details.component';
+import { ContributionsDetailsComponent } from './components/contributions/contributions-details/contributions-details.component';
 
 const routes: Routes = [
   {

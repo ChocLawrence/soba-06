@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CoreService } from '../../core/core.service';
-import { ContributionsService } from '../../services/contributions.service';
-import { EventsService } from '../../services/events.service';
-import { StatusesService } from '../../services/statuses.service';
-import { PaymentStatesService } from '../../services/payment-states.service';
-import { MembersService } from '../../services/members.service';
-import { PrintingService } from '../../services/printing.service';
-import { routerTransition } from '../../router.animations';
+import { CoreService } from '../../../core/core.service';
+import { ContributionsService } from '../../../services/contributions.service';
+import { EventsService } from '../../../services/events.service';
+import { StatusesService } from '../../../services/statuses.service';
+import { PaymentStatesService } from '../../../services/payment-states.service';
+import { MembersService } from '../../../services/members.service';
+import { PrintingService } from '../../../services/printing.service';
+import { routerTransition } from '../../../router.animations';
 import * as _ from 'lodash';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -22,8 +22,8 @@ import {
   NgbDateParserFormatter,
 } from '@ng-bootstrap/ng-bootstrap';
 import { DxDataGridComponent } from 'devextreme-angular';
+import DataSource from 'devextreme/data/data_source';
 
-import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-contributions-details',
@@ -59,6 +59,7 @@ export class ContributionsDetailsComponent implements OnInit {
   };
 
   public currentDate = new Date();
+  public currentYear = this.currentDate.getFullYear();
   public layoutFormGroup: FormGroup;
   public autoExpand = false;
   public layout = 'collapse';
@@ -67,9 +68,13 @@ export class ContributionsDetailsComponent implements OnInit {
   public allContributions: any[] = [];
   public tempAllContributions: any[] = [];
   public contributionSum;
-  public ongoingStatus:any;
+  public ongoingStatus: any;
   public eventSumsData: any[] = [];
   public members: any[] = [];
+  public years: any[] = [
+    { id: 1, name: '2023' },
+    { id: 2, name: this.currentYear },
+  ];
   public paymentStates: any[] = [];
   public events: any[] = [];
   public ongoingEvents: any[] = [];
@@ -94,6 +99,15 @@ export class ContributionsDetailsComponent implements OnInit {
   public currentPatient: any;
 
   //end print data
+  //[customizeColumns]="customizeColumns"
+  // public customizeColumns (columns) {
+  //   columns[0].caption = 'ID'; 
+  //   columns[0].visible = false;
+  //   columns[1].caption = 'FULL NAMES'; 
+  //   columns[1].width = 'auto';
+  //   columns[2].dataField = 'amount_1';
+  // }
+
 
   searchContributionForm: FormGroup;
 
@@ -115,8 +129,12 @@ export class ContributionsDetailsComponent implements OnInit {
     this.getStatuses();
     this.initSearchContributionsForm();
     this.initLayoutForm();
+    //this.tests();
   }
 
+  tests(){
+    console.log('>>>',this.contributionsDataGrid);
+  }
   //SEARCH BEGIN
 
   initLayoutForm() {
@@ -146,8 +164,24 @@ export class ContributionsDetailsComponent implements OnInit {
   initSearchContributionsForm() {
     this.searchContributionForm = this.fb.group({
       member_id: [''],
-      event_id: ['']
+      event_id: [''],
+      year_id: [''],
     });
+    this.loadForm();
+  }
+
+  loadForm() {
+
+    let selectedYear = this.years.filter((year) => {
+      return year.name ==this.currentYear.toString();
+    });
+
+    this.searchContributionForm.patchValue({
+      year_id: selectedYear,
+    });
+
+    this.onSubmitSearchContributions();
+
   }
 
   searchContributionFormIsValid() {
@@ -171,9 +205,9 @@ export class ContributionsDetailsComponent implements OnInit {
     //filter contributions
 
     let eventObj = [];
-    if(values.event_id){
+    if (values.event_id) {
       eventObj.push(values.event_id[0].id);
-      values.event_id =  eventObj;
+      values.event_id = eventObj;
     }
 
     this.getContributions(values);
@@ -186,6 +220,17 @@ export class ContributionsDetailsComponent implements OnInit {
   public onMemberDeSelect(contribution: any) {
     this.searchContributionForm.patchValue({
       member_id: null,
+    });
+    this.onSubmitSearchContributions();
+  }
+
+  public onYearSelect(contribution: any) {
+    this.checkYearSelection(contribution);
+  }
+
+  public onYearDeSelect(contribution: any) {
+    this.searchContributionForm.patchValue({
+      year_id: null,
     });
     this.onSubmitSearchContributions();
   }
@@ -223,7 +268,6 @@ export class ContributionsDetailsComponent implements OnInit {
     this.onSubmitSearchContributions();
   }
 
-
   public checkMemberSelection(contribution: any) {
     let value: any = contribution;
     // get packages and separate with commas
@@ -241,6 +285,25 @@ export class ContributionsDetailsComponent implements OnInit {
 
     this.onSubmitSearchContributions();
   }
+
+  public checkYearSelection(contribution: any) {
+    let value: any = contribution;
+    // get packages and separate with commas
+    const selectedMember = this.searchContributionForm.value.year_id;
+
+    if (selectedMember.length == 1) {
+      this.searchContributionForm.patchValue({
+        year_id: selectedMember,
+      });
+    } else {
+      this.searchContributionForm.patchValue({
+        year_id: null,
+      });
+    }
+
+    this.onSubmitSearchContributions();
+  }
+
 
   resetForm() {
     this.searchContributionForm.reset();
@@ -270,7 +333,7 @@ export class ContributionsDetailsComponent implements OnInit {
       .getStatuses()
       .then((statuses) => {
         this.statuses = statuses.data;
-        let ongoingStatus = this.getStatus("ongoing");
+        let ongoingStatus = this.getStatus('ongoing');
         this.ongoingStatus = ongoingStatus;
         this.getOngoingEvents();
         this.loadingData = false;
@@ -281,20 +344,16 @@ export class ContributionsDetailsComponent implements OnInit {
       });
   }
 
-  getOngoingEvents(){
-
-    if(this.events && this.ongoingStatus){
-
+  getOngoingEvents() {
+    if (this.events && this.ongoingStatus) {
       let ongoingEvents = this.events.filter((item) => {
         return item.status_id == this.ongoingStatus[0].id;
       });
 
       this.ongoingEvents = ongoingEvents;
-
     }
 
-    this.getContributions(this.defaultDataObject);
-    
+    //this.getContributions(this.defaultDataObject);
   }
 
   getStatus(value: string) {
@@ -302,7 +361,7 @@ export class ContributionsDetailsComponent implements OnInit {
       return item.slug == value.toString();
     });
     return status;
-}
+  }
 
   getEvents() {
     this.loadingData = true;
@@ -328,18 +387,17 @@ export class ContributionsDetailsComponent implements OnInit {
 
     //check for ongoing
     //&& this._core.isEmptyOrNull(searchObject.event_id)
-    
-    if(this.ongoingEvents.length>0){
+
+    if (this.ongoingEvents.length > 0) {
       let ongoingObject = [];
 
-      this.ongoingEvents.forEach((item)=>{
-        ongoingObject.push(item.id)
+      this.ongoingEvents.forEach((item) => {
+        ongoingObject.push(item.id);
       });
 
       searchObject.event_id = ongoingObject;
-
     }
-    
+
     //end check for ongoing events
 
     this.contributionsService
@@ -372,15 +430,12 @@ export class ContributionsDetailsComponent implements OnInit {
 
         if (allMembers.data.length != 0) {
           allMembers.data.forEach((member) => {
-
             if (!this._core.isEmptyOrNull(this.contributions.length)) {
-
               let contributions = this.contributions.filter((item) => {
                 return item.member_id == member.id;
               });
 
               if (!this._core.isEmptyOrNull(contributions.length)) {
-
                 let pushItem = {};
                 let contributionTotal = 0;
 
@@ -393,8 +448,9 @@ export class ContributionsDetailsComponent implements OnInit {
                     contribution.status_id;
                   member['date_' + contribution.event_id] =
                     contribution.created_at;
-                  contributionTotal += contribution.amount ? Number(contribution.amount) : Number(0);
-
+                  contributionTotal += contribution.amount
+                    ? Number(contribution.amount)
+                    : Number(0);
                 });
                 pushItem = { ...member, total: contributionTotal };
                 data.push(pushItem);
@@ -419,30 +475,28 @@ export class ContributionsDetailsComponent implements OnInit {
       });
   }
 
-  computeDate(contribution:any) {
-    
+  computeDate(contribution: any) {
     let date = '--';
 
-    if(contribution.date_1){
-       date = this._core.getDate(contribution.date_1);
-    }else if(contribution.date_2){
-      date =  this._core.getDate(contribution.date_2);
-    }else if(contribution.date_3){
-      date =  this._core.getDate(contribution.date_3);
-    }else if(contribution.date_4){
-      date =  this._core.getDate(contribution.date_4);
-    }else if(contribution.date_5){
-      date =  this._core.getDate(contribution.date_5);
-    }else if(contribution.date_6){
-      date =  this._core.getDate(contribution.date_6);
-    }else if(contribution.date_7){
-      date =  this._core.getDate(contribution.date_7);
-    }else if(contribution.date_8){
-      date =  this._core.getDate(contribution.date_8);
+    if (contribution.date_1) {
+      date = this._core.getDate(contribution.date_1);
+    } else if (contribution.date_2) {
+      date = this._core.getDate(contribution.date_2);
+    } else if (contribution.date_3) {
+      date = this._core.getDate(contribution.date_3);
+    } else if (contribution.date_4) {
+      date = this._core.getDate(contribution.date_4);
+    } else if (contribution.date_5) {
+      date = this._core.getDate(contribution.date_5);
+    } else if (contribution.date_6) {
+      date = this._core.getDate(contribution.date_6);
+    } else if (contribution.date_7) {
+      date = this._core.getDate(contribution.date_7);
+    } else if (contribution.date_8) {
+      date = this._core.getDate(contribution.date_8);
     }
 
     return date;
-
   }
 
   getCategoryName(value: string) {
@@ -504,11 +558,11 @@ export class ContributionsDetailsComponent implements OnInit {
     this.loadingData = false;
   }
 
-  sumAllContributions( obj ) {
+  sumAllContributions(obj) {
     let sum = obj.reduce(function (s, a) {
       return s + (isNaN(Number(a.total)) ? 0 : Number(a.total));
     }, 0);
-    return sum
+    return sum;
   }
 
   sumContributions(obj) {

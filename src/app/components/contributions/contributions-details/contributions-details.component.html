@@ -57,6 +57,13 @@
                 <p class="mb-4 mt-4"><strong>Search Contributions</strong></p>
                 <div class="row mb-4">
                     <div class="col-md-3">
+                        <ng-multiselect-dropdown [placeholder]="'Year' | translate"
+                            [settings]="dropdownSettings" [data]="years"
+                            [formControl]="$any(searchContributionForm).controls['year_id']"
+                            (onSelect)="onYearSelect($event)" (onDeSelect)="onYearDeSelect($event)">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-3">
                         <ng-multiselect-dropdown [placeholder]="'Full Names' | translate"
                             [settings]="memberDropdownSettings" [data]="members"
                             [formControl]="$any(searchContributionForm).controls['member_id']"
@@ -68,8 +75,6 @@
                             [data]="events" [formControl]="$any(searchContributionForm).controls['event_id']"
                             (onSelect)="onEventSelect($event)" (onDeSelect)="onEventDeSelect($event)">
                         </ng-multiselect-dropdown>
-                    </div>
-                    <div class="col-md-3">
                     </div>
                     <div class="col-md-3">
                         <button (click)="resetForm()" title="Reset Search Filter"
@@ -98,10 +103,7 @@
                     <!-- Columns -->
                     <dxi-column width="auto" dataField="full_name" [caption]="'Full Names' | translate">
                     </dxi-column>
-                    <!-- <dxi-column width="auto" dataField="event_1" [caption]="'Event1' | translate"
-                        cellTemplate="event1Template" headerCellTemplate="event1TitleHeaderTemplate">
-                    </dxi-column> -->
-
+                    
                     <dxi-column dataField="amount_1" headerCellTemplate="event1TitleHeaderTemplate">
                     </dxi-column>
                     <dxi-column dataField="amount_2" [caption]="'Amount' | translate"
@@ -129,16 +131,11 @@
 
                     <dxi-column dataField="total" [caption]="'TOTAL' | translate"
                     cellTemplate="totalTemplate">
-                    </dxi-column>
-                    <!-- <dxi-column dataField="status_id" [caption]="'Status' | translate"
-                        cellTemplate="statusTemplate">
-                    </dxi-column> -->
+                    </dxi-column> 
                     <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
                         [caption]="'Last Recorded' | translate">
                     </dxi-column>
-                    <!-- <dxi-column cellTemplate="actionsTemplate" [caption]="" alignment="right">
-                    </dxi-column> -->
-
+                   
                     <div *dxTemplate="let info of 'event1TitleHeaderTemplate'">
                         <p style="font-size:16px">{{getEventName('1')}}</p>
                     </div>
@@ -166,18 +163,7 @@
                     <div *dxTemplate="let info of 'event9TitleHeaderTemplate'">
                         <p style="font-size:16px">{{getEventName('9') | uppercase}}</p>
                     </div>
-
-                  
-                    <!-- <div *dxTemplate="let info of 'event5TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('5')}}</p>
-                    </div> -->
-
-                    <!-- <div *dxTemplate="let cell of 'statusTemplate'">
-                        <span>
-                            {{ cell.data.contribution_status_id ? getStatusName(cell.data.contribution_status_id) : "-"
-                            }}
-                        </span>
-                    </div> -->
+                     
 
                     <div *dxTemplate="let cell of 'totalTemplate'">
                         <span>
@@ -191,23 +177,11 @@
                         </span>
                     </div>
 
-
                     <div *dxTemplate="let cell of 'createdAtTemplate'">
                         <span>
                             {{ computeDate(cell.data) }}
                         </span>
                     </div>
-
-                    <!-- <div *dxTemplate="let cell of 'actionsTemplate'">
-                        <div class="mainActions">
-                            <ul>
-                                <li>
-                                    <i-feather name="eye" class="icons blue feather-icon"
-                                        [title]="'View Details' | translate"></i-feather>
-                                </li>
-                            </ul>
-                        </div>
-                    </div> -->
                 </dx-data-grid>
             </div>
             <div *ngIf="!allContributions.length">
