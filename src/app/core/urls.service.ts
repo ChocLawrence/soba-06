@@ -12,11 +12,11 @@ export class UrlsService {
     //returnUrl = "http://localhost:8000/api/";
     //returnUrl = "https://s06api.foodstability.com/api/";
     if (url.includes("localhost")) {
-      returnUrl = "http://localhost:8000/api/";
+      returnUrl = "https://s06.foodstability.com/api/";
     } else if (url.includes("soba06.com")) {
-      returnUrl = "https://cgapi.foodstability.com/api/";
+      returnUrl = "https://s06.foodstability.com/api/";
     } else {
-      returnUrl = "https://cgapi.foodstability.com/api/";
+      returnUrl = "https://s06.foodstability.com/api/";
     }
 
     return returnUrl;
@@ -28,11 +28,11 @@ export class UrlsService {
     let returnUrl = "";
 
     if (url.includes("localhost")) {
-      returnUrl = "http://localhost:8000/storage/";
+      returnUrl = "https://s06.foodstability.com/storage/";
     } else if (url.includes("soba06.com")) {
-      returnUrl = "https://cgapi.foodstability.com/storage/";
+      returnUrl = "https://s06.foodstability.com/storage/";
     } else {
-      returnUrl = "https://cgapi.foodstability.com/storage/";
+      returnUrl = "https://s06.foodstability.com/storage/";
     }
     
     return returnUrl;
