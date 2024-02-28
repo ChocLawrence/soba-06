@@ -57,23 +57,9 @@
                 <p class="mb-4 mt-4"><strong>Search Contributions</strong></p>
                 <div class="row mb-4">
                     <div class="col-md-3">
-                        <ng-multiselect-dropdown [placeholder]="'Year' | translate"
-                            [settings]="dropdownSettings" [data]="years"
-                            [formControl]="$any(searchContributionForm).controls['year_id']"
+                        <ng-multiselect-dropdown [placeholder]="'Year' | translate" [settings]="dropdownSettings"
+                            [data]="years" [formControl]="$any(searchContributionForm).controls['year_id']"
                             (onSelect)="onYearSelect($event)" (onDeSelect)="onYearDeSelect($event)">
-                        </ng-multiselect-dropdown>
-                    </div>
-                    <div class="col-md-3">
-                        <ng-multiselect-dropdown [placeholder]="'Full Names' | translate"
-                            [settings]="memberDropdownSettings" [data]="members"
-                            [formControl]="$any(searchContributionForm).controls['member_id']"
-                            (onSelect)="onMemberSelect($event)" (onDeSelect)="onMemberDeSelect($event)">
-                        </ng-multiselect-dropdown>
-                    </div>
-                    <div class="col-md-3">
-                        <ng-multiselect-dropdown [placeholder]="'Event' | translate" [settings]="dropdownSettings"
-                            [data]="events" [formControl]="$any(searchContributionForm).controls['event_id']"
-                            (onSelect)="onEventSelect($event)" (onDeSelect)="onEventDeSelect($event)">
                         </ng-multiselect-dropdown>
                     </div>
                     <div class="col-md-3">
@@ -88,11 +74,109 @@
                     </div>
                 </div>
             </form>
-            <div *ngIf="allContributions && allContributions.length>0">
-                <dx-data-grid #contributionsContainer id="contributionsContainer" [dataSource]="allContributions"
-                    [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true" [showColumnLines]="false"
-                    [allowColumnReordering]="true" [allowCollapsing]="false" [wordWrapEnabled]="true"
-                    [hoverStateEnabled]="true" [noDataText]="'No data available' | translate"
+
+
+            <div *ngIf="currentSearchYear == 2023 && (allContributions && allContributions.length>0)">
+                <dx-data-grid #contributionsContainer id="contributionsContainer"
+                [dataSource]="allContributions" [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true"
+                [showColumnLines]="false" [allowColumnReordering]="true" [allowCollapsing]="false"
+                [wordWrapEnabled]="true" [hoverStateEnabled]="true" [noDataText]="'No data available' | translate"
+                (onFileSaving)="_core.onFileSaving($event, 'Contributions')">
+                <dxo-column-chooser [enabled]="false"></dxo-column-chooser>
+                <dxo-paging [enabled]="true" [pageSize]="20">
+                </dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
+                </dxo-pager>
+
+                <!-- Columns -->
+                <dxi-column width="auto" dataField="full_name" [caption]="'Full Names' | translate">
+                </dxi-column>
+
+                <dxi-column dataField="amount_1" headerCellTemplate="event1TitleHeaderTemplate">
+                </dxi-column>
+                <dxi-column dataField="amount_2" [caption]="'Amount' | translate"
+                    headerCellTemplate="event2TitleHeaderTemplate">
+                </dxi-column>
+                <dxi-column dataField="amount_3" [caption]="'Amount' | translate"
+                    headerCellTemplate="event3TitleHeaderTemplate">
+                </dxi-column>
+
+                <dxi-column dataField="amount_4" [caption]="'Amount' | translate"
+                    headerCellTemplate="event4TitleHeaderTemplate">
+                </dxi-column>
+
+                <dxi-column dataField="amount_6" [caption]="'Amount' | translate"
+                    headerCellTemplate="event6TitleHeaderTemplate">
+                </dxi-column>
+
+                <dxi-column dataField="amount_8" [caption]="'Amount' | translate"
+                    headerCellTemplate="event8TitleHeaderTemplate">
+                </dxi-column>
+
+                <dxi-column dataField="amount_9" [caption]="'Amount' | translate"
+                    headerCellTemplate="event9TitleHeaderTemplate">
+                </dxi-column>
+
+                <dxi-column dataField="total" [caption]="'TOTAL' | translate" cellTemplate="totalTemplate">
+                </dxi-column>
+                <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
+                    [caption]="'Last Recorded' | translate">
+                </dxi-column>
+
+                <div *dxTemplate="let info of 'event1TitleHeaderTemplate'">
+                    <p style="font-size:16px">{{getEventName('1')}}</p>
+                </div>
+
+                <div *dxTemplate="let info of 'event2TitleHeaderTemplate'">
+                    <p style="font-size:16px">{{getEventName('2')}}</p>
+                </div>
+
+                <div *dxTemplate="let info of 'event3TitleHeaderTemplate'">
+                    <p style="font-size:16px">{{getEventName('3')}}</p>
+                </div>
+
+                <div *dxTemplate="let info of 'event4TitleHeaderTemplate'">
+                    <p style="font-size:16px">{{getEventName('4')}}</p>
+                </div>
+
+                <div *dxTemplate="let info of 'event6TitleHeaderTemplate'">
+                    <p style="font-size:16px">{{getEventName('6')}}</p>
+                </div>
+
+                <div *dxTemplate="let info of 'event8TitleHeaderTemplate'">
+                    <p style="font-size:16px">{{getEventName('8')}}</p>
+                </div>
+
+                <div *dxTemplate="let info of 'event9TitleHeaderTemplate'">
+                    <p style="font-size:16px">{{getEventName('9') | uppercase}}</p>
+                </div>
+
+
+                <div *dxTemplate="let cell of 'totalTemplate'">
+                    <span>
+                        {{ cell.data.total ? cell.data.total : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'commentTemplate'">
+                    <span>
+                        {{ cell.data.comment ? cell.data.comment : "-" }}
+                    </span>
+                </div>
+
+                <div *dxTemplate="let cell of 'createdAtTemplate'">
+                    <span>
+                        {{ computeDate(cell.data) }}
+                    </span>
+                </div>
+                </dx-data-grid>
+            </div>
+
+            <div *ngIf="currentSearchYear == 2024 && (allContributions && allContributions.length>0)">
+                <dx-data-grid #contributionsContainer2024 id="contributionsContainer2024"
+                    [dataSource]="allContributions" [columnAutoWidth]="true" [showBorders]="true" [showRowLines]="true"
+                    [showColumnLines]="false" [allowColumnReordering]="true" [allowCollapsing]="false"
+                    [wordWrapEnabled]="true" [hoverStateEnabled]="true" [noDataText]="'No data available' | translate"
                     (onFileSaving)="_core.onFileSaving($event, 'Contributions')">
                     <dxo-column-chooser [enabled]="false"></dxo-column-chooser>
                     <dxo-paging [enabled]="true" [pageSize]="20">
@@ -100,70 +184,29 @@
                     <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 30]" [showInfo]="true">
                     </dxo-pager>
 
-                    <!-- Columns -->
                     <dxi-column width="auto" dataField="full_name" [caption]="'Full Names' | translate">
                     </dxi-column>
-                    
-                    <dxi-column dataField="amount_1" headerCellTemplate="event1TitleHeaderTemplate">
+
+                    <dxi-column dataField="amount_10" headerCellTemplate="event10TitleHeaderTemplate">
                     </dxi-column>
-                    <dxi-column dataField="amount_2" [caption]="'Amount' | translate"
-                        headerCellTemplate="event2TitleHeaderTemplate">
-                    </dxi-column>
-                    <dxi-column dataField="amount_3" [caption]="'Amount' | translate"
-                        headerCellTemplate="event3TitleHeaderTemplate">
+                    <dxi-column dataField="amount_11" [caption]="'Amount' | translate"
+                        headerCellTemplate="event11TitleHeaderTemplate">
                     </dxi-column>
 
-                    <dxi-column dataField="amount_4" [caption]="'Amount' | translate"
-                        headerCellTemplate="event4TitleHeaderTemplate">
+                    <dxi-column dataField="total" [caption]="'TOTAL' | translate" cellTemplate="totalTemplate">
                     </dxi-column>
-
-                    <dxi-column dataField="amount_6" [caption]="'Amount' | translate"
-                        headerCellTemplate="event6TitleHeaderTemplate">
-                    </dxi-column>
-
-                    <dxi-column dataField="amount_8" [caption]="'Amount' | translate"
-                        headerCellTemplate="event8TitleHeaderTemplate">
-                    </dxi-column>
-
-                    <dxi-column dataField="amount_9" [caption]="'Amount' | translate"
-                        headerCellTemplate="event9TitleHeaderTemplate">
-                    </dxi-column>
-
-                    <dxi-column dataField="total" [caption]="'TOTAL' | translate"
-                    cellTemplate="totalTemplate">
-                    </dxi-column> 
-                    <dxi-column width="auto" dataField="createdat" cellTemplate="createdAtTemplate"
+                    <dxi-column width="auto" dataField="created_at" cellTemplate="createdAtTemplate"
                         [caption]="'Last Recorded' | translate">
                     </dxi-column>
-                   
-                    <div *dxTemplate="let info of 'event1TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('1')}}</p>
+
+                    <div *dxTemplate="let info of 'event10TitleHeaderTemplate'">
+                        <p style="font-size:16px">{{getEventName('10')}}</p>
                     </div>
 
-                    <div *dxTemplate="let info of 'event2TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('2')}}</p>
+                    <div *dxTemplate="let info of 'event11TitleHeaderTemplate'">
+                        <p style="font-size:16px">{{getEventName('11')}}</p>
                     </div>
 
-                    <div *dxTemplate="let info of 'event3TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('3')}}</p>
-                    </div>
-
-                    <div *dxTemplate="let info of 'event4TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('4')}}</p>
-                    </div>
-
-                    <div *dxTemplate="let info of 'event6TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('6')}}</p>
-                    </div>
-
-                    <div *dxTemplate="let info of 'event8TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('8')}}</p>
-                    </div>
-
-                    <div *dxTemplate="let info of 'event9TitleHeaderTemplate'">
-                        <p style="font-size:16px">{{getEventName('9') | uppercase}}</p>
-                    </div>
-                     
 
                     <div *dxTemplate="let cell of 'totalTemplate'">
                         <span>
@@ -186,7 +229,7 @@
             </div>
             <div *ngIf="!allContributions.length">
                 <hr>
-                <span>NO RESULT FOUND FOR SEARCH FILTER</span>
+                <span>NO RECORDS FOUND</span>
             </div>
         </div>
     </div>
@@ -200,7 +243,8 @@
         </div>
         <hr>
         <div class="h2-style">
-            <h2 class="text-center">SOBA 06 CLASS CONTRIBUTIONS</h2>
+            <h2 class="text-center">SOBA 06 CLASS CONTRIBUTIONS : {{this.searchContributionForm.value.year_id[0].name ?
+                this.searchContributionForm.value.year_id[0].name : '--'}}</h2>
         </div>
         <hr>
         <div class="row-align">
@@ -220,33 +264,64 @@
         </div>
         <hr>
         <table class="table">
-            <thead class="style-header"style="background-color: rgb(247, 211, 211);">
+            <thead class="style-header" style="background-color: rgb(247, 211, 211);">
                 <tr>
                     <th scope="col" style="border: 1px solid black;border-collapse: collapse;border-spacing: 0;">SN</th>
-                    <th scope="col" style="border: 1px solid black;border-collapse: collapse;border-spacing: 0;">FULL NAME</th>
-                    <th scope="col" style="border: 1px solid black;border-collapse: collapse;" *ngFor="let event of events.slice().reverse(); let i = index"  >
-                        {{ event.id ? getEventName(event.id).toUpperCase() : '---'}} 
+                    <th scope="col" style="border: 1px solid black;border-collapse: collapse;border-spacing: 0;">FULL
+                        NAME</th>
+                    <th scope="col" style="border: 1px solid black;border-collapse: collapse;"
+                        *ngFor="let event of currentYearEvents.slice().reverse(); let i = index">
+                        {{ event.id ? getEventName(event.id).toUpperCase() : '---'}}
                     </th>
                     <th scope="col" style="border: 1px solid black;border-collapse: collapse;">TOTAL</th>
                     <th scope="col" style="border: 1px solid black;border-collapse: collapse;">DATE</th>
                 </tr>
             </thead>
             <tbody *ngIf="allContributions">
-                <tr *ngFor="let contribution of allContributions; let i = index" class="table_row" style="border: 1px solid black;">
-                    <td style="border: 1px solid black;border-collapse: collapse;">{{ i + 1 }}</td>
-                    <td style="text-align: left;border: 1px solid black;border-collapse: collapse;">{{ contribution.full_name  | uppercase}}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_1 ? contribution.amount_1 : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_2 ? contribution.amount_2 : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_3 ? contribution.amount_3 : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_4 ? contribution.amount_4 : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_6 ? contribution.amount_6 : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_8 ? contribution.amount_8 : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{ contribution.amount_9 ? contribution.amount_9 : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;"id="p_name">{{ contribution.total ? contribution.total : '--' }}</td>
-                    <td style="border: 1px solid black;border-collapse: collapse;" id="p_name">{{ computeDate(contribution) }}</td>
-                </tr>
+                <span *ngIf="currentSearchYear==2023">
+                    <tr *ngFor="let contribution of allContributions; let i = index" class="table_row"
+                        style="border: 1px solid black;">
+                        <td style="border: 1px solid black;border-collapse: collapse;">{{ i + 1 }}</td>
+                        <td style="text-align: left;border: 1px solid black;border-collapse: collapse;">{{
+                            contribution.full_name | uppercase}}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_1 ? contribution.amount_1 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_2 ? contribution.amount_2 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_3 ? contribution.amount_3 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_4 ? contribution.amount_4 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_6 ? contribution.amount_6 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_8 ? contribution.amount_8 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_9 ? contribution.amount_9 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;" id="p_name">
+                            {{ contribution.total ? contribution.total : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse;" id="p_name">{{
+                            computeDate(contribution) }}</td>
+                    </tr>
+                </span>
+                <span *ngIf="currentSearchYear==2024">
+                    <tr *ngFor="let contribution of allContributions; let i = index" class="table_row"
+                        style="border: 1px solid black;">
+                        <td style="border: 1px solid black;border-collapse: collapse;">{{ i + 1 }}</td>
+                        <td style="text-align: left;border: 1px solid black;border-collapse: collapse;">{{
+                            contribution.full_name | uppercase}}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_10 ? contribution.amount_10 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_11 ? contribution.amount_11 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;" id="p_name">
+                            {{ contribution.total ? contribution.total : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse;" id="p_name">{{
+                            computeDate(contribution) }}</td>
+                    </tr>
+                </span>
             </tbody>
-        </table> 
+        </table>
         <hr>
         <span>Generated date : {{currentDate}}</span>
         <div class="signature mt-5">

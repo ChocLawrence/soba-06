@@ -24,7 +24,6 @@ import {
 import { DxDataGridComponent } from 'devextreme-angular';
 import DataSource from 'devextreme/data/data_source';
 
-
 @Component({
   selector: 'app-contributions-details',
   templateUrl: './contributions-details.component.html',
@@ -60,6 +59,8 @@ export class ContributionsDetailsComponent implements OnInit {
 
   public currentDate = new Date();
   public currentYear = this.currentDate.getFullYear();
+  public currentYearEvents: any[] = [];
+  public currentSearchYear:any;
   public layoutFormGroup: FormGroup;
   public autoExpand = false;
   public layout = 'collapse';
@@ -101,13 +102,12 @@ export class ContributionsDetailsComponent implements OnInit {
   //end print data
   //[customizeColumns]="customizeColumns"
   // public customizeColumns (columns) {
-  //   columns[0].caption = 'ID'; 
+  //   columns[0].caption = 'ID';
   //   columns[0].visible = false;
-  //   columns[1].caption = 'FULL NAMES'; 
+  //   columns[1].caption = 'FULL NAMES';
   //   columns[1].width = 'auto';
   //   columns[2].dataField = 'amount_1';
   // }
-
 
   searchContributionForm: FormGroup;
 
@@ -124,16 +124,16 @@ export class ContributionsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.initSearchContributionsForm();
     this.getPaymentStates();
     this.getEvents();
     this.getStatuses();
-    this.initSearchContributionsForm();
     this.initLayoutForm();
     //this.tests();
   }
 
-  tests(){
-    console.log('>>>',this.contributionsDataGrid);
+  tests() {
+    console.log('>>>', this.contributionsDataGrid);
   }
   //SEARCH BEGIN
 
@@ -163,25 +163,20 @@ export class ContributionsDetailsComponent implements OnInit {
 
   initSearchContributionsForm() {
     this.searchContributionForm = this.fb.group({
-      member_id: [''],
-      event_id: [''],
       year_id: [''],
     });
     this.loadForm();
   }
 
   loadForm() {
-
     let selectedYear = this.years.filter((year) => {
-      return year.name ==this.currentYear.toString();
+     // return year.name == this.currentYear.toString();
+     return year.name == 2023;
     });
 
     this.searchContributionForm.patchValue({
       year_id: selectedYear,
     });
-
-    this.onSubmitSearchContributions();
-
   }
 
   searchContributionFormIsValid() {
@@ -213,17 +208,6 @@ export class ContributionsDetailsComponent implements OnInit {
     this.getContributions(values);
   }
 
-  public onMemberSelect(contribution: any) {
-    this.checkMemberSelection(contribution);
-  }
-
-  public onMemberDeSelect(contribution: any) {
-    this.searchContributionForm.patchValue({
-      member_id: null,
-    });
-    this.onSubmitSearchContributions();
-  }
-
   public onYearSelect(contribution: any) {
     this.checkYearSelection(contribution);
   }
@@ -237,53 +221,6 @@ export class ContributionsDetailsComponent implements OnInit {
 
   get f() {
     return this.searchContributionForm.controls;
-  }
-
-  public onEventSelect(contribution: any) {
-    this.checkEventSelection(contribution);
-  }
-
-  public onEventDeSelect(contribution: any) {
-    this.searchContributionForm.patchValue({
-      event_id: null,
-    });
-    this.onSubmitSearchContributions();
-  }
-
-  public checkEventSelection(contribution: any) {
-    let value: any = contribution;
-    // get packages and separate with commas
-    const selectedEvent = this.searchContributionForm.value.event_id;
-
-    if (selectedEvent.length == 1) {
-      this.searchContributionForm.patchValue({
-        event_id: selectedEvent,
-      });
-    } else {
-      this.searchContributionForm.patchValue({
-        event_id: null,
-      });
-    }
-
-    this.onSubmitSearchContributions();
-  }
-
-  public checkMemberSelection(contribution: any) {
-    let value: any = contribution;
-    // get packages and separate with commas
-    const selectedMember = this.searchContributionForm.value.member_id;
-
-    if (selectedMember.length == 1) {
-      this.searchContributionForm.patchValue({
-        member_id: selectedMember,
-      });
-    } else {
-      this.searchContributionForm.patchValue({
-        member_id: null,
-      });
-    }
-
-    this.onSubmitSearchContributions();
   }
 
   public checkYearSelection(contribution: any) {
@@ -301,9 +238,8 @@ export class ContributionsDetailsComponent implements OnInit {
       });
     }
 
-    this.onSubmitSearchContributions();
+    this.getEventsByYear();
   }
-
 
   resetForm() {
     this.searchContributionForm.reset();
@@ -372,6 +308,7 @@ export class ContributionsDetailsComponent implements OnInit {
         this.eventsCount = events.data.length;
         this.events = events.data;
         this.getEventColumnHeaders();
+        this.getEventsByYear();
         this.loadingData = false;
       })
       .catch((e) => {
@@ -382,24 +319,43 @@ export class ContributionsDetailsComponent implements OnInit {
 
   getEventColumnHeaders() {}
 
+  getEventsByYear() {
+    let currentSearchYearTerm =
+      this.searchContributionForm.value.year_id &&
+      this.searchContributionForm.value.year_id[0].name
+        ? this.searchContributionForm.value.year_id[0].name
+        : this.currentYear;
+
+    if (this.events) {
+      let events = this.events.filter((item) => {
+        return item.created_at.substring(0, 4) == currentSearchYearTerm;
+      });
+
+      this.currentSearchYear = currentSearchYearTerm;
+      this.currentYearEvents = events;
+      this.onSubmitSearchContributions();
+    }
+  }
+
   getContributions(searchObject: any) {
     this.loadingData = true;
 
     //check for ongoing
     //&& this._core.isEmptyOrNull(searchObject.event_id)
 
-    if (this.ongoingEvents.length > 0) {
-      let ongoingObject = [];
+    if (this.currentYearEvents.length > 0) {
+      let currentObject = [];
 
-      this.ongoingEvents.forEach((item) => {
-        ongoingObject.push(item.id);
+      this.currentYearEvents.forEach((item) => {
+        currentObject.push(item.id);
       });
 
-      searchObject.event_id = ongoingObject;
+      searchObject.event_id = currentObject;
     }
 
-    //end check for ongoing events
+    //end check for current year events
 
+    this.loadingData = true;
     this.contributionsService
       .getContributions(searchObject)
       .then((contributions) => {
@@ -494,6 +450,12 @@ export class ContributionsDetailsComponent implements OnInit {
       date = this._core.getDate(contribution.date_7);
     } else if (contribution.date_8) {
       date = this._core.getDate(contribution.date_8);
+    } else if (contribution.date_9) {
+      date = this._core.getDate(contribution.date_9);
+    } else if (contribution.date_10) {
+      date = this._core.getDate(contribution.date_10);
+    } else if (contribution.date_11) {
+      date = this._core.getDate(contribution.date_11);
     }
 
     return date;
@@ -539,7 +501,7 @@ export class ContributionsDetailsComponent implements OnInit {
     this.contributionSum = this.sumAllContributions(this.allContributions);
     //get sum of individual events
     let data = [];
-    this.events.forEach((event) => {
+    this.currentYearEvents.forEach((event) => {
       //for each event, filter contributions and sum amount
 
       let contributions = this.contributions.filter((item) => {

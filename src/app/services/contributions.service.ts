@@ -51,10 +51,6 @@ export class ContributionsService {
       url += `&member_id=${encodeURIComponent(dataObject.member_id[0].id)}`;
     }
 
-    if (!this.core.isEmptyOrNull(dataObject.year_id)) {
-      url += `&year_id=${encodeURIComponent(dataObject.year_id[0].name)}`;
-    }
-
     if (!this.core.isEmptyOrNull(dataObject.keyword)) {
       url += `&keyword=${encodeURIComponent(dataObject.keyword)}`;
     }
