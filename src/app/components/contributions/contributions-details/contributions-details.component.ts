@@ -170,8 +170,7 @@ export class ContributionsDetailsComponent implements OnInit {
 
   loadForm() {
     let selectedYear = this.years.filter((year) => {
-     // return year.name == this.currentYear.toString();
-     return year.name == 2023;
+      return year.name == this.currentYear.toString();
     });
 
     this.searchContributionForm.patchValue({
