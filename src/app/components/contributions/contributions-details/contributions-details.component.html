@@ -192,6 +192,9 @@
                     <dxi-column dataField="amount_11" [caption]="'Amount' | translate"
                         headerCellTemplate="event11TitleHeaderTemplate">
                     </dxi-column>
+                    <dxi-column dataField="amount_12" [caption]="'Amount' | translate"
+                    headerCellTemplate="event12TitleHeaderTemplate">
+                </dxi-column>
 
                     <dxi-column dataField="total" [caption]="'TOTAL' | translate" cellTemplate="totalTemplate">
                     </dxi-column>
@@ -205,6 +208,10 @@
 
                     <div *dxTemplate="let info of 'event11TitleHeaderTemplate'">
                         <p style="font-size:16px">{{getEventName('11')}}</p>
+                    </div>
+
+                    <div *dxTemplate="let info of 'event12TitleHeaderTemplate'">
+                        <p style="font-size:16px">{{getEventName('12')}}</p>
                     </div>
 
 
@@ -314,6 +321,8 @@
                             contribution.amount_10 ? contribution.amount_10 : '--' }}</td>
                         <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
                             contribution.amount_11 ? contribution.amount_11 : '--' }}</td>
+                        <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{{
+                            contribution.amount_12 ? contribution.amount_12 : '--' }}</td>
                         <td style="border: 1px solid black;border-collapse: collapse; text-align: center;" id="p_name">
                             {{ contribution.total ? contribution.total : '--' }}</td>
                         <td style="border: 1px solid black;border-collapse: collapse;" id="p_name">{{
