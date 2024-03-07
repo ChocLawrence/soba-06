@@ -40,7 +40,7 @@ export class ContributionsService {
     }
 
     if (!this.core.isEmptyOrNull(dataObject.event_id)) {
-      url += `&event_id=${encodeURIComponent(dataObject.event_id)}`;
+      url += `&event_id=${encodeURIComponent(dataObject.event_id[0].id)}`;
     }
 
     if (!this.core.isEmptyOrNull(dataObject.status_id)) {
